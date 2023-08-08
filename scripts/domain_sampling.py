@@ -52,13 +52,19 @@ for i in range(Nb):
         atemp = spin_of_beta(betaData[i])
         otemp = omega_of_a_alpha(atemp, alphaData[j])
         spin_omega_samples[i, j] = [atemp, otemp]
+a_isco = np.linspace(-A_MAX, A_MAX, 5*Nb)
+omega_isco = kerr_isco_frequency(a_isco)
 
 plot_array = np.reshape(spin_omega_samples, (spin_omega_samples.shape[0]*spin_omega_samples.shape[1], 2))
 x = plot_array[:, 0]
 y = plot_array[:, 1]
 xy = np.vstack([x,np.log10(y)])
 z = gaussian_kde(xy)(xy)
-plt.scatter(x, y, c=np.log10(z), s=5, cmap = 'plasma')
+plt.plot([-A_MAX, A_MAX], [OMEGA_MIN, OMEGA_MIN], '--', color="gray", zorder=2)
+plt.plot(a_isco, omega_isco, '--', color="gray", zorder=2)
+plt.plot([-A_MAX, -A_MAX], [OMEGA_MIN, omega_isco[0]], '--', color="gray", zorder=2)
+plt.plot([A_MAX, A_MAX], [OMEGA_MIN, omega_isco[-1]], '--', color="gray", zorder=2)
+plt.scatter(x, y, c=np.log10(z), s=5, cmap = 'plasma', zorder=1)
 plt.yscale('log')
 plt.xlabel('$\hat{a}$')
 plt.ylabel('$\hat{\Omega}$')
