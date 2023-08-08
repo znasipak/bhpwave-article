@@ -1,2 +1,2 @@
-# bhpwave-article
+# bhpwave-article [![LaTex Build](https://github.com/znasipak/bhpwave-article/actions/workflows/compile-release.yml/badge.svg)](https://github.com/znasipak/bhpwave-article/actions/workflows/compile-release.yml/badge.svg) [![Read the article](https://img.shields.io/badge/PDF-latest-blue.svg?style=flat)](https://github.com/znasipak/bhpwave-article/raw/gh-action-result/pdflatex/ms.pdf)
 Journal article for bhpwave

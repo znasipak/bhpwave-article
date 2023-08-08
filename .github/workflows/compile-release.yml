@@ -1,5 +1,5 @@
 # From the toolkit repository
-name: Compile Latex and Release PDF  
+name: LaTex Build  
 on: [push] 
 jobs:
   build_latex:
