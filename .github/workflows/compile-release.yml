@@ -16,7 +16,7 @@ jobs:
         run: |
           git checkout --orphan gh-action-result/pdflatex
           git rm -rf .
-          git add Toolkit.pdf
+          git add ms.pdf
           git -c user.name='GitHub Action' -c user.email='action@github.com' commit -m "Built paper"
 
       - name: Push changes
