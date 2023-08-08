@@ -20,7 +20,6 @@
 %prstper,
 %floatfix,
 ]{revtex4-2}
-\usepackage{showyourwork}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 % Begin!
@@ -284,7 +283,7 @@ which we can invert to approximate $t_p(f)$ for individual harmonics. As explain
 Up to this point, waveforms have been constructed in the source frame, with our Boyer-Lindquist coordinate system centered on the massive black hole. To get the observed waveform in the solar system barycenter (SSB) frame $h_\mathrm{SSB}$, we adopt the same conventions as the \textsc{FEW} model and make use of the transformation provided in \cite{KatzETC21}. In this frame, 
 a generic EMRI system is parametrized by the 12 intrinsic parameters $(\mu, M, a, \vec{a}_2, p_0, e_0, x_0, \Phi_{r0}, \Phi_{\theta 0}, \Phi_{\phi 0})$---where $\vec{a}_2$ is the spin-vector of the smaller body; $p_0$, $e_0$, and $x_0$ are respectively the initial semi-latus rectum, orbital eccentricity, and projection of the orbital inclination; and $\Phi_{r0}$, $\Phi_{\theta 0}$, $\Phi_{\phi 0}$ are respectively the initial radial, polar, and azimuthal phases---and the 5 extrinsic parameters $(d_L, q_S, \phi_S, q_K, \phi_K)$---where $d_L$ is the luminosity distance to the source EMRI, $q_S$ and $\phi_S$ are the polar and azimuthal sky positions of the source, and $q_K$ and $\phi_K$ are the polar and azimuthal angles defining the orientation of the massive black hole's axis of rotation. In our simplified quasi-circular setup, five of the intrinsic parameters are constrained to the values $\vec{a}_2 = 0$, $e_0 = 0$, $x_0 = 1$, $\Phi_{r0} = \Phi_{\theta 0} = 0$, while two of the remaining free parameters are given by $\Phi_{\phi 0} = \Phi(0)$ and $p_0 = r_0$.
 
-These extrinsic parameters are related to Boyer-Lindquist $(r,\theta, \phi)$ via
+The extrinsic parameters are related to Boyer-Lindquist $(r,\theta, \phi)$ via
 \begin{subequations}
     \begin{align}
         r &= d_L,
@@ -335,12 +334,12 @@ The Jacobian $\partial_{\mathcal{E}}\hat{\Omega}$ is analytically obtained from 
 In this form, the equations of motion no longer depend on the masses of the binary, just the dimensionless orbital frequency and dimensionless Kerr spin parameter.
 Therefore, we can pre-compute the rescaled trajectories $\check{t}(\hat{\Omega}; \hat{a})$ and $\check{\Phi}(\hat{\Omega}; \hat{a})$ and store them on a numerical grid spanning the domain of $\hat{a}$ and $\hat{\Omega}$. This allows us to construct bicubic spline interpolants to represent the trajectories. We can then rapidly evaluate the numerical interpolants to get any quasi-circular inspiral within our domain. 
 
-For this work, we set the boundaries of our grid at $a \in [-a_\mathrm{max}, +a_\mathrm{max}]$ and $\Omega \in [\Omega_\mathrm{ISCO}, \Omega_\mathrm{min}]$ with $a_\mathrm{max} = 0.9999$ and $\Omega_\mathrm{min} = 2\times 10^{-3}$ (which corresponds to $r_0 \approx 50 M$). This domain is plotted in Fig.~\ref{fig:domain}, highlighting the particularly strong dependence of the lower frequency boundary $\Omega=\Omega_\mathrm{ISCO}$ on the black hole spin, which presents a challenge when sampling this space. Furthermore, as shown in Figure \ref{fig:temp}, $\check{t}$ and $\check{\Phi}$ accumulate quickly as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$. Therefore, a simple uniform sampling in $\hat{a}$ and $\Omega-\Omega_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
+For this work, we set the boundaries of our grid at $\hat{a} \in [-\hat{a}_\mathrm{max}, +\hat{a}_\mathrm{max}]$ and $\hat{\Omega} \in [\hat{\Omega}_\mathrm{min}, \hat{\Omega}_\mathrm{ISCO}]$ with $\hat{a}_\mathrm{max} = 0.9999$ and $\hat{\Omega}_\mathrm{min} = 2\times 10^{-3}$ (which corresponds to $r_0 \approx 50 M$). This domain is plotted in Fig.~\ref{fig:domain}, highlighting the particularly strong dependence of the lower frequency boundary $\hat{\Omega}=\hat{\Omega}_\mathrm{ISCO}$ on the black hole spin, which presents a challenge when sampling this space. Furthermore, as shown in Figure \ref{fig:temp}, $\check{t}$ and $\check{\Phi}$ accumulate quickly as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$. Therefore, a simple uniform sampling in $\hat{a}$ and $\hat{\Omega}-\hat{\Omega}_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.95\columnwidth]{figures/domain_sampling.png}
-    \caption{Caption}
+    \includegraphics[width=0.95\columnwidth]{figures/domain_sampling.pdf}
+    \caption{A $32\times 64$ grid in $(\beta, \alpha)$ mapped to the $(\hat{a}, \hat{\Omega})$ domain. Each dot represents a sampled point in the parameter space. These points are equally-spaced in $\alpha$ and in $\beta$, but cluster around $\hat{\Omega} = \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} = \hat{a}_\mathrm{max}$. The shading of each point reflects the relative density of points in the $(\hat{a}, \hat{\Omega})$ domain.}
     \label{fig:domain}
 \end{figure}
 
