@@ -1,4 +1,4 @@
-# https://github.com/merkez/latex-on-ci-cd
+# From the toolkit repository
 name: Compile Latex and Release PDF  
 on: [push] 
 jobs:
@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
@@ -18,7 +18,7 @@ jobs:
           git rm -rf .
           git add Toolkit.pdf
           git -c user.name='GitHub Action' -c user.email='action@github.com' commit -m "Built paper"
-          
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
