@@ -54,20 +54,20 @@ Extreme-mass-ratio inspirals (EMRIs) are binaries composed of a compact object w
 Due to their small mass ratios $\epsilon = \mu/M \ll 1$, EMRIs are naturally modeled by black hole perturbation theory and the self-force formalism \cite{PounWard20}. Within this framework, the small body is treated as a perturbation to a background Kerr spacetime. The inspiral of the small body is then driven by a \emph{gravitational self-force} (GSF), which arises from the small body interacting with its own perturbation of the spacetime metric. The metric perturbations and the GSF are constructed perturbatively, order by order in $\epsilon$, to derive the dynamics and resulting gravitational wave emission of the binary. 
 
 We can understand the relative impact of these self-forces on EMRI gravitational waveforms by expanding the phasing of the EMRI gravitational waveform $\Phi_\mathrm{GW}$ in powers of $\epsilon$ via a two-timescale analysis \cite{HindFlan08},
-\begin{align}
+\begin{align} \label{eqn:twotimescale}
 \Phi_\mathrm{GW} = \frac{1}{\epsilon} \left[ \Phi_\mathrm{0PA} + \epsilon^{1/2} \Phi_\mathrm{res} + \epsilon \Phi_\mathrm{1PA} + O(\epsilon^2)\right].
 \end{align}
 The leading-order \emph{adiabatic} term\footnote{This term is also referred to as the post-0 adiabatic or 0PA term to remain consistent with the naming conventions of the sub-leading terms (e.g., $\Phi_\mathrm{1PA}$).} $\Phi_\mathrm{0PA}$ only depends on the time-averaged \emph{dissipative} first-order GSF, which drives the dissipation of energy and angular momentum from the system. The sub-leading post-1 adiabatic (1PA) piece $\Phi_\mathrm{1PA}$ depends on the remaining contributions from the first-order GSF and the time-averaged components of the second-order GSF. The half-order correction $\Phi_\mathrm{res}$ arises due to the presence of self-forced $r\theta$-resonances experienced by EMRIs undergoing eccentric and inclined inspirals \cite{FlanHind12}. EMRI gravitational models must, therefore, include the $\Phi_\mathrm{0PA}$, $\Phi_\mathrm{res}$, and $\Phi_\mathrm{1PA}$ effects in order to maintain sub-radian phase accuracy and enable the full scientific potential of future mHz gravitational wave observatories. 
 
-Nonetheless purely adiabatic models---which only include $\Phi_\mathrm{0PA}$ in the gravitational wave phasing---may be suitable for detecting (but not characterizing) EMRI signals and are invaluable tools for developing data analysis pipelines for EMRI search and parametrization. They capture almost all of the phasing information and relativistic behavior of EMRI signals, making them powerful probes of astrophysical parameter space. The theoretical foundation and numerical calculation of adiabatic waveforms is also well understood, and has been performed for the most generic, eccentric, precessing EMRIs \cite{HughETC21}.
+Nonetheless purely adiabatic models---which only include $\Phi_\mathrm{0PA}$ in the gravitational wave phasing---may be suitable for detecting (but not characterizing) EMRI signals and are invaluable tools for developing data analysis pipelines for EMRI search and parametrization. They capture almost all of the phasing information and relativistic behavior of EMRI signals, making them powerful probes of astrophysical parameter space. The theoretical foundation and numerical calculation of adiabatic waveforms is also well understood, and has been performed for eccentric, precessing EMRIs \cite{HughETC21}.
 
 In practice, however, it is challenging to optimize adiabatic EMRI waveform calculations in order to make them efficient and accessible, so that they can be incorporated in large scale samplings of parameter space. Currently, only one open-source tool exists for producing adiabatic EMRI waveforms: the Fast EMRI Waveforms (FEW) Python package \cite{ChuaGallVall19, ChuaETC20, KatzETC20, KatzETC21}. While this tool is the gold standard for EMRI waveform models, particularly due to its ability to leverage GPUs, it is currently restricted to eccentric binaries with non-rotating black holes. Since we expect almost all astrophysical EMRIs to possess a rotating massive black hole, this model misses a crucial area of parameter space.
 
-Therefore we introduce \texttt{bhpwave} [RTD link?] an open-source Python-based waveform generator that models the adiabatic dynamics and gravitational wave signals produced by a small body undergoing a quasi-circular\footnote{Quasi-circular refers to the fact that the particle is inspiraling so its motion is not circular, but at any moment of time its motion is tangent to a circular geodesic as described in Sec.~\ref{sec:adiabatic}. This is a consequence of the fact that in the adiabatic limit, circular orbits remain circular \cite{KennOri96, Kenn98}.} (non-eccentric) inspiral into a \emph{rotating} massive black hole. This code can model any binary with an initial orbital separation of $r_0 \leq 50 M$ and a massive black hole spin in the range $|a| \leq 0.995 M$. (See Sec.~\ref{sec:adiabatic} for exact definitions of $a$ and $r_0$.) Furthermore, the model supports any mass-ratio, though adiabatic waveform models are most relevant for $\epsilon \lesssim 10^{-4}$. By leveraging parallel computations across CPUs, \texttt{bhpwave} can evaluate years-long waveforms in milliseconds. Even on a standard laptop, waveform evaluations still complete within a few hundred milliseconds to a couple seconds.
+Therefore we introduce \texttt{bhpwave} [RTD link?] an open-source Python-based waveform generator that models the adiabatic dynamics and gravitational wave signals produced by a small body undergoing a quasi-circular\footnote{These inspirals are referred to as ``quasi-circular," because at any moment of time its motion is tangent to a circular geodesic as described in Sec.~\ref{sec:adiabatic}. This is a consequence of the fact that in the adiabatic limit, circular orbits remain circular, i.e., $e(t) = O(\epsilon)$ \cite{KennOri96, Kenn98}.} (non-eccentric) inspiral into a \emph{rotating} massive black hole. This code can model any binary with an initial orbital separation of $r_0 \leq 50 M$ and a massive black hole spin in the range $|a| \leq 0.995 M$. (See Sec.~\ref{sec:adiabatic} for exact definitions of $a$ and $r_0$.) Furthermore, the model supports any mass-ratio, though adiabatic waveform models are most relevant for $\epsilon \lesssim 10^{-4}$. By leveraging parallel computations across CPUs, \texttt{bhpwave} can evaluate years-long waveforms in milliseconds. Even on a standard laptop, waveform evaluations still complete within a few hundred milliseconds to a couple seconds.
 
 A notable limitation of \texttt{bhpwave} is that it currently neglects the effects of eccentricity and precession.\footnote{In a frame where the massive black hole's angular momentum is held fixed, precession is instead described in terms of the inclination of the small body relative to the equatorial plane of the more massive black hole.} Nonetheless, while most observed EMRIs are expected to be highly eccentric \cite{GairETC04},  there are possible formation channels driven by accretion flow that circularize EMRI dynamics and align the orbital angular momentum with the massive black hole's spin \cite{PanLyuYang21}. Thus, \texttt{bhpwave} is applicable to these so-called ``wet-formation" EMRIs. 
 
-Additionally, \texttt{bhpwave} does not provide the first adiabatic calculation of quasi-circular inspirals. These systems have long been studied in the literature \cite{Detw78, KennOri96, FinnThor00, Hugh00b, GralHughWarb16}. However, as aforementioned, it is challenging to implement an adiabatic model that is efficient, reliable, and accessible. Even when neglecting eccentricity, the inclusion of massive black hole spin presents a number of challenges that are less pronounced for binaries with non-spinning bodies, such as the larger range of radial separations accessible to spinning systems, the faster frequency evolution for more deeply bound orbits, and the higher mode content needed for modeling rapidly-rotating systems. By building upon the theoretical foundations described in the literature, our aim for \texttt{bhpwave} is to provide an efficient and accessible model that fills in this area of parameter space and provides an important stepping stone for developing more advanced models that incorporate all possible orbital effects.
+Additionally, \texttt{bhpwave} does not provide the first adiabatic calculation of quasi-circular inspirals. These systems have long been studied in the literature \cite{Detw78, KennOri96, FinnThor00, Hugh00b, GralHughWarb16}. However, as aforementioned, it is challenging to implement an adiabatic model that is efficient, reliable, and accessible. Even when neglecting eccentricity, the inclusion of massive black hole spin presents a number of challenges that are less pronounced for binaries with non-spinning bodies, such as the larger range of radial separations accessible to spinning binaries, the faster frequency evolution for more deeply bound orbits, and the higher mode content needed for modeling rapidly-rotating systems. By building upon the theoretical foundations described in the literature, our aim for \texttt{bhpwave} is to provide an efficient and accessible model that fills in this area of parameter space and provides an important stepping stone for developing more advanced models that incorporate all possible orbital effects.
 
 To encourage the continued development of open-source adiabatic EMRI models, this paper outlines the theoretical and numerical foundations underpinning \texttt{bhpwave}. In Sec.~\ref{sec:adiabatic} we summarize the quasi-circular limit of the adiabatic approximation within the context of black hole perturbation theory to establish methods and notation. In Sec.~\ref{sec:bhpwave} we outline how \texttt{bhpwave} implements the quasi-circular adiabatic model, primarily through its three modules: \texttt{bhpwave.trajectory}, \texttt{bhpwave.harmonics}, and \texttt{bhpwave.waveform}. In Sec.~\ref{sec:numerical} we describe both the numerical routines used to generate the adiabatic data for \texttt{bhpwave} and the algorithms employed by \texttt{bhpwave} to generate quasi-circular inspirals, waveform harmonics, and gravitational signals. Additionally, we provide validation tests and model comparisons to verify the accuracy of \texttt{bhpwave}. To demonstrate the utility of \texttt{bhpwave}, in Sec.~\ref{sec:errors}, we use a toy problem test the impact of modeling errors on parameter biases for EMRI data analysis. Finally, we discuss further applications and possible extensions of \texttt{bhpwave} in Sec.~\ref{sec:conclusion}. For this paper we use the metric signature $(-+++)$, the sign conventions, where applicable, of \cite{MisnThorWhee73}, and units such that $c=G=1$.
 
@@ -88,7 +88,7 @@ Consider a small body with mass $\mu$ orbiting in a Kerr spacetime with metric $
 \end{multline}
 where $a$ is the Kerr spin parameter, $M$ is the Kerr mass parameter, $\Delta = r^2 - 2Mr + a^2$, and $\Sigma = r^2+a^2\cos^2\theta$.
 
-The mass $\mu$ follows a geodesic $z_p^\mu \doteq (t_p, r_p, \theta_p, \phi_p)$ that maintains a constant Boyer-Lindquist radius $r_p = r_0$ and is restricted to the equatorial plane $\theta_p = \pi/2$ (with respect to the angular momentum of the Kerr black hole). Due to the Killing symmetries of Kerr spacetime, this motion possesses three constants of motion: the orbital energy $u_t = - \mathcal{E}$, the $z$-component of the orbital angular momentum $u_\phi = \mathcal{L}_z$, and the Carter constant $\mathcal{Q} = Q_{\mu\nu} u^\mu u^\nu$, which are related to $a$ and $r_0$ by
+The mass $\mu$ follows a geodesic $z_p^\mu \doteq (t_p, r_p, \theta_p, \phi_p)$ that maintains a constant Boyer-Lindquist radius $r_p = r_0$ and is restricted to the equatorial plane $\theta_p = \pi/2$ (with respect to the angular momentum of the Kerr black hole). Due to the Killing symmetries of Kerr spacetime, this motion possesses three constants of motion: the orbital energy $u_t = - \mathcal{E}$, the $z$-component of the orbital angular momentum $u_\phi = \mathcal{L}_z$, and the Carter constant $\mathcal{Q} = Q_{\mu\nu} u^\mu u^\nu$ [citation], which are related to $a$ and $r_0$ by
 \begin{subequations} \label{eqn:En}
 \begin{align}
     \mathcal{E} &= \frac{1 - 2 v^2 \pm \hat{a} v^3}{\sqrt{1-3v^2\pm 2\hat{a}v^3}},
@@ -160,7 +160,7 @@ where
 \begin{align} \label{eqn:XfromR}
     X_{-2\ell m}(r) \sum_{j=\ell_\mathrm{min}}^\infty b_{-2jm}^\ell(\gamma)R_{-2jm}(r).
 \end{align}
-Furthermore, the spin-weighted spherical harmonics form a complete and orthonormal set of basis functions of the unit sphere (for the same value of spin-weight),
+Furthermore, the spin-weighted spherical harmonics form a complete and orthonormal set on basis functions of the unit sphere (for the same value of spin-weight),
 \begin{align}
     \int Y_{s\ell m} \bar{Y}_{s\ell'm'} d\Omega = \delta_{l l'} \delta_{m m'}.
 \end{align}
@@ -199,9 +199,9 @@ The amplitudes $Z^\mathcal{H/I}_{-2jm}$ are often referred to as \emph{Teukolsky
 \begin{align}
     Z^\mathrm{H/I}_{-2jm} \rightarrow X^\mathrm{H/I}_{-2\ell m} = \sum_{j=\ell_\mathrm{min}}^\infty b^\ell_{-2jm}(\gamma) Z^\mathrm{H/I}_{-2jm}.
 \end{align}
-As a final note, because $Z^\mathrm{H/I}_{-2jm}$ and  $X^\mathrm{H/I}_{-2\ell m}$ depend on the source motion, we can parametrize both amplitudes in terms of the orbital constants, e.g., $X^\mathcal{H/I}_{-2\ell m}= {X}^\mathcal{H/I}_{-2ell m}(\Omega_p; a)$.
+As a final note, because $Z^\mathrm{H/I}_{-2jm}$ and  $X^\mathrm{H/I}_{-2\ell m}$ depend on the source motion, we can parametrize both amplitudes in terms of the orbital constants, e.g., $X^\mathcal{H/I}_{-2\ell m}= {X}^\mathcal{H/I}_{-2\ell m}(\Omega_p; a)$.
 
-Upon obtaining $\psi_4$, we can then calculate the flux of energy that this radiative field carries away to infinity $\dot{E}^\mathcal{I}$ and the flux radiated down the black hole horizon $\dot{E}^\mathcal{H}$ \cite{TeukPres74}, 
+Upon obtaining $\psi_4$, we can then calculate the flux of energy that $\psi_4$ radiates away to infinity $\dot{E}^\mathcal{I}$ and the flux radiated down the black hole horizon $\dot{E}^\mathcal{H}$ \cite{TeukPres74}, 
 \begin{subequations} \label{eqn:fluxes}
 \begin{align}
     \dot{E}^\mathcal{I} &= \frac{1}{4\pi} \sum_{jm} \alpha_{jm}^\infty {|Z^\mathcal{I}_{-2jm}|^2},
@@ -237,20 +237,20 @@ The angular momentum fluxes are then related to the energy fluxes by $\dot{L}_z^
 
 Due to gravitational {radiation-reaction}, the small body does not remain on a circular geodesic. The binary \emph{radiates} gravitational waves and the small body \emph{reacts} to the radiative losses of energy and angular momentum by undergoing a quasi-circular inspiral into the rotating massive black hole. We can parametrize this motion in terms of the time-evolving orbital energy ${E}(t)$ and orbital phase $\Phi(t)$ of the inspiraling body, which at leading order is given by the equations of motion \cite{PounWard20,HughETC21},
 \begin{align} \label{eqn:eom}
-    \frac{d {E}}{dt} &= \epsilon \mathcal{F}_t + O(\epsilon^2),
+    \frac{d {E}}{dt} &= \epsilon \mathcal{F}_E + O(\epsilon^2),
     &
     \frac{d\Phi}{dt} &= \Omega + O(\epsilon).
 \end{align}
 Because $\dot{E} \sim \epsilon$, the orbital energy evolves gradually and the evolution can be understood in terms of the \emph{osculating geodesics} method \cite{GairETC11}. At any time $t_0$, the motion is approximately tangent to a geodesic with energy $E(t_0) \approx \mathcal{E}$ and frequency $\Omega(t_0) \approx \Omega_p$. The small body then evolves from geodesic to geodesic based on its gravitational wave emission until the body approaches the ISCO, at which point the approximation breaks down and we end the evolution.
 
-In effect, at leading order we can express the orbital frequency $\Omega$ in terms of the orbital energy ${E}$ using Eqs.~\eqref{eqn:En} and \eqref{eqn:OmegaOfR}, but with $\mathcal{E}$ and $\Omega_p$ replaced by $E$ and $\Omega$, respectively. Furthermore, the forcing term $\mathcal{F}_t$ is constructed using flux-balance arguments \cite{Mino03, Galt82, QuinWald99}: the loss of orbital energy is balanced by the energy flux due to gravitational wave radiation produced by a point-particle on a circular geodesic $\dot{E}^\mathrm{GW}$, leading to the relation $\epsilon \mathcal{F}_t = - \dot{E}^\mathrm{GW}$. 
+In effect, at leading order we can express the orbital frequency $\Omega$ in terms of the orbital energy ${E}$ using Eqs.~\eqref{eqn:En} and \eqref{eqn:OmegaOfR}, but with $\mathcal{E}$ and $\Omega_p$ replaced by $E$ and $\Omega$, respectively. Furthermore, the forcing term $\mathcal{F}_E$ is constructed using flux-balance arguments \cite{Mino03, Galt82, QuinWald99}: for a point-particle on a circular geodesic the loss of orbital energy is balanced by the gravitational wave energy flux $\dot{E}^\mathrm{GW}$, leading to the relation $\epsilon \mathcal{F}_E = - \dot{E}^\mathrm{GW}$. 
 
-As seen from Eq.~\eqref{eqn:eom}, the time it takes the system to undergo this inspiral scales with the radiation reaction timescale $T_\mathrm{insp} \sim T_\mathrm{rr} = M \epsilon^{-1}$. Similarly, the total accumulated phase scales like $\Delta\Phi_\mathrm{insp} \sim \epsilon^{-1}$.
+As seen from Eq.~\eqref{eqn:eom}, the time it takes the system to undergo this inspiral scales with the radiation reaction timescale $T_\mathrm{insp} \sim T_\mathrm{rr} = M \epsilon^{-1}$. Similarly, the total accumulated phase scales like $\Delta\Phi_\mathrm{insp} \sim \epsilon^{-1}$, thus giving the leading-order phase contribution to the gravitational wave signal, as described in Eq.~\eqref{eqn:twotimescale}.
 
 \subsection{Time domain adiabatic waveform}
 \label{sec:waveform}
 
-After determining the adiabatic inspiral of the smaller body, we generalize \eqref{eqn:psi4LModes}---our geodesic expression for $\psi_4$---by once again leveraging the fact that at any moment of time the motion is approximately tangent to a geodesic. Consequently, the field amplitudes slowly evolve with frequency and time $X^\mathcal{H/I}_{-2\ell m}(\Omega_p; a) \rightarrow X^\mathcal{H/I}_{-2\ell m}(\Omega(t); a)$, while the field's phase rapidly accumulates in proportion to the orbital phase $\Omega_p t \rightarrow \Phi(t)$. As a result, the adiabatic waveform $h = h_+ - i h_\times$ takes the form
+After determining the adiabatic inspiral of the smaller body, we generalize \eqref{eqn:psi4LModes}---our geodesic expression for $\psi_4$---by once again leveraging the fact that at any moment of time the motion is approximately tangent to a geodesic. Consequently, the field amplitudes are promoted from constants to quantities that slowly evolve with frequency and time $X^\mathcal{H/I}_{-2\ell m}(\Omega_p; a) \rightarrow X^\mathcal{H/I}_{-2\ell m}(\Omega(t); a)$, while the field's phase rapidly accumulates in proportion to the orbital phase $\Omega_p t \rightarrow \Phi(t)$. As a result, the adiabatic waveform $h = h_+ - i h_\times$ takes the form
 \begin{align} \label{eqn:adiabaticWaveform}
     h(u,r,\theta,\phi) = \frac{\mu}{r}\sum_{\ell m} B_{\ell m}(u) Y_{-2\ell m}(\theta, \phi) e^{-im\Phi(u)},
 \end{align}
@@ -263,7 +263,7 @@ For later convenience we introduce $A_{\ell m} = |B_{\ell m}|$, the magnitude of
 \subsection{Frequency domain waveforms}
 
 The amplitude and phase decomposition of \eqref{eqn:adiabaticWaveform} makes it particularly straightforward to represent our waveforms in the frequency domain via the stationary phase approximation \cite{HughETC21},
-\begin{align}
+\begin{align} \label{eqn:fourierH}
     \tilde{h}(f) &= \int_{-\infty}^\infty h(t) e^{2\pi i f t} dt,
     \\ \notag
     & \approx \frac{\mu}{r}\sum_{\ell m} \tilde{B}_{\ell m}(f) Y_{-2\ell m}(\theta, \phi) e^{i[2\pi f t_p(f)- m\Phi(t_p(f))]},
@@ -276,12 +276,12 @@ and $t_p(f)$ refers to the times at which the binary emits gravitational waves w
 \begin{align} \label{eqn:fourierPhase}
     2\pi f \approx m \dot{\Phi}(t) = m \Omega(t),
 \end{align}
-which we can invert to approximate $t_p(f)$ for individual harmonics. As explained in Appendix \ref{app:fourierPhase}, both \eqref{eqn:fourierAmplitude} and \eqref{eqn:fourierPhase} neglect terms related to $\dot{\psi}_{\ell m}$ and $\ddot{\psi}_{\ell m}$, which introduces an $O(\epsilon)$ error to the phase and an $O(\epsilon^{1/2})$ error to the amplitude. Since the amplitudes scale as $\tilde{B}_{\ell m}(f) \sim 1/\sqrt{\epsilon}$, it is safe to neglect these terms for small mass-ratios.
+which we can invert to approximate $t_p(f)$ for individual harmonics. Both \eqref{eqn:fourierAmplitude} and \eqref{eqn:fourierPhase} neglect terms related to $\dot{\psi}_{\ell m}$ and $\ddot{\psi}_{\ell m}$, which introduces an $O(\epsilon)$ error to the phase and an $O(\epsilon^{1/2})$ error to the amplitude. (See Appendix \ref{app:fourierPhase} for further details.) Since the amplitudes scale as $\tilde{B}_{\ell m}(f) \sim 1/\sqrt{\epsilon}$, it is safe to neglect these terms for small mass-ratios.
 
 \section{Solar system barycenter waveforms}
 
 Up to this point, waveforms have been constructed in the source frame, with our Boyer-Lindquist coordinate system centered on the massive black hole. To get the observed waveform in the solar system barycenter (SSB) frame $h_\mathrm{SSB}$, we adopt the same conventions as the \textsc{FEW} model and make use of the transformation provided in \cite{KatzETC21}. In this frame, 
-a generic EMRI system is parametrized by the 12 intrinsic parameters $(\mu, M, a, \vec{a}_2, p_0, e_0, x_0, \Phi_{r0}, \Phi_{\theta 0}, \Phi_{\phi 0})$---where $\vec{a}_2$ is the spin-vector of the smaller body; $p_0$, $e_0$, and $x_0$ are respectively the initial semi-latus rectum, orbital eccentricity, and projection of the orbital inclination; and $\Phi_{r0}$, $\Phi_{\theta 0}$, $\Phi_{\phi 0}$ are respectively the initial radial, polar, and azimuthal phases---and the 5 extrinsic parameters $(d_L, q_S, \phi_S, q_K, \phi_K)$---where $d_L$ is the luminosity distance to the source EMRI, $q_S$ and $\phi_S$ are the polar and azimuthal sky positions of the source, and $q_K$ and $\phi_K$ are the polar and azimuthal angles defining the orientation of the massive black hole's axis of rotation. In our simplified quasi-circular setup, five of the intrinsic parameters are constrained to the values $\vec{a}_2 = 0$, $e_0 = 0$, $x_0 = 1$, $\Phi_{r0} = \Phi_{\theta 0} = 0$, while two of the remaining free parameters are given by $\Phi_{\phi 0} = \Phi(0)$ and $p_0 = r_0$.
+a generic EMRI system is parametrized by 12 intrinsic parameters $(\mu, M, a, \vec{a}_2, p_0, e_0, x_0, \Phi_{r0}, \Phi_{\theta 0}, \Phi_{\phi 0})$---where $\vec{a}_2$ is the spin-vector of the smaller body; $p_0$, $e_0$, and $x_0$ are respectively the initial semi-latus rectum, orbital eccentricity, and projection of the orbital inclination; and $\Phi_{r0}$, $\Phi_{\theta 0}$, $\Phi_{\phi 0}$ are respectively the initial radial, polar, and azimuthal phases---and by 5 extrinsic parameters $(d_L, q_S, \phi_S, q_K, \phi_K)$---where $d_L$ is the luminosity distance to the source EMRI, $q_S$ and $\phi_S$ are the polar and azimuthal sky positions of the source, and $q_K$ and $\phi_K$ are the polar and azimuthal angles defining the orientation of the massive black hole's axis of rotation. In our simplified quasi-circular setup, five of the intrinsic parameters are constrained to the values $\vec{a}_2 = 0$, $e_0 = 0$, $x_0 = 1$, $\Phi_{r0} = \Phi_{\theta 0} = 0$, while two of the remaining free parameters are given by $\Phi_{\phi 0} = \Phi(0)$ and $p_0 = r_0$.
 
 The extrinsic parameters are related to Boyer-Lindquist $(r,\theta, \phi)$ via
 \begin{subequations}
@@ -309,7 +309,7 @@ where $D_\psi$ is given by
 \section{Numerical methods}
 \label{sec:numerical}
 
-\subsection{Fluxes and inspiral}
+\subsection{Equations of motion and the numerical domain}
 
 To simplify the calculation of our inspirals, we introduce the dimensionless and rescaled orbital quantities
 \begin{align}
@@ -323,27 +323,38 @@ To simplify the calculation of our inspirals, we introduce the dimensionless and
 \end{align} 
 A hat represents a quantity that is made dimensionless, while a check represents a quantity that is dimensionless and scaled by the mass ratio. We then reparametrize the equations of motion in terms of the (dimensionless) orbital frequency, yielding
 \begin{subequations}
-\begin{align}
-    \frac{d\check{t}}{d\hat{\Omega}} &= \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_t(\hat{\Omega}; \hat{a})\right]^{-1},
-    \\
-    \frac{d\check{\Phi}}{d\hat{\Omega}} &= \hat{\Omega} \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_t(\hat{\Omega}; \hat{a})\right]^{-1}.
+\begin{align} \label{eqn:dtdOmega}
+    \frac{d\check{t}}{d\hat{\Omega}} &= \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right]^{-1},
+    \\ \label{eqn:dPhidOmega}
+    \frac{d\check{\Phi}}{d\hat{\Omega}} &= \hat{\Omega} \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right]^{-1}.
 \end{align} 
 \end{subequations}
-The Jacobian $\partial_{\mathcal{E}}\hat{\Omega}$ is analytically obtained from \eqref{eqn:En} and \eqref{eqn:OmegaOfR}, while we construct ${\mathcal{F}}_t$ numerically via \eqref{eqn:fluxes}.
+The Jacobian $\partial_{\mathcal{E}}\hat{\Omega}$ is analytically obtained from \eqref{eqn:En} and \eqref{eqn:OmegaOfR}, while we construct ${\mathcal{F}}_E$ numerically via \eqref{eqn:fluxes}.
 
-In this form, the equations of motion no longer depend on the masses of the binary, just the dimensionless orbital frequency and dimensionless Kerr spin parameter.
-Therefore, we can pre-compute the rescaled trajectories $\check{t}(\hat{\Omega}; \hat{a})$ and $\check{\Phi}(\hat{\Omega}; \hat{a})$ and store them on a numerical grid spanning the domain of $\hat{a}$ and $\hat{\Omega}$. This allows us to construct bicubic spline interpolants to represent the trajectories. We can then rapidly evaluate the numerical interpolants to get any quasi-circular inspiral within our domain. 
+In this form, the equations of motion no longer depend on the masses of the binary, just the dimensionless orbital frequency and dimensionless Kerr spin parameter. By parametrizing in terms of frequency, we decouple the evolution in time and phase, leading to solutions $\check{t}(\hat{\Omega}; \hat{a})$ and $\check{\Phi}(\hat{\Omega}; \hat{a})$ that can be easily used to construct frequency domain waveforms via Eqs.~\eqref{eqn:fourierH}-\eqref{eqn:fourierPhase}. Constructing time-domain waveforms then requires either inverting (i.e., $\check{t}(\hat{\Omega}; \hat{a}) \rightarrow \hat{\Omega}(\check{t}; \hat{a})$) or solving the inverse of \eqref{eqn:dtdOmega} (i.e.,  $d\hat{\Omega}/d\check{t} = \left[d\check{t}/d\hat{\Omega} \right]^{-1}$). In this work, we perform the latter.
 
-For this work, we set the boundaries of our grid at $\hat{a} \in [-\hat{a}_\mathrm{max}, +\hat{a}_\mathrm{max}]$ and $\hat{\Omega} \in [\hat{\Omega}_\mathrm{min}, \hat{\Omega}_\mathrm{ISCO}]$ with $\hat{a}_\mathrm{max} = 0.9999$ and $\hat{\Omega}_\mathrm{min} = 2\times 10^{-3}$ (which corresponds to $r_0 \approx 50 M$). This domain is plotted in Fig.~\ref{fig:domain}, highlighting the particularly strong dependence of the lower frequency boundary $\hat{\Omega}=\hat{\Omega}_\mathrm{ISCO}$ on the black hole spin, which presents a challenge when sampling this space. Furthermore, as shown in Figure \ref{fig:temp}, $\check{t}$ and $\check{\Phi}$ accumulate quickly as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$. Therefore, a simple uniform sampling in $\hat{a}$ and $\hat{\Omega}-\hat{\Omega}_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
+Therefore, we first interpolate the data $\mathcal{F}_E(\hat{\Omega}; \hat{a})$, and then solve the equations of motion for the rescaled trajectories $\check{t}(\hat{\Omega}; \hat{a})$, $\hat{\Omega}(\check{t}; \hat{a})$, and $\check{\Phi}(\hat{\Omega}; \hat{a})$. All of this data can be precomputed and stored on a numerical grid spanning the domains of $(\hat{a}, \hat{\Omega})$ or $(\hat{a}, \check{t})$. From these grids, we can construct bicubic spline interpolants to represent the trajectories, which can be rapidly evaluated to get any quasi-circular inspiral within our domain. For this work, we set the boundaries of our grid at $\hat{a} \in [-\hat{a}_\mathrm{max}, +\hat{a}_\mathrm{max}]$ and $\hat{\Omega} \in [\hat{\Omega}_\mathrm{min}, \hat{\Omega}_\mathrm{ISCO}]$ with $\hat{a}_\mathrm{max} = 0.9999$ and $\hat{\Omega}_\mathrm{min} = 2\times 10^{-3}$ (which corresponds to $r_0 \approx 50 M$). This domain is plotted in Fig.~\ref{fig:domain}.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.95\columnwidth]{figures/domain_sampling.pdf}
-    \caption{A $32\times 64$ grid in $(\beta, \alpha)$ mapped to the $(\hat{a}, \hat{\Omega})$ domain. Each dot represents a sampled point in the parameter space. These points are equally-spaced in $\alpha$ and in $\beta$, but cluster around $\hat{\Omega} = \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} = \hat{a}_\mathrm{max}$. The shading of each point reflects the relative density of points in the $(\hat{a}, \hat{\Omega})$ domain.}
+    \caption{A $32\times 64$ grid in $(\beta, \alpha)$ mapped to the $(\hat{a}, \hat{\Omega})$ domain. Each dot represents a sampled point in the parameter space. These points are equally-spaced in $\alpha$ and in $\beta$, but cluster around $\hat{\Omega} = \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} = \hat{a}_\mathrm{max}$. The shading of each point reflects the relative density of points in the $(\hat{a}, \hat{\Omega})$ domain, while the dashed lines represent the domain boundaries.}
     \label{fig:domain}
 \end{figure}
 
-Therefore, we aim to construct a parametrization that mitigates the errors in our numerical interpolations of the inspiral trajectories. We first ameliorate the rapid growth in time and phase by rescaling $\check{t}$ and $\check{\Phi}$ by their leading post-Newtonian behavior, as shown in Fig.~\ref{fig:tempa}. Next, motivated by post-Newtonian and near-extremal expansions of the orbital quantities, we introduce the parameters $x = \hat{\Omega}^{1/3}$ and $\chi = (1 - \hat{a})^{1/3}$, leading to the improved behavior in Fig.~\ref{fig:tempb}. In Fig.~\ref{fig:tempc} we plot the variation in $\check{t}$ and $\check{\Phi}$ with respect to the final parameters,
+\subsection{Interpolated fluxes and trajectories}
+
+There are two main challenges to constructing $\mathcal{F}_E(\hat{\Omega}; \hat{a})$ via numerical interpolation: (1) the lower frequency boundary $\hat{\Omega}=\hat{\Omega}_\mathrm{ISCO}$ has a particularly strong dependence on the black hole spin, as highlighted in Fig.~\ref{fig:domain}; and (2) $\mathcal{F}_E$, $\check{t}$, and $\check{\Phi}$ rapidly accumulate as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$, as shown in Figure \ref{fig:temp}. Consequently, a simple uniform sampling in $\hat{a}$ and $\hat{\Omega}-\hat{\Omega}_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
+
+Therefore, we alter our parametrization in order to mitigate the errors in our numerical interpolations. We first ameliorate the growth in flux, time, and phase by rescaling $\mathcal{F}_E$, $\check{t}$ and $\check{\Phi}$ by their frequency-dependence at leading post-Newtonian order,
+\begin{align}
+    \mathcal{F}_E^N &= \frac{\mathcal{F}_E}{\check{\Omega}^{10/3}},
+    &
+    \check{\Phi}^N &= \frac{\check{\Phi}}{\check{\Omega}^{-5/3}},
+    &, 
+    \check{t}^N &= \frac{\check{t}}{\check{\Omega}^{-8/3}},
+\end{align}
+as shown in Fig.~\ref{fig:tempa}. Next, motivated by post-Newtonian and near-extremal expansions of the orbital quantities, we introduce the parameters $x = \hat{\Omega}^{1/3}$ and $\chi = (1 - \hat{a})^{1/3}$, leading to the improved behavior in Fig.~\ref{fig:tempb}. In Fig.~\ref{fig:tempc} we plot the variation in $\check{t}$ and $\check{\Phi}$ with respect to the final parameters,
 \begin{align} \label{eqn:params}
     \alpha^2 &= \frac{x_\mathrm{ISCO}-x}{x_\mathrm{ISCO}-x_\mathrm{min}},
     &
@@ -351,11 +362,13 @@ Therefore, we aim to construct a parametrization that mitigates the errors in ou
 \end{align}
 where $x_\mathrm{min} = \Omega_\mathrm{min}^{1/3}$, $x_\mathrm{ISCO} = \Omega_\mathrm{ISCO}^{1/3}$, and $\chi_\pm = (1 \pm a_\mathrm{max})^{1/3}$. We square the left-hand side of \eqref{eqn:params} to further smooth out the behavior near the ISCO frequency and maximum spin values.
 
-After choosing this parametrization, we solve for the fluxes $\dot{E}^\mathrm{GW}$ and precompute $\mathcal{F}_t$ on a fixed $129 \times 257$ equally-spaced grid in in $\beta \times \alpha$. These sampling points are mapped to $[a, \Omega]$ domain in Fig.~\ref{fig:domain}. This illustrates the concentration of sampling points towards the ISCO and near-extremal spins. 
+After choosing this parametrization, we solve for the fluxes $\dot{E}^\mathrm{GW}$ and precompute $\mathcal{F}_E$ on a fixed grid in the $(\beta, \alpha)$ domain using 129 equally-spaced samples in $\beta$ and 257 equally-spaced samples in $\alpha$. A downsampling of these points is mapped to the $(\hat{a}, \hat{\Omega})$ domain in Fig.~\ref{fig:domain}. This illustrates the concentration of sampling points towards the ISCO and near-extremal spins. 
 
-For \texttt{bhpwave}, we produced a $129 \times 257$ regularly-spaced grid in $\beta \times \alpha$. These sampling points are mapped to $[a, \Omega]$ domain in Fig.~\ref{fig:domain}. This illustrates the concentration of sampling points towards the ISCO and near-extremal spins. 
+\begin{align}
+    1 - e^{\gamma} = \check{t}^2
+\end{align}
 
-Trajectory data are then precomputed on this grid. This data is compiled into bicubic spline interpolants for $\check{t}$, $\check{\Phi}$, $\check{\Phi}$ when \texttt{bhpwave} is loaded.
+Trajectory data are then precomputed on this grid. This data is compiled into bicubic spline interpolants for $\mathcal{F}_E$, $\check{t}$, and $\check{\Phi}$ when \texttt{bhpwave} is loaded.
 
 \subsection{Mode amplitudes and selection}
 
@@ -363,7 +376,18 @@ Similar to the trajectories, we presample the waveform amplitudes
 
 \subsection{Waveform evaluation}
 
+Time-domain waveforms are constructed 
+
 \subsection{Self-consistent validation tests}
+
+\begin{align}
+    \epsilon_\Omega(\hat{\Omega}_0, a) = \left| 1 -  \hat{\Omega}_0\left[\frac{d\check{t}^I}{d\alpha}\right]\left[\frac{d\check{\Phi}^I}{d{\alpha}} \right]^{-1}\right|,
+\end{align}
+where on the righthand side, all functions are evaluated at $\hat{\Omega}_0$.
+
+\begin{align}
+    \epsilon_t(t_0, a) = \left| 1- \frac{t_0}{\check{t}^I(\alpha(\hat{\Omega}^I(\gamma(t_0))))} \right|.
+\end{align}
 
 \subsection{Model comparison}
 
