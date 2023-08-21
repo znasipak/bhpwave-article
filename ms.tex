@@ -22,6 +22,7 @@
 ]{revtex4-2}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
+\usepackage{subcaption}
 % Begin!
 \begin{document}
 
@@ -342,6 +343,13 @@ Therefore, we first interpolate the data $\mathcal{F}_E(\hat{\Omega}; \hat{a})$,
     \label{fig:domain}
 \end{figure}
 
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/flux_parametrization.pdf}
+    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \label{fig:flux}
+\end{figure*}
+
 \subsection{Interpolated fluxes and trajectories}
 
 There are two main challenges to constructing $\mathcal{F}_E(\hat{\Omega}; \hat{a})$ via numerical interpolation: (1) the lower frequency boundary $\hat{\Omega}=\hat{\Omega}_\mathrm{ISCO}$ has a particularly strong dependence on the black hole spin, as highlighted in Fig.~\ref{fig:domain}; and (2) $\mathcal{F}_E$, $\check{t}$, and $\check{\Phi}$ rapidly accumulate as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$, as shown in Figure \ref{fig:temp}. Consequently, a simple uniform sampling in $\hat{a}$ and $\hat{\Omega}-\hat{\Omega}_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
@@ -354,7 +362,7 @@ Therefore, we alter our parametrization in order to mitigate the errors in our n
     &, 
     \check{t}^N &= \frac{\check{t}}{\check{\Omega}^{-8/3}},
 \end{align}
-as shown in Fig.~\ref{fig:tempa}. Next, motivated by post-Newtonian and near-extremal expansions of the orbital quantities, we introduce the parameters $x = \hat{\Omega}^{1/3}$ and $\chi = (1 - \hat{a})^{1/3}$, leading to the improved behavior in Fig.~\ref{fig:tempb}. In Fig.~\ref{fig:tempc} we plot the variation in $\check{t}$ and $\check{\Phi}$ with respect to the final parameters,
+as shown in the middle plot of Fig.~\ref{fig:flux}. Next, motivated by post-Newtonian and near-extremal expansions of the orbital quantities, we introduce the parameters $x = \hat{\Omega}^{1/3}$ and $\chi = (1 - \hat{a})^{1/3}$, leading to the improved behavior in Fig.~\ref{fig:tempb}. In Fig.~\ref{fig:tempc} we plot the variation in $\check{t}$ and $\check{\Phi}$ with respect to the final parameters,
 \begin{align} \label{eqn:params}
     \alpha^2 &= \frac{x_\mathrm{ISCO}-x}{x_\mathrm{ISCO}-x_\mathrm{min}},
     &
@@ -370,15 +378,7 @@ After choosing this parametrization, we solve for the fluxes $\dot{E}^\mathrm{GW
 
 Trajectory data are then precomputed on this grid. This data is compiled into bicubic spline interpolants for $\mathcal{F}_E$, $\check{t}$, and $\check{\Phi}$ when \texttt{bhpwave} is loaded.
 
-\subsection{Mode amplitudes and selection}
-
-Similar to the trajectories, we presample the waveform amplitudes
-
-\subsection{Waveform evaluation}
-
-Time-domain waveforms are constructed 
-
-\subsection{Self-consistent validation tests}
+\subsection{Numerical accuracy of trajectories}
 
 \begin{align}
     \epsilon_\Omega(\hat{\Omega}_0, a) = \left| 1 -  \hat{\Omega}_0\left[\frac{d\check{t}^I}{d\alpha}\right]\left[\frac{d\check{\Phi}^I}{d{\alpha}} \right]^{-1}\right|,
@@ -388,6 +388,14 @@ where on the righthand side, all functions are evaluated at $\hat{\Omega}_0$.
 \begin{align}
     \epsilon_t(t_0, a) = \left| 1- \frac{t_0}{\check{t}^I(\alpha(\hat{\Omega}^I(\gamma(t_0))))} \right|.
 \end{align}
+
+\subsection{Mode amplitudes and selection}
+
+Similar to the trajectories, we presample the waveform amplitudes
+
+\subsection{Waveform evaluation}
+
+Time-domain waveforms are constructed 
 
 \subsection{Model comparison}
 
