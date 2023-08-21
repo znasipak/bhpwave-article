@@ -55,7 +55,7 @@ for i in range(Nb):
 a_isco = np.linspace(-A_MAX, A_MAX, 5*Nb)
 omega_isco = kerr_isco_frequency(a_isco)
 
-plot_array = np.reshape(spin_omega_samples, (spin_omega_samples.shape[0]*spin_omega_samples.shape[1], 2))
+plot_array = np.reshape(spin_omega_samples, (Na*Nb, 2))
 x = plot_array[:, 0]
 y = plot_array[:, 1]
 xy = np.vstack([x,np.log10(y)])
