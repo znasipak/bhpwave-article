@@ -91,76 +91,35 @@ for file, spin in zip(flux_file_list, flux_spin_list):
     tempData = tempData[tempData[:,0] < 62.]
     testData.append([spin, tempData])
 
-comparisons = []
-comparisons2 = []
-bc = 'E(3)'
-for data in testData:
-    a = data[0]
-    compData = data[1]
-    r_vals = compData[:, 0]
-    flux_vals = compData[:, 1] + compData[:, 2]
-    flux_comparison = np.zeros((r_vals.shape[0]))
-    for i in range(flux_comparison.shape[0]):
-        flux_comparison[i] = scaled_energy_flux(a, r_vals[i], bc=bc)
-    comparisons.append([r_vals, np.abs(1. - flux_comparison/flux_vals)])
-    comparisons2.append([r_vals, np.abs(flux_comparison-flux_vals)])
-
-testData2 = []
-for file, spin in zip(flux_file_list[:3], flux_spin_list[:3]):
-    tempData = np.loadtxt(file)
-    tempData = tempData[tempData[:,0] < 3.5]
-    testData2.append([spin, tempData])
-
-comparisons3 = []
-bc_type= "E(3)"
-for data in testData2:
-    a = data[0]
-    compData = data[1]
-    r_vals = compData[:, 0]
-    flux_vals = compData[:, 1] + compData[:, 2]
-    flux_comparison = np.zeros((r_vals.shape[0]))
-    for i in range(flux_comparison.shape[0]):
-        flux_comparison[i] = scaled_energy_flux(a, r_vals[i], bc = bc_type)
-    comparisons3.append([r_vals, np.abs(1. - flux_comparison/flux_vals)])
-
-mma_values_900=np.loadtxt(pathname + "/../data/mathetamatica_fluxes_a9.dat")
-mma_values_995=np.loadtxt(pathname + "/../data/mathetamatica_fluxes_a995.dat")
-
-comparison_fluxes = []
-bc_type = 'E(3)'
-for vals in mma_values_900:
-    a, r0, flux, flux_error = vals
-    flux_comp = scaled_energy_flux(a, r0, bc = bc_type)
-    comparison_fluxes.append([r0, np.abs(1 - flux/flux_comp)])
-mma_comp_900 = np.array(comparison_fluxes).T
-comparison_fluxes = []
-for vals in mma_values_995:
-    a, r0, flux, flux_error = vals
-    flux_comp = scaled_energy_flux(a, r0, bc = bc_type)
-    comparison_fluxes.append([r0, np.abs(1 - flux/flux_comp)])
-mma_comp_995 = np.array(comparison_fluxes).T
-
+bc_array = ["not-a-knot", "natural"]
 markers = ['.', 'x', '+', 'D', 'o', 'v', 's', '8']
-fig, axs = plt.subplots(1,3, sharey=True)
-fig.set_size_inches(13.5, 4.)
-for i, comparison in enumerate(comparisons):
-    axs[0].plot(comparison[0][::32], comparison[1][::32], markers[i], label="$"+str(flux_spin_list[i])+"$", markersize = 4.5, fillstyle='none')
-axs[0].set_yscale('log')
-axs[0].legend(loc="upper right", ncol=2)
-axs[0].set_xlabel('$r_0/M$')
-axs[0].set_ylabel('$|1 - {\mathcal{F}_E^I}/{\mathcal{F}_E^\mathrm{ext}}|$')
+fig, axs = plt.subplots(len(bc_array), 1, sharex=True)
+fig.set_size_inches(4., 6.5)
 
-for i, comparison in enumerate(comparisons3):
-    axs[1].plot(comparison[0][::16], comparison[1][::16], markers[i][::16], label="$"+str(flux_spin_list[i])+"$", markersize = 4.5, fillstyle='none')
-axs[1].set_yscale('log')
-axs[1].set_xlabel('$r_0/M$')
-axs[1].set_xlim(0.95, 3.6)
+i = 0
+for bc in bc_array:
+    comparisons = []
+    for data in testData:
+        a = data[0]
+        compData = data[1]
+        r_vals = compData[:, 0]
+        flux_vals = compData[:, 1] + compData[:, 2]
+        flux_comparison = np.zeros((r_vals.shape[0]))
+        for j in range(flux_comparison.shape[0]):
+            flux_comparison[j] = scaled_energy_flux(a, r_vals[j], bc=bc)
+        comparisons.append([r_vals, np.abs(1. - flux_comparison/flux_vals)])
+    
+    for j, comparison in enumerate(comparisons):
+        axs[i].plot(comparison[0][::32], comparison[1][::32], markers[j], label="$"+str(flux_spin_list[j])+"$", markersize = 4.5, fillstyle='none')
+    axs[i].set_yscale('log')
+    # if i == 0:
+    #     axs[i].legend(loc="upper right", ncol=2)
+    axs[i].set_ylabel('$|1 - {\mathcal{F}_E^I}/{\mathcal{F}_E^\mathrm{ext}}|$')
+    axs[i].set_title(bc)
+    axs[i].set_ylim(1.e-15, 2.e-1)
+    i += 1 
+axs[i-1].set_xlabel('$r_0/M$')
 
-axs[2].plot(mma_comp_900[0], mma_comp_900[1], markers[2], label="$0.9$", markersize = 4.5)
-axs[2].plot(mma_comp_995[0], mma_comp_995[1], markers[1], label="$0.995$", markersize = 4.5)
-axs[2].plot(mma_comp_900[0], mma_comp_900[1], markers[2], label="$0.9$", markersize = 4.5)
-axs[2].set_xlabel('$r_0/M$')
-axs[2].set_xlim(0.95, 3.6)
-
-print("Saving figure to " + pathname + "/../figures/flux_comparison.pdf")
-plt.savefig(pathname+"/../figures/flux_comparison.pdf", bbox_inches="tight", dpi=300)
+fig_name = "boundary_condition_comparison"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname+"/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi=300)
