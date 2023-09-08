@@ -423,7 +423,7 @@ Papamichael \cite{BehfPapa79, Behf95}. The choice of boundary conditions is disc
     \label{fig:fluxComparison}
 \end{figure*}
 
-To confirm the numerical accuracy of our interpolated data, we perform a series of comparisons and self-consistency checks. First we assess the accuracy of our flux interpolant by downsampling the data. Let $f^I_{(n,m)}(x,y)$ denote a bicubic spline approximating $f(x,y)$ using $(2^n+1) \times (2^m+1)$ grid points in $(x,y)$, e.g., $\mathcal{F}_{E(8,7)}^I(\alpha, \chi) = \mathcal{F}_E^I(\alpha, \chi) $. We then estimate the fractional interpolation error for the flux spline $\mathcal{F}_{E(N,M)}^I$ via
+To confirm the numerical accuracy of our interpolated data, we perform a series of comparisons and self-consistency checks. First we assess the accuracy of our flux interpolant by downsampling the data. Let $f^I_{(n,m)}(x,y)$ denote a bicubic spline that interpolates the function $f(x,y)$ using $(2^n+1) \times (2^m+1)$ grid points in $(x,y)$, e.g., $\mathcal{F}_{E(8,7)}^I(\alpha, \chi) = \mathcal{F}_E^I(\alpha, \chi) $. We then estimate the fractional interpolation error for the flux spline $\mathcal{F}_{E(N,M)}^I$ via
 \begin{align}
     \delta_{(N,M)}(\alpha, \chi) = \left|1 - \frac{\mathcal{F}_{E(N,M)}^I(\alpha, \chi)}{\mathcal{F}_{E(N+1,M+1)}^I(\alpha, \chi)} \right|.
 \end{align}
