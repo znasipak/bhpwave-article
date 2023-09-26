@@ -72,7 +72,7 @@ chiIs = np.linspace(0., 1., 302)
 error_test=np.array([[abs(1-Edot_67(chiI, alphaJ)/Edot_78(chiI, alphaJ)) for chiI in chiIs] for alphaJ in alphaJs])
 error_test[error_test==0.]=1.e-16
 
-plt.pcolormesh(chiIs, alphaJs, np.log10(error_test), cmap='plasma', shading='auto')
+plt.pcolormesh(chiIs, alphaJs, np.log10(error_test), cmap='plasma', shading='gouraud')
 plt.ylabel('$\\alpha$')
 plt.xlabel('$\\chi$')
 plt.title('$\delta_{(7,6)}(\\alpha, \\chi)$')
@@ -80,4 +80,4 @@ plt.colorbar()
 
 fig_name = "flux_spline_error"
 print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
-plt.savefig(pathname+"/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi=300)
+plt.savefig(pathname+"/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi=100)
