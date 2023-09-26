@@ -236,15 +236,15 @@ The angular momentum fluxes are then related to the energy fluxes by $\dot{L}_z^
 \subsection{Adiabatic quasi-circular inspirals}
 \label{sec:inspiral}
 
-Due to gravitational {radiation-reaction}, the small body does not remain on a circular geodesic. The binary \emph{radiates} gravitational waves and the small body \emph{reacts} to the radiative losses of energy and angular momentum by undergoing a quasi-circular inspiral into the rotating massive black hole. We can parametrize this motion in terms of the time-evolving orbital energy ${E}(t)$ and orbital phase $\Phi(t)$ of the inspiraling body, which at leading order is given by the equations of motion \cite{PounWard20,HughETC21},
+Due to gravitational {radiation-reaction}, the small body does not remain on a circular geodesic. The binary {radiates} gravitational waves and the small body {reacts} to the radiative losses of energy and angular momentum by undergoing a quasi-circular inspiral into the rotating massive black hole. We can parametrize this motion in terms of the time-evolving orbital energy ${E}(t)$ and orbital phase $\Phi(t)$ of the inspiraling body, which at leading order is given by the equations of motion \cite{PounWard20,HughETC21},
 \begin{align} \label{eqn:eom}
-    \frac{d {E}}{dt} &= \epsilon \mathcal{F}_E + O(\epsilon^2),
+    \frac{d {E}}{dt} &= -\epsilon \mathcal{F}_E + O(\epsilon^2),
     &
     \frac{d\Phi}{dt} &= \Omega + O(\epsilon).
 \end{align}
 Because $\dot{E} \sim \epsilon$, the orbital energy evolves gradually and the evolution can be understood in terms of the \emph{osculating geodesics} method \cite{GairETC11}. At any time $t_0$, the motion is approximately tangent to a geodesic with energy $E(t_0) \approx \mathcal{E}$ and frequency $\Omega(t_0) \approx \Omega_p$. The small body then evolves from geodesic to geodesic based on its gravitational wave emission until the body approaches the ISCO, at which point the approximation breaks down and we end the evolution.
 
-In effect, at leading order we can express the orbital frequency $\Omega$ in terms of the orbital energy ${E}$ using Eqs.~\eqref{eqn:En} and \eqref{eqn:OmegaOfR}, but with $\mathcal{E}$ and $\Omega_p$ replaced by $E$ and $\Omega$, respectively. Furthermore, the forcing term $\mathcal{F}_E$ is constructed using flux-balance arguments \cite{Mino03, Galt82, QuinWald99}: for a point-particle on a circular geodesic the loss of orbital energy is balanced by the gravitational wave energy flux $\dot{E}^\mathrm{GW}$, leading to the relation $\epsilon \mathcal{F}_E = - \dot{E}^\mathrm{GW}$. 
+In effect, at leading order we can express the orbital frequency $\Omega$ in terms of the orbital energy ${E}$ using Eqs.~\eqref{eqn:En} and \eqref{eqn:OmegaOfR}, but with $\mathcal{E}$ and $\Omega_p$ replaced by $E$ and $\Omega$, respectively. Furthermore, the forcing term $\mathcal{F}_E$ is constructed using flux-balance arguments \cite{Mino03, Galt82, QuinWald99}: for a point-particle on a circular geodesic the loss of orbital energy is balanced by the gravitational wave energy flux $\dot{E}^\mathrm{GW}$, leading to the relation $\epsilon \mathcal{F}_E = \dot{E}^\mathrm{GW}$. 
 
 As seen from Eq.~\eqref{eqn:eom}, the time it takes the system to undergo this inspiral scales with the radiation reaction timescale $T_\mathrm{insp} \sim T_\mathrm{rr} = M \epsilon^{-1}$. Similarly, the total accumulated phase scales like $\Delta\Phi_\mathrm{insp} \sim \epsilon^{-1}$, thus giving the leading-order phase contribution to the gravitational wave signal, as described in Eq.~\eqref{eqn:twotimescale}.
 
@@ -293,7 +293,7 @@ Up to this point, waveforms have been constructed in the source frame, with our 
 a generic EMRI system is parametrized by 12 intrinsic parameters $(\mu, M, a, \vec{a}_2, p_0, e_0, x_0, \Phi_{r0}, \Phi_{\theta 0}, \Phi_{\phi 0})$---where $\vec{a}_2$ is the spin-vector of the smaller body; $p_0$, $e_0$, and $x_0$ are respectively the initial semi-latus rectum, orbital eccentricity, and projection of the orbital inclination; and $\Phi_{r0}$, $\Phi_{\theta 0}$, $\Phi_{\phi 0}$ are respectively the initial radial, polar, and azimuthal phases---and by 5 extrinsic parameters $(d_L, q_S, \phi_S, q_K, \phi_K)$---where $d_L$ is the luminosity distance to the source EMRI, $q_S$ and $\phi_S$ are the polar and azimuthal sky positions of the source, and $q_K$ and $\phi_K$ are the polar and azimuthal angles defining the orientation of the massive black hole's axis of rotation. In our simplified quasi-circular setup, five of the intrinsic parameters are constrained to the values $\vec{a}_2 = 0$, $e_0 = 0$, $x_0 = 1$, $\Phi_{r0} = \Phi_{\theta 0} = 0$, while two of the remaining free intrinsic parameters are given by $\Phi_{\phi 0} = \Phi(0)$ and $p_0 = r_0$.
 
 The extrinsic parameters are related to Boyer-Lindquist $(r,\theta, \phi)$ via
-\begin{subequations}
+\begin{subequations} \label{eqn:SSBtoSource}
     \begin{align}
         r &= d_L,
         \\
@@ -305,7 +305,7 @@ The extrinsic parameters are related to Boyer-Lindquist $(r,\theta, \phi)$ via
     \end{align}
 \end{subequations}
 The frame transformation also rotates the strain amplitudes by the polarization angle $\psi$ \cite{KatzETC21}. As a result, $h_\mathrm{SSB}$ is related to $h$, the strain in the source frame, via
-\begin{align}
+\begin{align} \label{eqn:polarization}
     h_\mathrm{SSB} = e^{i\psi} h = \frac{D_\psi^2}{|D_\psi|^2} h,
 \end{align}
 where $D_\psi$ is given by
@@ -314,6 +314,7 @@ where $D_\psi$ is given by
     \\ 
      - \sin q_S\cos q_K +i \sin q_K \sin(\phi_K - \phi_S).
 \end{multline}
+For the special case where $D_\psi = 0$, this reduces to $h_\mathrm{SSB} = h$.
 
 \section{Numerical methods}
 \label{sec:numerical}
@@ -331,18 +332,31 @@ To simplify the calculation of our inspirals, we introduce the dimensionless and
     \hat{a} &= \frac{a}{M}.
 \end{align} 
 A hat represents a quantity that is made dimensionless, while a check represents a quantity that is dimensionless and scaled by the mass ratio. We then reparametrize the equations of motion in terms of the (dimensionless) orbital frequency, yielding
-\begin{subequations} \label{eqn:eom2}
+\begin{subequations} \label{eqn:eom1}
 \begin{align} \label{eqn:dtdOmega}
-    \frac{d\check{t}}{d\hat{\Omega}} &= \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right]^{-1},
+    \frac{d\hat{\Omega}}{d\check{t}} &= -\left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right],
     \\ \label{eqn:dPhidOmega}
-    \frac{d\check{\Phi}}{d\hat{\Omega}} &= \hat{\Omega} \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right]^{-1}.
+    \frac{d\check{\Phi}}{d\check{t}} &= \hat{\Omega},
 \end{align} 
 \end{subequations}
+for time-domain trajectories, and 
+\begin{subequations} \label{eqn:eom2}
+\begin{align} \label{eqn:dtdOmega}
+    \frac{d\check{t}}{d\hat{\Omega}} &= -\left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right]^{-1},
+    \\ \label{eqn:dPhidOmega}
+    \frac{d\check{\Phi}}{d\hat{\Omega}} &= -\hat{\Omega} \left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right]^{-1},
+\end{align} 
+\end{subequations}
+for the frequency domain.
 The Jacobian $\partial_{\mathcal{E}}\hat{\Omega}$ is analytically obtained from \eqref{eqn:En} and \eqref{eqn:OmegaOfR}, while we construct ${\mathcal{F}}_E$ numerically via \eqref{eqn:fluxes}.
 
-In this form, the equations of motion no longer depend on the masses of the binary, just the dimensionless orbital frequency and dimensionless Kerr spin parameter. By parametrizing in terms of frequency, we decouple the evolution in time and phase, leading to solutions $\check{t}(\hat{\Omega}; \hat{a})$ and $\check{\Phi}(\hat{\Omega}; \hat{a})$. In this form, it is straightforward to construct the frequency domain waveforms via Eqs.~\eqref{eqn:fourierH}-\eqref{eqn:fourierPhase}. Calculating time-domain waveforms then requires either inverting (i.e., $\check{t}(\hat{\Omega}; \hat{a}) \rightarrow \hat{\Omega}(\check{t}; \hat{a})$) or solving the inverse of \eqref{eqn:dtdOmega} (i.e.,  $d\hat{\Omega}/d\check{t} = \left[d\check{t}/d\hat{\Omega} \right]^{-1}$). In this work, we perform the former to avoid $d\hat{\Omega}/d\check{t}$ diverging at the ISCO.
+In this form, the equations of motion no longer depend on the masses of the binary, just the dimensionless orbital frequency and dimensionless Kerr spin parameter. By parametrizing in terms of frequency in \eqref{eqn:eom2}, we decouple the evolution in time and phase, leading to solutions $\check{t}(\hat{\Omega}; \hat{a})$ and $\check{\Phi}(\hat{\Omega}; \hat{a})$. In this form, it is straightforward to construct the frequency domain waveforms via Eqs.~\eqref{eqn:fourierH}-\eqref{eqn:fourierPhase}.
 
-Therefore, we first interpolate the data $\mathcal{F}_E(\hat{\Omega}; \hat{a})$, and then solve the equations of motion for the rescaled trajectories $\check{t}(\hat{\Omega}; \hat{a})$, $\hat{\Omega}(\check{t}; \hat{a})$, and $\check{\Phi}(\hat{\Omega}; \hat{a})$. All of this data can be precomputed and stored on a numerical grid spanning the domains of $(\hat{a}, \hat{\Omega})$ or $(\hat{a}, \check{t})$. From these grids, we construct bicubic spline interpolants to represent the trajectories, which can be rapidly evaluated to get any quasi-circular inspiral within our domain. For this work, we set the boundaries of our grid at $\hat{a} \in [-\hat{a}_\mathrm{max}, +\hat{a}_\mathrm{max}]$ and $\hat{\Omega} \in [\hat{\Omega}_\mathrm{min}, \hat{\Omega}_\mathrm{ISCO}]$ with $\hat{a}_\mathrm{max} = 0.9999$ and $\hat{\Omega}_\mathrm{min} = 2\times 10^{-3}$ (which corresponds to $r_0 \approx 50 M$). This domain is plotted in Fig.~\ref{fig:domain}.
+% Calculating time-domain waveforms then requires either inverting (i.e., $\check{t}(\hat{\Omega}; \hat{a}) \rightarrow \hat{\Omega}(\check{t}; \hat{a})$) or solving the inverse of \eqref{eqn:dtdOmega} (i.e.,  $d\hat{\Omega}/d\check{t} = \left[d\check{t}/d\hat{\Omega} \right]^{-1}$). In this work, we perform the former to avoid $d\hat{\Omega}/d\check{t}$ diverging at the ISCO.
+
+Therefore, we first interpolate the data $\mathcal{F}_E(\hat{\Omega}; \hat{a})$, and then solve the equations of motion for the rescaled frequency-domain trajectories $\check{t}(\hat{\Omega}; \hat{a})$ and $\check{\Phi}(\hat{\Omega}; \hat{a})$. We set the initial conditions $\check{t}(\hat{\Omega}_\mathrm{ISCO}) = \check{\Phi}(\hat{\Omega}_\mathrm{ISCO}) = 0$. Thus all time and phase values are $\leq 0$. We then solve for the time-domain trajectories $\hat{\Omega}(\check{t}; a)$ and $\check{\Phi}(\check{t}; a)$. Data can be precomputed and stored on a numerical grid spanning the domains of $(\hat{a}, \hat{\Omega})$ or $(\hat{a}, \check{t})$. From these grids, we construct bicubic spline interpolants to represent the trajectories, which can be rapidly evaluated to get any quasi-circular inspiral within our domain. For this work, we set the boundaries of our grid at $\hat{a} \in [-\hat{a}_\mathrm{max}, +\hat{a}_\mathrm{max}]$ and $\hat{\Omega} \in [\hat{\Omega}_\mathrm{min}, \hat{\Omega}_\mathrm{ISCO}]$ with $\hat{a}_\mathrm{max} = 0.9999$ and $\hat{\Omega}_\mathrm{min} = 2\times 10^{-3}$ (which corresponds to $r_0 \approx 60 M$). This domain is plotted in Fig.~\ref{fig:domain}.
+
+Note that, due to the one-to-one mapping between time and frequency, we could calculate the frequency-domain trajectories and then invert them to get the time-domain trajectories. In practice, however, we create four separate spline representations for $\check{t}(\hat{\Omega}; \hat{a})$, $\check{\Phi}(\hat{\Omega}; \hat{a})$, $\hat{\Omega}(\check{t}; a)$, and $\check{\Phi}(\check{t}; a)$. This is much more computationally efficient then inverting one set of solutions through root-finding methods (e.g., $\hat{\Omega}(\check{t}_0) = \mathrm{Root}[\check{t}(\hat{\Omega}) - \check{t}_0]$) and avoids the accumulation of interpolation errors when taking the composition of two splines (e.g., $\check{\Phi}(\check{t}_0) = \check{\Phi}[\hat{\Omega}(\check{t}_0)])$.
 
 \begin{figure}
     \centering
@@ -351,33 +365,27 @@ Therefore, we first interpolate the data $\mathcal{F}_E(\hat{\Omega}; \hat{a})$,
     \label{fig:domain}
 \end{figure}
 
-\begin{figure*}[bh]
-    \centering
-    \includegraphics[width=0.95\linewidth]{figures/orginal_parametrization.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
-    \label{fig:original}
-\end{figure*}
-
 \subsection{Interpolated fluxes and trajectories}
 
-There are two main challenges to constructing $\mathcal{F}_E(\hat{\Omega}; \hat{a})$ via numerical interpolation: (1) the lower frequency boundary $\hat{\Omega}=\hat{\Omega}_\mathrm{ISCO}$ has a particularly strong dependence on the black hole spin as highlighted in Figure \ref{fig:domain}; and (2) $\mathcal{F}_E$, $\check{t}$, and $\check{\Phi}$ rapidly accumulate as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$ as shown in Figure \ref{fig:original}. Consequently, a simple uniform sampling in $\hat{a}$ and $\hat{\Omega}-\hat{\Omega}_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
+There are two main challenges to constructing $\mathcal{F}_E(\hat{\Omega}; \hat{a})$ via numerical interpolation: (1) the lower frequency boundary $\hat{\Omega}=\hat{\Omega}_\mathrm{ISCO}$ has a particularly strong dependence on the black hole spin as highlighted in Figure \ref{fig:domain}; and (2) $\mathcal{F}_E$, $\check{t}$, and $\check{\Phi}$ rapidly accumulate as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$ and $\hat{a} \rightarrow 1$ as shown in Figure \ref{fig:original}. A simple uniform sampling in $\hat{a}$ and $\hat{\Omega}-\hat{\Omega}_\mathrm{ISCO}$ could lead to substantial errors in our interpolating functions due to the large magnitudes of the higher-order derivatives with respect to $\hat{a}$ and $\hat{\Omega}$.
 
-Therefore, we alter our parametrization to mitigate errors in our numerical spline interpolations. We first ameliorate the growth in flux, time, and phase by rescaling $\mathcal{F}_E$, $\check{t}$ and $\check{\Phi}$ by their frequency-dependence at leading post-Newtonian order,
-% \begin{align}
-%     \mathcal{F}_E^N &= \frac{\mathcal{F}_E}{\check{\Omega}^{10/3}},
-%     &
-%     \check{\Phi}^N &= -\frac{\check{\Phi}}{\check{\Omega}^{-5/3}},
-%     &
-%     \check{t}^N &= -\frac{\check{t}}{\check{\Omega}^{-8/3}},
-% \end{align}
+Consequently, we alter our parametrization to mitigate errors in our numerical spline interpolations. We first ameliorate the growth in flux, time, and phase by rescaling $\mathcal{F}_E$, $\check{t}$ and $\check{\Phi}$ by their frequency-dependence at leading post-Newtonian order,
 \begin{align}
-    \mathcal{F}_E^N &= \frac{\mathcal{F}_E}{\check{\Omega}^{{10}/{3}}},
-    &
-    \check{\Phi}^N &= -{\check{\Omega}^{{5}/{3}}}{\check{\Phi}},
-    &
-    \check{t}^N &= -{\check{\Omega}^{{8}/{3}}}{\check{t}},
+    \mathcal{F}_E^\mathrm{PN} &= \hat{\Omega}^{10/3},
+    \\
+    \check{\Phi}^\mathrm{PN} &= \hat{\Omega}_\mathrm{ISCO}^{-5/3} - \hat{\Omega}^{-5/3},
+    \\
+    \check{t}^\mathrm{PN} &= \hat{\Omega}_\mathrm{ISCO}^{-8/3} - \hat{\Omega}^{-8/3},
 \end{align}
-as shown in the middle plot of Fig.~\ref{fig:rescaled}. We introduce minus signs to the time and phase, because we set $\check{t}(\hat{\Omega}_\mathrm{ISCO}) = \check{\Phi}(\hat{\Omega}_\mathrm{ISCO}) = 0$. Therefore, non-normalized phases and frequencies have negative values. Next, motivated by post-Newtonian and near-extremal expansions of the orbital quantities, we introduce the parameters $x = \hat{\Omega}^{1/3}$ and $y = (1 - \hat{a})^{1/3}$, from which we define the final parameters
+resulting in the normalized functions
+\begin{align}
+    \mathcal{F}_N &= \frac{\mathcal{F}_E}{\mathcal{F}_E^\mathrm{PN}},
+    &
+    \check{\Phi}_N &= \frac{\check{\Phi}}{ \check{\Phi}^\mathrm{PN} + \delta},
+    &
+    \check{t}_N &= \frac{\check{t}}{\check{t}^\mathrm{PN} + \delta},
+\end{align}
+which are plotted in the middle panel of Fig.~\ref{fig:rescaled}. We introduce the $\delta = 10^{-6}$ offset to avoid division by zero as $\hat{\Omega} \rightarrow \hat{\Omega}_\mathrm{ISCO}$. As a result of this shift, the normalized time and phase data still satisfy the initial conditions $\check{t}_N(\hat{\Omega}_\mathrm{ISCO}) = \check{\Phi}_N(\hat{\Omega}_\mathrm{ISCO}) = 0$. Next, motivated by post-Newtonian and near-extremal expansions of the orbital quantities, we introduce $x = \hat{\Omega}^{1/3}$ and $y = (1 - \hat{a})^{1/3}$, from which we define the final sampling parameters,
 \begin{align} \label{eqn:params}
     \alpha^2 &= \frac{x_\mathrm{ISCO}-x}{x_\mathrm{ISCO}-x_\mathrm{min}},
     &
@@ -385,116 +393,177 @@ as shown in the middle plot of Fig.~\ref{fig:rescaled}. We introduce minus signs
 \end{align}
 where $x_\mathrm{min} = \Omega_\mathrm{min}^{1/3}$, $x_\mathrm{ISCO} = \Omega_\mathrm{ISCO}^{1/3}$, and $y_\pm = (1 \pm a_\mathrm{max})^{1/3}$. We square the left-hand side of \eqref{eqn:params} to further smooth out the behavior near the ISCO and maximal spin values. This can be seen in Fig.~\ref{fig:final}, where we plot the variation in $\check{t}$ and $\check{\Phi}$ with respect to $\alpha$ and $\chi$.
 
-\begin{figure*}[bhtp]
+\begin{figure*}[!htp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/orginal_parametrization.pdf}
+    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \label{fig:original}
+\end{figure*}
+
+\begin{figure*}[!htp]
     \centering
     \includegraphics[width=0.98\linewidth]{figures/rescaled_parametrization.pdf}
     \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
     \label{fig:rescaled}
 \end{figure*}
 
-\begin{figure*}[bhtp]
+\begin{figure*}[!htp]
     \centering
     \includegraphics[width=0.98\linewidth]{figures/final_parametrization.pdf}
     \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
     \label{fig:final}
 \end{figure*}
 
-After choosing this parametrization, we solve for the fluxes $\dot{E}^\mathrm{GW}$ using the Teukolsky solver provided in the \texttt{pybhpt} Python package.\footnote{This code is available at \href{https://github.com/znasipak/pybhpt}{github.com/znasipak/pybhpt}.} Flux data is calculated with a requested precision of $10^{-10}$. We precompute $\dot{E}^\mathrm{GW}$, from which we get $\mathcal{F}_E$, on a fixed grid in the $(\alpha, \chi)$ domain using 129 equally-spaced samples in $\chi$ and 257 equally-spaced samples in $\alpha$. A downsampling of these points is mapped to the $(\hat{a}, \hat{\Omega})$ domain in Fig.~\ref{fig:domain} to illustrate the concentration of sampling points towards the ISCO and near-extremal spins. From this grid, we construct the interpolated function $\mathcal{F}_E^I(\alpha, \chi)$, then solve \eqref{eqn:eom2} for $\check{t}$ and $\check{\Phi}$ on the same $257 \times 129$ grid in $(\alpha, \chi)$. Similarly, we then assemble the interpolated functions $\check{t}^I_{N}(\alpha, \chi)$ and $\check{\Phi}^I_{N}(\alpha, \chi)$. Note that we explicitly differentiate between numerical solutions and their interpolated approximants by labeling interpolated functions with the superscript $I$.
+After choosing this parametrization, we solve for the fluxes $\dot{E}^\mathrm{GW}$ using the Teukolsky solver provided in the \texttt{pybhpt} Python package.\footnote{This code is available at \href{https://github.com/znasipak/pybhpt}{github.com/znasipak/pybhpt}.} Flux data is calculated with a requested precision of $10^{-10}$. We precompute $\dot{E}^\mathrm{GW}$, from which we get $\mathcal{F}_E$, on a fixed grid in the $(\alpha, \chi)$ domain using 129 equally-spaced samples in $\chi$ and 257 equally-spaced samples in $\alpha$. A downsampling of these points is mapped to the $(\hat{a}, \hat{\Omega})$ domain in Fig.~\ref{fig:domain} to illustrate the concentration of sampling points towards the ISCO and near-extremal spins. From this grid, we construct the interpolated function $\mathcal{F}_N^I(\alpha, \chi)$, then solve \eqref{eqn:eom2} for $\check{t}$ and $\check{\Phi}$ on a more densely sampled $513 \times 513$ grid in $(\alpha, \chi)$. We then assemble the interpolated functions $\check{t}^I_{N}(\alpha, \chi)$ and $\check{\Phi}^I_{N}(\alpha, \chi)$. Note that we explicitly differentiate between numerical solutions and their interpolated approximants by labeling interpolated functions with the superscript $I$. Furthermore, all splines are generated by imposing the $E(3)$ boundary conditions of Behforooz and Papamichael \cite{BehfPapa79, Behf95}. 
 
-Finally, we look to construct a numerical interpolant for $\hat{\Omega}(\check{t}; \hat{a})$. Due to our renormalization of time, $\check{t}_N^I(\alpha, \chi)$ is no longer monotonic with respect to $\alpha$. Therefore, we cannot simply parametrize $\hat{\Omega}$ in terms of $\check{t}_N$. Instead, we introduce the alternate time-parametrization
+Next, we construct numerical interpolants for $\hat{\Omega}(\check{t}; \hat{a})$ and $\check{\Phi}(\check{t}; \hat{a})$. Because $\check{t}_N^I(\alpha, \chi)$ is not monotonic with respect to $\alpha$, we cannot simply parametrize $\hat{\Omega}$ and $\check{\Phi}$ in terms of $\check{t}_N$. Instead, we introduce the alternative time-parametrization
 \begin{align} \label{eqn:gammaTransform}
-    \gamma^2(\hat{\Omega};\hat{a}) = \ln\left[1 - {\check{t}}(\hat{\Omega};\hat{a})\right],
+    \gamma^6(\hat{\Omega};\hat{a}) = \ln\left[1 - {\check{t}}(\hat{\Omega};\hat{a})\right],
 \end{align}
-in order to tame the rapid growth in $\check{t}$ but preserve the monotonic relationship between $\check{t}$ and $\hat{\Omega}$. Finally we introduce the renormalized parameter
+where we take the logarithm to tame the rapid growth in $\check{t}$ while preserving its monotonic relationship with $\hat{\Omega}$. The choice of $\gamma^6$ was determined through numerical experimentation, and helps to smooth out the behavior as $t\rightarrow 0$ and $\gamma \rightarrow 0$. From this we define the renormalized parameter
 \begin{align} \label{eqn:betaTransform}
-    \beta(\hat{\Omega}; \chi) &= \frac{\gamma(\hat{\Omega}; \chi)}{\gamma_\mathrm{max}(\chi)},
+    \beta(\hat{\Omega}; \chi) &= \frac{\gamma(\hat{\Omega}; \hat{a}(\chi))}{\gamma_\mathrm{max}},
     &
-    \gamma_\mathrm{max}(\chi) &= \gamma(\hat{\Omega}_\mathrm{min};\chi),
+    \gamma_\mathrm{max} &= \gamma(\hat{\Omega}_\mathrm{min};-a_\mathrm{max}),
 \end{align}
-so that $\beta \in [0, 1]$ for all values of $\chi$. We then use a root-finding solver to compute $\hat{\Omega}$ from Eqs.~\eqref{eqn:gammaTransform} and \eqref{eqn:betaTransform} on uniform $257 \times 129$ grid in $(\beta, \chi)$. From this data, we construct the bicubic spline $\hat{\Omega}^I(\beta, \chi)$ and the cubic spline $\gamma_\mathrm{max}^I(\chi)$. In this work, bicubic splines are generated by imposing the $E(3)$ boundary conditions of Behforooz and
-Papamichael \cite{BehfPapa79, Behf95}. The choice of boundary conditions is discussed in the following section.
+and only focus on the interval $\beta \in [0, 1]$. Limiting $\beta$ does cut-off some low-frequency values in our new domain, since $\beta(\hat{\Omega}_\mathrm{min}; \chi < 1) > 1$. However, in practice this choice has a minimal impact: our frequency boundary ends up being truncated at $\hat{\Omega} \simeq 0.00206$ instead of $\hat{\Omega} = \hat{\Omega}_\mathrm{min} = 0.002$. Note that we could extend our boundary out to $\hat{\Omega} = \hat{\Omega}_\mathrm{min}$ by redefining $\gamma_\mathrm{max}(\hat{a}) = \gamma(\hat{\Omega}_\mathrm{min}; \hat{a})$, but this functional dependence adds another layer of computational complexity when relating $\hat{\Omega}$ and $\beta$. To avoid unnecessary computational costs, we use the more simple transformation in \eqref{eqn:betaTransform}.
 
-\subsection{Numerical accuracy of fluxes}
+% Finally, we construct a numerical interpolant for $\hat{\Omega}(\check{t}; \hat{a})$. Due to our renormalization of time, $\check{t}_N^I(\alpha, \chi)$ is no longer monotonic with respect to $\alpha$, and we cannot simply parametrize $\hat{\Omega}$ in terms of $\check{t}_N$. Instead, we introduce the alternative time-parametrization
+% \begin{align} \label{eqn:gammaTransform}
+%     \gamma(\check{t}; \hat{a}) = 1 - \left(\frac{5\Omega_\mathrm{ISCO}^{-8/3}(\hat{a}) - 256\check{t}}{5 \Omega_\mathrm{ISCO}^{-8/3}(\hat{a})} \right)^{-1/4}
+% \end{align}
+% in order to tame the rapid growth in $\check{t}$ but preserve the monotonic relationship between $\check{t}$ and $\hat{\Omega}$. Finally we define the renormalized parameter
+% \begin{align} \label{eqn:betaTransform}
+%     \beta(\alpha; \chi) &= \frac{\gamma(\check{t}(\alpha, \chi); \hat{a}(\chi))}{\gamma_\mathrm{max}(\chi)},
+%     \\
+%     \gamma_\mathrm{max}(\chi) &= \gamma(\check{t}(\alpha = 1, \chi = 1);\hat{a}(\chi)),
+% \end{align}
+% and we only focus on the interval $\beta \in [0, 1]$. By limiting $\beta$ we do leave-off some low-frequency values in our new domain, since $\beta(\hat{\Omega}_\mathrm{min}; \chi < 1) > 1$. We can ameliorate this issue by redefining $\gamma_\mathrm{max}(a) = \gamma(\hat{\Omega}_\mathrm{min}; a)$, but this functional dependence adds another layer of computational complexity when relating $\hat{\Omega}$ and $\beta$. To avoid unnecessary computational costs, we instead use the normalization convention of \eqref{eqn:betaTransform}.
 
-\begin{figure*}[bhtp]
-    \centering
-    \includegraphics[width=0.98\linewidth]{figures/flux_comparison.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
-    \label{fig:fluxComparison}
-\end{figure*}
-
-To confirm the numerical accuracy of our interpolated data, we perform a series of comparisons and self-consistency checks. First we assess the accuracy of our flux interpolant by downsampling the data. Let $f^I_{(n,m)}(x,y)$ denote a bicubic spline that interpolates the function $f(x,y)$ using $(2^n+1) \times (2^m+1)$ grid points in $(x,y)$, e.g., $\mathcal{F}_{E(8,7)}^I(\alpha, \chi) = \mathcal{F}_E^I(\alpha, \chi) $. We then estimate the fractional interpolation error for the flux spline $\mathcal{F}_{E(N,M)}^I$ via
-\begin{align}
-    \delta_{(N,M)}(\alpha, \chi) = \left|1 - \frac{\mathcal{F}_{E(N,M)}^I(\alpha, \chi)}{\mathcal{F}_{E(N+1,M+1)}^I(\alpha, \chi)} \right|.
+We then evaluate the time-domain equations of motion \eqref{eqn:eom1} and store solutions on an uniform $513 \times 513$ grid in $(\beta, \chi)$. Because we use $\alpha$ in place of $\hat{\Omega}$ when solving \eqref{eqn:eom1}, we must excise $\beta = 0$ ($\check{t} = 0$). The solution is trivially $\alpha = \check{\Phi} = 0$ at $\beta = 0$, but $d\alpha/dt$ diverges at this point and thus typical numerical methods for solving ordinary differential equations fail at this point. Therefore, we instead solve the equations of motion by starting one grid point away from $\beta = 0$. To incorporate the correct initial conditions, we use the Brent root-solving method to invert $\check{t}(\hat{\Omega}; a)$ and then $\check{\Phi}(\hat{\Omega}; a)$. Once we have solutions, we create the bicubic spline $\alpha^I(\beta, \chi)$, which we can transform to get $\hat{\Omega}(\check{t}; \hat{a})$. For the phase, we introduce a new renormalization that does not depend on $\hat{\Omega}$,
+\begin{align} \label{eqn:phaseNorm2}
+    \check{\Phi}_{N(2)} &= \ln\left(1 - \check{\Phi} \right). 
 \end{align}
-By downsampling the data, we calculate $\delta_{(7,6)}$, $\delta_{(6,5)}$, and $\delta_{(5,4)}$. We plot $\delta_{(7,6)}$ in Figure \ref{fig:fIError}, demonstrating that $\delta_{(7,6)}<10^{-6}$ across the entire domain. To estimate the interpolation error of our fully-sampled spline, $\delta_{(8,7)}$, we examine the convergence rate of $|| \delta_{(n+1,n)} ||_\infty$ in Figure \ref{fig:deltaConvergence}. We find that $|| \delta_{(n+1,n)} ||_\infty \propto 2^{-4n}$, which is consistent with the standard fourth-order scaling for cubic spline errors ($\delta \sim \Delta x^4$ for grid spacing $\Delta x$). Provided this scaling holds true as we increase the sampling rate, we estimate that $\delta_{(8,7)} \lesssim 5\times 10^{-8}$.
+and create the interpolant $\check{\Phi}_{N(2)}^I(\beta, \chi)$, which we can then also transform to get $\check{\Phi}(\check{t}; \hat{a})$.
 
-We also compare the flux interpolant to Kerr circular flux values produced by independent codes \cite{TaraETC14, GralHughWarb16}. Tables of these values are provided within the ``Circular Orbit Self-force Data'' repository hosted by the Black Hole Perturbation Toolkit \cite{BHPTK18}. Figure \ref{fig:fluxComparison} plots the fractional errors between the Toolkit data set and our interpolated fluxes for the spin values $\hat{a} = [-0.99, -0.8, -0.5, 0.1, 0.6, 0.9, 0.995, 0.999]$ as a function of the orbital separation $r_0$. For $r_0 \gtrsim 3.5 M$ the fractional errors in the fluxes are consistent with the interpolation error estimated in Figure \ref{fig:fIError}, indicating that our flux results are reliable to a precision $\sim 10^{-9}$ in this domain. Crucially, we find that our use of the $E(3)$ boundary condition in our spline interpolation is essential for achieving these small fractional errors. For example, in Figure \ref{fig:fluxComparison2} we plot the fractional errors resulting from the use of the more common `natural' or `not-a-knot' spline boundary conditions when interpolating our flux results. Both boundary conditions degrade the accuracy of our interpolated flux data, with the natural spline providing the largest fractional errors. For both the natural and not-a-knot splines, the fractional errors rise as we approach larger negative values of the spin ($a \rightarrow -1$) and larger orbital separations ($\Omega \rightarrow \Omega_\mathrm{min}$), where our flux data is sparsely-sampled. Therefore, a careful choice of boundary conditions can significantly improve the accuracy of our splines, thereby diminishing the number of points at which we need to perform expensive calculations of the gravitational wave fluxes.
+To evaluate the fidelity of our interpolated trajectories, we perform a series of self-consistency checks and comparisons, which are discussed in full detail in Appendix \ref{app:tests}. We find that our interpolated fluxes have fractional errors $< 10^{-8}$ over the entire domain, and they agree with independent flux calculations \cite{TaraETC14, GralHughWarb16} provided within the ``Circular Orbit Self-force Data'' repository on the Black Hole Perturbation Toolkit \cite{BHPTK18}.\footnote{Note that the flux results in the Toolkit repository are not accurate to all reported digits for $\hat{a} \geq 0.9$ and $ 2M \lesssim r_0 \lesssim 4 M$, as discussed in \ref{app:fluxtests}.} This high level of accuracy is achieved, in part, by our choice of the $E(3)$ spline boundary condition, which improves the precision of our flux interpolant by several orders of magnitude when compared to the more common `natural' or `not-a-knot' boundary conditions (see Appendix \ref{app:fluxtests}). 
 
-Finally, we return the near-ISCO region of Figure \ref{fig:fluxComparison}. The fractional errors between our data and the fluxes published in the Toolkit peak at $\sim 10^{-3}$ near $r_0 \sim 3 M$, as seen in the middle plot of Figure \ref{fig:fluxComparison}. To identify the source of this disagreement, we perform another set of flux calculations using the \texttt{Teukolsky} Mathematica package \cite{BHPT_TEUK}, which is also provided in the Black Hole Perturbation Toolkit.\footnote{Note that this package was designed and implemented independently of the circular flux data published in the ``Circular Orbit Self-force Data'' Toolkit data repository.} In the Mathematica code, we use over 300 digits of precision to guarantee the accuracy of the computed flux values. The fractional error between our flux interpolant and the high-precision Teukolsky fluxes are shown in the right plot of Figure \ref{fig:fluxComparison}, demonstrating strong agreement between our data and the Toolkit-generated fluxes. Therefore, we suspect that the flux values published in the ``Circular Orbit Self-force Data'' repository are not accurate to all reported digits for $ 2M \lesssim r_0 \lesssim 4 M$.
+Furthermore, we find that the interpolated frequency-domain quantities, $\check{t}^I_N$ and $\check{\Phi}^I_N$, possess absolute errors $< 5\times 10^{-7}$, and the derivatives of the interpolated splines satisfy the frequency-domain equations of motion \eqref{eqn:eom2} to a precision $\sim 10^{-6}$. Likewise, $\alpha^I$ has estimated fractional errors $< 5\times 10^{-8}$ and $\check{\Phi}^I_{N(2)}$ has estimated absolute errors $< 5\times 10^{-8}$.
 
-Altogether, these tests indicate the the error in our interpolated flux function is $< 10^{8}$ and often matches the intrinsic error in the underlying flux data, which was calculated to a requested precision of $\sim 10$ digits. Since flux errors scale as $\sim \epsilon^{-1}$ over an inspiral, we expect that this level of flux interpolation error will have a subradian impact on the phase accuracy of our gravitational waveforms for astrophysically-realistic systems.
-
-\subsection{Numerical accuracy of trajectories}
-
-Next, we check that the interpolated trajectories satisfy the equations of motion \eqref{eqn:eom2} via the two tests,
+Next we quantify the impact of these interpolation errors on the gravitational wave phases.  First, we calculate the phase accumulated over an inspiral with initial orbital frequency $\hat{\Omega}_0$ using our interpolated data,
 \begin{align}
-    \delta_{\mathcal{F}}(\hat{\Omega}_0, \hat{a}) &= \left| 1 - \mathcal{F}^I_E\left(\frac{d\check{t}^I}{d\alpha}\right)\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)^{-1}\right|,
+    \Delta \Phi^I &= \frac{1}{\epsilon}\left[\check{\Phi}^I\left(\check{t}_0 + \frac{\epsilon T}{M}; \hat{a} \right) - \check{\Phi}^I\left(\check{t}_0; \hat{a}\right) \right],
+\end{align}
+where $\check{t}_0 = \check{t}(\hat{\Omega}_0; \hat{a})$ and $T$ is the duration of the observed inspiral. Note that $\check{\Phi}^I$ is reconstructed from $\check{\Phi}^I_{N(2)}$ via \eqref{eqn:phaseNorm2}. We then compare $\Delta \Phi^I$ to the accumulated phase $\Phi^\mathrm{ODE}$ obtained by directly integrating \eqref{eqn:eom1} with the initial conditions $\hat{\Omega}(\check{t}=0) = \hat{\Omega}_0$ and $\check{\Phi}(\check{t}=0) = 0$. The interpolation error is then estimated by the difference $\delta \Phi^I = |\Delta\Phi^I - \Phi^\mathrm{ODE}|$. Next, we find the maximum value of $\delta \Phi^I$ for a range of $\hat{a}$ values and initial orbital frequencies $\hat{\Omega}_0$. We denote this maximized difference as $||\delta \Phi^I||_{\hat{a},\hat{\Omega}}$. Then in Figure \ref{fig:obsTime} we plot $||\delta \Phi^I||_{\hat{a},\hat{\Omega}}$ as a function of mass-ratio $10^{-7} \leq \epsilon \leq 10^{-2}$ and massive black hole mass $10^{4} \leq M \leq 10^{8}$ for binaries observed for $T = [0.5, 2, 5, 10, 25]$ years. We measure maximum phase errors of $0.025$, $0.046$, $0.080$, $0.090$, and $0.16$ for the observation periods $0.5$, $2$, $5$, $10$, and $25$ years, respectively. These phase errors are reduced by about a factor of five if we only focus on inspirals with initial frequencies $\hat{\Omega} \geq 0.013$ (corresponding to $r_0 \lesssim 18 M)$ and binaries with smaller bodies of mass $\mu \geq 2 M_\odot$. Therefore, we see that interpolation errors meet the subradian phase accuracy requirements for realistic space-based mHz gravitational wave observations. 
+
+\subsection{Mode amplitudes}
+
+Similar to the trajectories, we presample the complex waveform amplitudes $B_{\ell m}$ on a fixed $65 \times 65$ grid in $(\alpha, \chi)$. To optimize the accuracy of our amplitude interpolation, we decompose $B_{\ell m}$ into its phase $\psi_{\ell m}$ and the log of the real amplitude $\mathcal{A}_{lm} = \ln A_{\ell m}$ and interpolate these quantities independently. We generate data for all $\ell \leq 15$ and $0 < m \leq \ell$. In Figure \ref{fig:relativeAmplitude}, we plot the ratio of the a For spins $\hat{a} \lesssim 0.9$, this mode content is sufficient for modeling the amplitudes . In the near-ISCO, near-extremal regime, 
+
+We use a lower sampling rate, because waveform amplitudes do not need to be known as accurately as waveform phases.
+
+\subsection{Waveform evaluation and mode selection}
+
+Given a fixed time step $dt$, signal duration $T$, and binary source parameters (e.g., $M$, $\mu$, $r_0$, $d_L$), time-domain waveforms are constructed using \eqref{eqn:adiabaticWaveform}, \eqref{eqn:SSBtoSource}, \eqref{eqn:polarization}, with all functions evaluated from the trajectory and mode amplitude splines outlined above. We simplify the sum over $(\ell, m)$-modes using the identities
+\begin{align}
+    B_{\ell -m} &= (-1)^{\ell} B^*_{\ell m}
+    &
+    Y_{s\ell -m}(\theta) &= (-1)^{m} Y_{-s \ell m}(\theta),
+\end{align}
+leading to the reduced sums
+\begin{subequations} \label{eqn:timeDomainReduced}
+    \begin{align}
+    h_+(t) = +\sum_{\ell=2}^\infty \sum_{ m = 1}^{\ell} A_{\ell m} Y^+_{\ell m} \cos(\psi_{\ell m} - m \Phi),
     \\
-    \delta_{\Phi}(\hat{\Omega}_0, \hat{a}) &= \left| 1 -  \hat{\Omega}_0\left(\frac{d\check{t}^I}{d\alpha}\right)\left(\frac{d\check{\Phi}^I}{d{\alpha}} \right)^{-1}\right|,
+    h_\times(t) = -\sum_{\ell=2}^\infty \sum_{ m = 1}^{\ell}  A_{\ell m} Y^\times_{\ell m} \sin(\psi_{\ell m} - m \Phi),
 \end{align}
-where, on the righthand side, all functions and derivatives are evaluated at $\alpha(\hat{a},\hat{\Omega}_0)$ and $\chi(\hat{a})$ .
+\end{subequations}
+where
+\begin{subequations}
+    \begin{align}
+    Y^+_{\ell m} &= Y_{-2\ell m} + (-1)^{\ell + m} Y_{+2\ell m},
+    \\
+    Y^\times_{\ell m} &= Y_{-2\ell m} - (-1)^{\ell + m} Y_{+2\ell m}.
+\end{align}
+\end{subequations}
+Note that $a^*$ denotes the complex conjugate of $a$.
 
-To assess the accuracy of $\hat{\Omega}^I(\check{t};\hat{a})$, we calculate the error
+The truncation of the $(\ell, m)$-mode sum is determined by the power in each harmonic mode,
+\begin{subequations}
+    \begin{align}
+        P_{\ell m} &= \int_0^T \left[ \left|A_{\ell m}(t) Y_{\ell m}^+\right|^2 + \left|A_{\ell m}(t) Y_{\ell m}^\times\right|^2  \right]dt ,
+        \\
+        &\approx \left[\left|Y_{\ell m}^+\right|^2 + \left|Y_{\ell m}^\times\right|^2 \right] \sum_{n=0}^{N} |A_{\ell m}(n \times \Delta t)|^2 \Delta t,
+    \end{align}
+\end{subequations}
+where $\Delta t = T/N$ for signal duration $T$. In this work, we set $N = 50$ to approximate the mode power. We include all $(\ell, m)$-modes that satisfy the selection criteria
+\begin{align} \label{eqn:modeSelectionCriteria}
+    {P_{\ell m}} > \epsilon_\mathrm{threshold} \times {\sum_{\ell' = 2}^{\ell} \sum_{m'=1}^{\ell'}P_{\ell' m'}},
+\end{align}
+for a user-specified threshold $\epsilon_\mathrm{threshold}$. Rather than computing the power for all of the modes and then removing the modes that do not satisfy \eqref{eqn:modeSelectionCriteria}, we instead perform a serial search for all modes that do satisfy \eqref{eqn:modeSelectionCriteria}. First we find all modes that meet \eqref{eqn:modeSelectionCriteria} for $m \leq 2$. We then increase $m$ to $m = 3$ and then increment over $\ell$, beginning with $\ell = m$ until \eqref{eqn:modeSelectionCriteria} is no longer satisfied. We repeat this process of increasing $m$ and then $\ell$, until either $P_{mm}$ no longer satisfies \eqref{eqn:modeSelectionCriteria} or $m > 20$.
+
+Following this mode selection, we evaluate all of the selected modes in \eqref{eqn:timeDomainReduced} at the time steps $t_i = i\times dt$ for $i = 0, 1, 2, \dots, T/dt$. To speed-up the calculation, we parallelize evaluations over the time steps $t_i$ using OpenMP \cite{OpenMP}.
+
+Frequency-domain waveforms are generated in a similar manner for a fixed frequency step $df$ and maximum frequency $f_\mathrm{max}$. Alternatively, one can specify a time step $dt$ and signal duration $T$, for which we set $df = 1/T$ and $2f_\mathrm{max} = 1/dt$. By eliminating sums over negative $m$-modes, we have
 \begin{align}
-    \delta_{\Omega}(t_0, \hat{a}) = \left| 1- \frac{t_0}{\check{t}^I[\alpha(\hat{\Omega}^I[\beta(t_0)])]} \right|,
+    \tilde{h}_+(f) &= +\sum_{\ell = 2}^\infty \sum_{m = 1}^{\ell} \sqrt{\frac{\pi}{2m\dot{\Omega}}}A_{\ell m} Y_{\ell m}^+ e^{+i\Psi_{\ell m}},
+    \\
+    \tilde{h}_\times(f) &= -\sum_{\ell = 2}^\infty \sum_{m = 1}^{\ell} \sqrt{\frac{\pi}{2m\dot{\Omega}}}A_{\ell m} Y_{\ell m}^\times e^{-i\Psi_{\ell m}},
 \end{align}
-where once again all functions are evaluated at $\chi(\hat{a})$.
-
-\subsection{Mode amplitudes and selection}
-
-Similar to the trajectories, we presample the waveform amplitudes
-
-\subsection{Waveform evaluation}
-
-Time-domain waveforms are constructed 
+where the phases are given by $\Psi_{\ell m} = \psi_{\ell m} + 2\pi f t- m\Phi - \pi/4$ and all mode-functions are evaluated at $\Omega = 2\pi f/m$. Mode selection is identical to the time-domain waveforms. Similarly we parallelize evaluations over the frequency steps $f_j = j\times df$ for $j = 0, 1, 2, \dots, f_\mathrm{max}/df$.
 
 \subsection{Model comparison}
 
-\section{bhpwave}
-\label{sec:bhpwave}
+To demonstrate the accuracy of our model, we compare our waveforms with those produced by FEW in the limit where $\hat{a} = e_0 = 0$. As a visual demonstration, in Figure \ref{fig:compareFEW} we plot $h_+$ for an EMRI with source properties $(M, \mu, a, p_0, e_0, x_0) = (10^6 M_\odot, 10 M_\odot, 0, 20, 0, 1)$ observed in the SSB frame for five years. The strain calculated by FEW is given by the dashed lines, while the bhpwave result is given by the solid lines. We zoom in on the waveform at three time windows placed near the beginning, middle, and end of the waveform. Across all three periods there is no visual disagreement between the two models. In the rightmost panel of Figure \ref{fig:compareFEW}, we also plot the phase difference between the two models as a function of time. The two waveforms maintain subradian agreement over all five years of the signal.
 
-Our waveform model \texttt{bhpwave} is implemented through three Python modules: a trajectory module \texttt{bhpwave.trajectory} that generates goedesics and inspirals, a harmonic module \texttt{bhpwave.harmonics} described in Sec.~\ref{sec:harm}, and a waveform module \texttt{bhpwave.waveform} described in Sec.~\ref{sec:wave}.
+For a more quantitative comparison, in Table \ref{tab:compareFEW} we report the overlap between our waveforms $h_\mathrm{B}$ and the FEW waveforms $h_\mathrm{F}$ for a series of different EMRI systems. The overlap is defined by
+\begin{align}
+    O(h_\mathrm{B}, h_\mathrm{F}) = \sum_{+,\times} \frac{\left(h_\mathrm{B} | h_\mathrm{F} \right)}{\sqrt{\left(h_\mathrm{B} | h_\mathrm{B} \right)\left(h_\mathrm{F} | h_\mathrm{F} \right)}},
+\end{align}
+where 
+\begin{align}
+    \left(a | b \right) = 4 \mathrm{Re} \int_0^\infty \frac{\tilde{a}(f)\tilde{b}^*(f)}{S_n(f)}df
+\end{align}
+is the noise-weighted inner product between two real signals, ${b}^*$ is the complex conjugate of ${b}$, $S_n(f)$ is the one-sided noise spectral density of LISA, and the sum is performed over the plus and cross polarizations of the gravitational wave strain. For this work, we use the analytic approximation of $S_n(f)$ given by Cornish \cite{Corn}.
 
-\subsection{Trajectory module}
-\label{sec:traj}
+% \section{bhpwave}
+% \label{sec:bhpwave}
 
-The trajectory module \texttt{bhpwave.trajectory} is separated into two submodules: 
-\begin{enumerate}
-    \item \texttt{bhpwave.trajectory.geodesic}
-    \item \texttt{bhpwave.trajectory.inspiral}
-\end{enumerate}
-The geodesic module implements the equations of Sec.~\ref{sec:geo} and their derivatives with respect to the orbital parameters. The inspiral module constructs bicubic splines of pre-computed inspiral trajectories 
+% Our waveform model \texttt{bhpwave} is implemented through three Python modules: a trajectory module \texttt{bhpwave.trajectory} that generates goedesics and inspirals, a harmonic module \texttt{bhpwave.harmonics} described in Sec.~\ref{sec:harm}, and a waveform module \texttt{bhpwave.waveform} described in Sec.~\ref{sec:wave}.
 
-\subsection{Harmonics module}
-\label{sec:harm}
+% \subsection{Trajectory module}
+% \label{sec:traj}
 
-The harmonics module \texttt{bhpwave.harmonics} is separated into two submodules: 
-\begin{enumerate}
-    \item \texttt{bhpwave.trajectory.swsh}
-    \item \texttt{bhpwave.trajectory.amplitudes}
-\end{enumerate}
+% The trajectory module \texttt{bhpwave.trajectory} is separated into two submodules: 
+% \begin{enumerate}
+%     \item \texttt{bhpwave.trajectory.geodesic}
+%     \item \texttt{bhpwave.trajectory.inspiral}
+% \end{enumerate}
+% The geodesic module implements the equations of Sec.~\ref{sec:geo} and their derivatives with respect to the orbital parameters. The inspiral module constructs bicubic splines of pre-computed inspiral trajectories 
 
-\subsection{Waveform module}
-\label{sec:wave}
+% \subsection{Harmonics module}
+% \label{sec:harm}
 
-The waveform module \texttt{bhpwave.waveform} is the parent module for computing 
+% The harmonics module \texttt{bhpwave.harmonics} is separated into two submodules: 
+% \begin{enumerate}
+%     \item \texttt{bhpwave.trajectory.swsh}
+%     \item \texttt{bhpwave.trajectory.amplitudes}
+% \end{enumerate}
+
+% \subsection{Waveform module}
+% \label{sec:wave}
+
+% The waveform module \texttt{bhpwave.waveform} is the parent module for computing 
 
 \section{Assessing modeling errors}
 \label{sec:errors}
 
 \section{Conclusion}
 \label{sec:conclusion}
+
+\begin{acknowledgements}
+This research was supported by an appointment to the NASA Postdoctoral Program at the NASA Goddard Space Flight Center, administered by Oak Ridge Associated Universities under contract with NASA. The author also thanks John G.~Baker for their discussions and helpful feedback. This work makes use of the Black Hole Perturbation Toolkit.
+\end{acknowledgements}
 
 \appendix
 
@@ -523,6 +592,81 @@ This can be seen by parametrizing the time and phase in terms of $\Omega$. Then 
     \\ \notag
     & \qquad \qquad + m\partial_\Omega\Phi(\Omega_0)\big]\delta \Omega + O(\delta\Omega^2),
 \end{align}
+
+\section{Validating fluxes, trajectories, and numerical splines}
+\label{app:tests}
+
+\subsection{Numerical precision of fluxes}
+\label{app:fluxtests}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/flux_spline_error.pdf}
+    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \label{fig:fluxSplineError}
+\end{figure}
+
+\begin{figure}[bhtp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/spline_convergence.pdf}
+    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \label{fig:fluxSplineConvergence}
+\end{figure}
+
+\begin{figure*}[bhtp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/flux_comparison.pdf}
+    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \label{fig:fluxComparison}
+\end{figure*}
+
+\begin{figure}[bhtp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/boundary_condition_comparison.pdf}
+    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \label{fig:fluxComparison2}
+\end{figure}
+
+
+
+To confirm the numerical accuracy of our interpolated data, we perform a series of comparisons and self-consistency checks. First we assess the accuracy of our flux interpolant by downsampling the data. Let $f^I_{(n,m)}(x,y)$ denote a bicubic spline that interpolates the function $f(x,y)$ using $(2^n+1) \times (2^m+1)$ grid points in $(x,y)$, e.g., $\mathcal{F}_{N(8,7)}^I(\alpha, \chi) = \mathcal{F}_N^I(\alpha, \chi) $. We then estimate the fractional interpolation error for the flux spline $\mathcal{F}_{N(N',M')}^I$ via
+\begin{align}
+    \delta_{(N',M')}(\alpha, \chi) = \left|1 - \frac{\mathcal{F}_{N(N',M')}^I(\alpha, \chi)}{\mathcal{F}_{N(N'+1,M'+1)}^I(\alpha, \chi)} \right|.
+\end{align}
+By downsampling the data, we calculate $\delta_{(7,6)}$, $\delta_{(6,5)}$, and $\delta_{(5,4)}$. We plot $\delta_{(7,6)}$ in Figure \ref{fig:fluxSplineError}, demonstrating that $\delta_{(7,6)}<10^{-6}$ across the entire domain. To estimate the interpolation error of our fully-sampled spline, $\delta_{(8,7)}$, we examine the convergence rate of $|| \delta_{(n+1,n)} ||_\infty$ in Figure \ref{fig:fluxSplineConvergence}. We find that $|| \delta_{(n+1,n)} ||_\infty \propto 2^{-4n}$, which is consistent with the standard fourth-order scaling for cubic spline errors ($\delta \sim \Delta x^4$ for grid spacing $\Delta x$). Provided this scaling holds true as we increase the sampling rate, we estimate that $\delta_{(8,7)} \lesssim 5\times 10^{-8}$.
+
+We also compare the flux interpolant to Kerr circular flux values produced by independent codes \cite{TaraETC14, GralHughWarb16}. Tables of these values are provided within the ``Circular Orbit Self-force Data'' repository hosted by the Black Hole Perturbation Toolkit \cite{BHPTK18}. Figure \ref{fig:fluxComparison} plots the fractional errors between the Toolkit data set and our interpolated fluxes for the spin values $\hat{a} = [-0.99, -0.8, -0.5, 0.1, 0.6, 0.9, 0.995, 0.999]$ as a function of the orbital separation $r_0$. For $r_0 \gtrsim 3.5 M$ the fractional errors in the fluxes are consistent with the interpolation error estimated in Figure \ref{fig:fluxSplineError}, indicating that our flux results are reliable to a precision $\sim 10^{-9}$ in this domain. Crucially, we find that our use of the $E(3)$ boundary condition in our spline interpolation is essential for achieving these small fractional errors. For example, in Figure \ref{fig:fluxComparison2} we plot the fractional errors resulting from the use of the more common `natural' or `not-a-knot' spline boundary conditions when interpolating our flux results. Both boundary conditions degrade the accuracy of our interpolated flux data, with the natural spline providing the largest fractional errors. For both the natural and not-a-knot splines, the fractional errors rise as we approach larger negative values of the spin ($a \rightarrow -1$) and larger orbital separations ($\Omega \rightarrow \Omega_\mathrm{min}$), where our flux data is sparsely-sampled. Therefore, a careful choice of boundary conditions can significantly improve the accuracy of our splines, thereby diminishing the number of points at which we need to perform expensive calculations of the gravitational wave fluxes.
+
+Finally, we return the near-ISCO region of Figure \ref{fig:fluxComparison}. The fractional errors between our data and the fluxes published in the Toolkit peak at $\sim 10^{-3}$ near $r_0 \sim 3 M$, as seen in the middle plot of Figure \ref{fig:fluxComparison}. To identify the source of this disagreement, we perform another set of flux calculations using the \texttt{Teukolsky} Mathematica package \cite{BHPT_TEUK}, which is also provided in the Black Hole Perturbation Toolkit.\footnote{Note that this package was designed and implemented independently of the circular flux data published in the ``Circular Orbit Self-force Data'' Toolkit data repository.} In the Mathematica code, we use over 300 digits of precision to guarantee the accuracy of the computed flux values. The fractional error between our flux interpolant and the high-precision Teukolsky fluxes are shown in the right plot of Figure \ref{fig:fluxComparison}, demonstrating strong agreement between our data and the Toolkit-generated fluxes. Therefore, we suspect that the flux values published in the ``Circular Orbit Self-force Data'' repository are not accurate to all reported digits for $ 2M \lesssim r_0 \lesssim 4 M$.
+
+Altogether, these tests indicate the the error in our interpolated flux function is $< 10^{8}$ and often matches the intrinsic error in the underlying flux data, which was calculated to a requested precision of $\sim 10$ digits. Since flux errors scale as $\sim \epsilon^{-1}$ over an inspiral, we expect that this level of flux interpolation error will have a subradian impact on the phase accuracy of our gravitational waveforms for astrophysically-realistic systems.
+
+\subsection{Numerical accuracy of trajectories}
+\label{app:trajtests}
+
+Next we validate the accuracy of our trajectories. For the time and phase evolution, we are concerned with the absolute error in the splines, since the quantities $\Omega t$ and $\Phi$ appear directly in the phasing of our frequency- and time-domain waveforms, respectively. 
+
+First we verify the numerical convergence of our splines. Similar to our analysis of the fluxes, we define the convergence measures,
+\begin{align}
+    \Delta^t_{(N',M')} &= \left| {\check{t}^I_{(N',M')}} - {\check{t}^I_{(N'+1,M'+1)}} \right|,
+    \\
+    \Delta^\Phi_{(N',M')} &= \left| {\check{\Phi}^I_{(N',M')}} - {\check{\Phi}^I_{(N'+1,M'+1)}} \right|,
+\end{align}
+and plot $|| \Delta^{t/\Phi}_{(n+1,n)}||_\infty$ for $n = (3, 4, 5, 6)$ in Figure \ref{fig:trajConvergence}. As before, the error improves as we increase the sampling density by a factor of $2$ in each dimension, though in this case the maximum absolute error converges slightly faster than $2^{4n}$. Thus extrapolating this rate of convergence, we estimate $|| \Delta^{t/\Phi}_{(8,7)}||_\infty \lesssim 5\times 10^{-7}$. 
+
+Next, we check that the interpolated trajectories satisfy the equations of motion \eqref{eqn:eom2} via the two tests,
+\begin{align}
+    \delta_{t}(\hat{\Omega}_0, \hat{a}) &= \left| 1 - \left[1 + \frac{1}{\mathcal{F}^I_N}\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)\right]\left[1 - \frac{d\check{t}^I}{d\alpha}\right]^{-1}\right|,
+    \\
+    \delta_{\Phi}(\hat{\Omega}_0, \hat{a}) &= \left| 1 -  \left[1 + \frac{\hat{\Omega}_0}{\mathcal{F}^I_N}\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)\right]\left[1 -\frac{d\check{\Phi}^I}{d{\alpha}} \right]^{-1}\right|,
+\end{align}
+where, on the righthand side, all functions and derivatives are evaluated at $\alpha(\hat{a},\hat{\Omega}_0)$ and $\chi(\hat{a})$. We shift the numerators and denominators by a factor $1$, because the $\alpha$-derivatives vanish at $\alpha = 0$. This translation effectively leads to $\delta_t$ and $\delta_\Phi$ measuring absolute error for values of $\alpha \lesssim 0.05$, while measuring relative error for values $\alpha \gtrsim 0.05$. Based on this analysis, we find $||\delta_t||_\infty \simeq 10^{-5.8}$ and $||\delta_\Phi||_\infty \simeq 10^{-5.9}$.
+
+To assess the accuracy of $\hat{\Omega}^I(\check{t};\hat{a})$, we calculate the error
+\begin{align}
+    \delta_{\Omega}(t_0, \hat{a}) = \left| 1- \frac{t_0}{\check{t}^I[\alpha(\hat{\Omega}^I[\beta(t_0)])]} \right|,
+\end{align}
+where once again all functions are evaluated at $\chi(\hat{a})$.
 
 \bibliography{parent}
 
