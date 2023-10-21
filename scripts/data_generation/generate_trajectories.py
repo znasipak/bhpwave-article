@@ -11,8 +11,14 @@ OMEGA_MIN = 2.e-3
 A_MAX = 0.9999
 
 flux_array = np.load(pathname + "/../../data/Edot_circ.npy")
-chi_array = np.linspace(0, 1, flux_array.shape[0])
-alpha_array = np.linspace(0, 1, flux_array.shape[1])
+chi_flux_array = np.linspace(0, 1, flux_array.shape[0])
+alpha_flux_array = np.linspace(0, 1, flux_array.shape[1])
+
+Nchi = 2**7 + 1
+Nalpha = 2**8 + 1
+
+chi_array = np.linspace(0, 1, Nchi)
+alpha_array = np.linspace(0, 1, Nalpha)
 beta_array = np.linspace(0, 1, alpha_array.shape[0])
 
 def alpha_of_a_omega(a, omega):
@@ -59,87 +65,125 @@ def energy_r_derivative(a, r):
 def r_omega_derivative(a, omega):
     return -2./(3.*pow(omega, 5./3.)*pow(1. - a*omega, 1./3.))
 
-t_data = np.zeros(flux_array.shape)
-phi_data = np.zeros(flux_array.shape)
-alpha_beta_data = np.zeros(flux_array.shape)
+ALPHA, CHI = np.meshgrid(alpha_array, chi_array)
+BETA, _ = np.meshgrid(beta_array, chi_array)
+SPIN = spin_of_chi(CHI)
+OMEGA = omega_of_a_alpha(SPIN, ALPHA)
+
+t_data = np.zeros(ALPHA.shape)
+phi_data = np.zeros(ALPHA.shape)
+alpha_beta_data = np.zeros(ALPHA.shape)
+phi_beta_data = np.zeros(ALPHA.shape)
 
 def pn_flux_noprefactor(omega):
     return omega**(10./3.)
 
 ALPHA, CHI = np.meshgrid(alpha_array, chi_array)
+BETA, _ = np.meshgrid(beta_array, chi_array)
 SPIN = spin_of_chi(CHI)
 OMEGA = omega_of_a_alpha(SPIN, ALPHA)
 
-flux_norm_array = flux_array/pn_flux_noprefactor(OMEGA)
+ALPHA_FLUX, CHI_FLUX = np.meshgrid(alpha_flux_array, chi_flux_array)
+SPIN_FLUX = spin_of_chi(CHI_FLUX)
+OMEGA_FLUX = omega_of_a_alpha(SPIN_FLUX, ALPHA_FLUX)
+flux_norm_array = flux_array/pn_flux_noprefactor(OMEGA_FLUX)
+flux_spline = BicubicSpline(chi_flux_array, alpha_flux_array, flux_norm_array, bc = 'E(3)')
 
-beta_exponent = 6
+
+# redefine PN flux prefactor to have some error in it
+error_magnitude = 1e-5
+def pn_flux_noprefactor(omega):
+    return omega**(10./3.)*(1 + (1 + error_magnitude)*1247/336*omega**(2./3.))/(1 + 1247/336*omega**(2./3.))
 
 def time_of_beta(beta, gamma_max_squared):
-    gamma_squared = beta**beta_exponent*gamma_max_squared
+    gamma_squared = beta**6*gamma_max_squared
     return np.expm1(gamma_squared)
 
-print("Generating time and phase evolution")
+print("Generating time, phase, and frequency evolution")
 for i in range(chi_array.shape[0]):
     iterChi = chi_array.shape[0] - 1 - i # we fill things in backwards in order to define \gamma_max early on
-    a_val = spin_of_chi(chi_array[iterChi])
+    chi_val = chi_array[iterChi]
+    a_val = spin_of_chi(chi_val)
     oISCO_val = kerr_isco_frequency(a_val)
     omega_data = omega_of_a_alpha(a_val, alpha_array)
-    flux_norm = flux_norm_array[iterChi]
-    flux_spline = CubicSpline(alpha_array, flux_norm, bc = 'E(3)')
+    # flux_norm = flux_norm_array[iterChi]
+    # flux_spline = CubicSpline(alpha_array, flux_norm, bc = 'E(3)')
 
     def dIdAlphaIntegrate(alpha, t):
         omega = omega_of_a_alpha(a_val, alpha)
         dOmega_dAlpha = omega_alpha_derivative(omega, oISCO_val)
         dE_dOmega = energy_omega_derivative(a_val, omega)
-        Edot = flux_spline(alpha)*pn_flux_noprefactor(omega)
+        Edot = flux_spline(chi_val, alpha)*pn_flux_noprefactor(omega)
         return dE_dOmega*dOmega_dAlpha/Edot*np.array([1., omega])
     
     insp = solve_ivp(dIdAlphaIntegrate, [0., 1.], [0., 0.], method='DOP853', t_eval=alpha_array, rtol=1.e-13, atol=1.e-14)
     t_data[iterChi] = insp.y[0]
     phi_data[iterChi] = insp.y[1]
 
-def pn_timescale_noprefactor(omega):
-    return omega**(-8./3.)
+    if iterChi == (chi_array.shape[0] - 1):
+        t_max_value = insp.y[0][-1]
+        gamma_max_squared = np.log(1 + t_max_value)
+        t_array = time_of_beta(beta_array, gamma_max_squared)
+        max_step_size = np.min(t_array[1:] - t_array[:-1])
 
-def time_of_omega_root(omega, t0, spin_index):
-    a_val = spin_of_chi(chi_array[spin_index])
-    omega_data = omega_of_a_alpha(a_val, alpha_array)
+    def dtdAlphaIntegrate(alpha, t):
+        omega = omega_of_a_alpha(a_val, alpha)
+        dOmega_dAlpha = omega_alpha_derivative(omega, oISCO_val)
+        dE_dOmega = energy_omega_derivative(a_val, omega)
+        Edot = flux_spline(chi_val, alpha)*pn_flux_noprefactor(omega)
+        return dE_dOmega*dOmega_dAlpha/Edot*np.array([1.])
+    
+    def dJdTIntegrate(t, alphaVec):
+        alpha = alphaVec[0]
+        omega = omega_of_a_alpha(a_val, alpha)
+        dOmega_dAlpha = omega_alpha_derivative(omega, oISCO_val)
+        dE_dOmega = energy_omega_derivative(a_val, omega)
+        Edot = flux_spline(chi_val, alpha)*pn_flux_noprefactor(omega)
+        return np.array([1./(dE_dOmega*dOmega_dAlpha/Edot), omega])
+    
+    # def insp_event(t, y):
+    #     sol = 1.
+    #     for t0 in (t_array):
+    #         sol *= (y[0] - t0)/(y[0] + t0 + 1)
+    #     return sol
 
-    t_norm = t_data[spin_index]/pn_timescale_noprefactor(omega_data)
-    spl = CubicSpline(alpha_array, t_norm, bc = 'E(3)')
+    # insp = solve_ivp(dtdAlphaIntegrate, [0., 1.], [0.], method='DOP853', t_eval=None, rtol=1.e-13, atol=1.e-14, events = insp_event, max_step=max_step_size)
+    # alpha_select = insp.t_events[0][insp.y_events[0].T[0] >= (1. - 1.e-8)*t_array[1]]
+    # alpha_beta_data[iterChi] = np.concatenate(([0.], alpha_select))
 
-    alpha = alpha_of_a_omega(a_val, omega)
-    return spl(alpha)*pn_timescale_noprefactor(omega) - t0
+    def insp_event(t, y):
+        return (y[0] - t_array[-1])
+    
+    def t_of_alpha_root(alpha, t0):
+        insp = solve_ivp(dtdAlphaIntegrate, [0., alpha], [0.], method='DOP853', t_eval=None, rtol=1.e-13, atol = 1.e-16)
+        t_val = insp.y[0]
+        return t_val[-1] - t0
 
-beta_array = np.linspace(0, 1, alpha_array.shape[0])
-t_max_values = t_data.T[-1]
-# t_max_values_norm = t_max_values/pn_timescale_noprefactor(OMEGA_MIN)
-# spl_tmax = CubicSpline(chi_array, t_max_values_norm, bc = "E(3)")
-gamma_max_squared = np.log(1. + t_max_values[-1])
-print(f'gamma_max_squared: {gamma_max_squared}')
+    # insp = solve_ivp(dtdAlphaIntegrate, [0., 1.], [0.], method='DOP853', t_eval=None, rtol=1.e-13, atol=1.e-14, events = insp_event)
+    # alpha_select = insp.t_events[0]
 
-print("Inverting for frequency evolution")
-omega_beta_array = np.zeros((chi_array.shape[0], alpha_array.shape[0]))
-for i in range(chi_array.shape[0]):
-    spin_index = i
-    a_val = spin_of_chi(chi_array[spin_index])
-    omega_max = omega_of_a_alpha(a_val, 0.)
-    print(a_val)
-    for j, beta in enumerate(beta_array):
-        t0 = time_of_beta(beta, gamma_max_squared)
-        if j == 0:
-            omega_beta_array[i, 0] = omega_max
-        elif j == alpha_array.shape[0] - 1 and i == chi_array.shape[0] - 1:
-            omega_beta_array[i, -1] = OMEGA_MIN
-        else:
-            xtol = np.min([1.e-10, 0.001*t0])
-            sol = root_scalar(time_of_omega_root, args=(t0, spin_index), method='brentq', bracket=[OMEGA_MIN, omega_max], xtol = xtol, rtol = 1.e-12)
-            omega_beta_array[i, j] = sol.root
+    sol = root_scalar(t_of_alpha_root, args=(t_array[1]), method='brentq', bracket=[0, 1], rtol = 1.e-12)
+    alpha_initial = sol.root
 
-BETA, _ = np.meshgrid(beta_array, chi_array)
+    insp = solve_ivp(dIdAlphaIntegrate, [0., alpha_initial], [0., 0.], method='DOP853', t_eval=[alpha_initial], rtol=1.e-13, atol = 1.e-16)
+    phi_initial = insp.y[1][0]
 
-print("Saving trajectory data to " + pathname + "/../../data/trajectory_v3.txt")
+    insp = solve_ivp(dJdTIntegrate, [t_array[1], t_array[-1]], [alpha_initial, phi_initial], method='DOP853', t_eval=t_array[1:], rtol=1.e-13, atol = 1.e-12)
+    # if i < 10:
+    print(i)
+    print(1 - root_scalar(t_of_alpha_root, args=(t_array[-1]), method='brentq', bracket=[0, 1], rtol = 1.e-12).root/insp.y[0][-1])
+    alpha_beta_data[iterChi] = np.concatenate(([0.], insp.y[0]))
+    phi_beta_data[iterChi] = np.concatenate(([0.], insp.y[1]))
 
-header_txt = "chiN \t alphaN \n129\t257 \nchi\talpha\tflux\ttime\tphase\tbeta\tomega"
-full_data_array = np.array([CHI.flatten(), ALPHA.flatten(), flux_array.flatten(), t_data.flatten(), phi_data.flatten(), BETA.flatten(), omega_beta_array.flatten()]).T
-np.savetxt(pathname + "/../../data/trajectory_v3.txt", full_data_array, header=header_txt, fmt = "%1.15e", comments='')
+omega_beta_array = omega_of_a_alpha(SPIN, alpha_beta_data)
+
+flux_array_upsample = np.zeros(phi_data.shape)
+chiDownsample = round((phi_data.shape[0] - 1)/(flux_array.shape[0] - 1))
+alphaDownsample = round((phi_data.shape[1] - 1)/(flux_array.shape[1] - 1))
+flux_array_upsample[::chiDownsample, ::alphaDownsample] = flux_array
+
+print("Saving trajectory data to " + pathname + "/../../data/trajectory_error.txt")
+
+header_txt = "chiN \t alphaN \n"+str(chi_array.shape[0])+"\t"+str(alpha_array.shape[0])+"\t"+str(chi_flux_array.shape[0])+"\t"+str(alpha_flux_array.shape[0])+" \nchi\talpha\tflux\ttime\tphase\tbeta\tomega\tPhiT"
+full_data_array = np.array([CHI.flatten(), ALPHA.flatten(), flux_array_upsample.flatten(), -t_data.flatten(), -phi_data.flatten(), BETA.flatten(), omega_beta_array.flatten(), -phi_beta_data.flatten()]).T
+np.savetxt(pathname + "/../../data/trajectory_error.txt", full_data_array, header=header_txt, fmt = "%1.15e", comments='')
