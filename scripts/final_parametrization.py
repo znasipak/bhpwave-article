@@ -79,27 +79,30 @@ for i in range(Nb):
 cmap_temp = mpl.colormaps['plasma'].resampled(80)
 alist = [0, 10, 14, 20, 25, 29, 32]
 
+N = len(alist)
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.viridis(np.linspace(0,1,N)))
+
 fig, axs = plt.subplots(1, 3,)
 fig.set_size_inches(12, 4)
 fig.tight_layout()
 for i in alist: 
     avals, omegas, EdotVals = flux_samples[i,:,:3].T
     alphas, betas = flux_samples[i,:,3:].T
-    axs[0].plot((alphas), EdotVals, color=cmap_temp(2*i), lw=2)
+    axs[0].plot((alphas), EdotVals, lw=2)
 axs[0].set_xlabel('$\\alpha$')
 axs[0].set_ylabel('$5/32 \\times \mathcal{F}_E^N$')
 
 for i in alist: 
     avals, omegas, PVals = phase_samples[i,:,:3].T
     alphas, betas = flux_samples[i,:,3:].T
-    axs[1].plot((alphas), 32*PVals*omegas**(5/3), color=cmap_temp(2*i), lw=2)
+    axs[1].plot((alphas), 32*PVals*omegas**(5/3), lw=2)
 axs[1].set_xlabel('$\\alpha$')
 axs[1].set_ylabel('$32 \\times \check{\Phi}^N$')
 
 for i in alist: 
     avals, omegas, TVals = time_samples[i,:,:3].T
     alphas, betas = flux_samples[i,:,3:].T
-    axs[2].plot((alphas), 256/5*TVals*omegas**(8/3), label="$\\beta = {:.4}$".format(betas[0]), color=cmap_temp(2*i), lw=2)
+    axs[2].plot((alphas), 256/5*TVals*omegas**(8/3), label="$\\beta = {:.4}$".format(betas[0]), lw=2)
 axs[2].set_xlabel('$\\alpha$')
 axs[2].set_ylabel('$256/5 \\times \check{t}^N$')
 axs[2].legend()

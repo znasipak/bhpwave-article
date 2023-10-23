@@ -108,7 +108,7 @@ for data in testData:
 testData2 = []
 for file, spin in zip(flux_file_list[:3], flux_spin_list[:3]):
     tempData = np.loadtxt(file)
-    tempData = tempData[tempData[:,0] < 3.5]
+    tempData = tempData[tempData[:,0] < 62.]
     testData2.append([spin, tempData])
 
 comparisons3 = []
@@ -148,10 +148,13 @@ for vals in mma_values_999:
 mma_comp_999 = np.array(comparison_fluxes).T
 
 markers = ['.', 'x', '+', 'D', 'o', 'v', 's', '8']
+N = len(markers)
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.rainbow(np.linspace(0,1,N)))
+
 fig, axs = plt.subplots(1,3, sharey=True)
 fig.set_size_inches(13.5, 4.)
 for i, comparison in enumerate(comparisons):
-    axs[0].plot(comparison[0][::32], comparison[1][::32], markers[i], label="$"+str(flux_spin_list[i])+"$", markersize = 4.5, fillstyle='none')
+    axs[0].plot(comparison[0][::16], comparison[1][::16], markers[i], label="$"+str(flux_spin_list[i])+"$", markersize = 4.5, fillstyle='none')
 axs[0].set_yscale('log')
 axs[0].legend(loc="upper right", ncol=2)
 axs[0].set_xlabel('$r_0/M$')
@@ -159,15 +162,15 @@ axs[0].set_ylabel('$|1 - {\mathcal{F}_E^I}/{\mathcal{F}_E^\mathrm{ext}}|$')
 axs[0].set_title('Circular Orbit Self-force Data')
 
 for i, comparison in enumerate(comparisons3):
-    axs[1].plot(comparison[0][::16], comparison[1][::16], markers[i][::16], label="$"+str(flux_spin_list[i])+"$", markersize = 4.5, fillstyle='none')
+    axs[1].plot(comparison[0][::16], comparison[1][::16], markers[i], label="$"+str(flux_spin_list[i])+"$", markersize = 4.5, fillstyle='none')
 axs[1].set_yscale('log')
 axs[1].set_xlabel('$r_0/M$')
 axs[1].set_xlim(0.95, 3.6)
 axs[1].set_title('Circular Orbit Self-force Data')
 
-axs[2].plot(mma_comp_999[0], mma_comp_999[1], markers[0], label="$0.9$", markersize = 4.5)
-axs[2].plot(mma_comp_995[0], mma_comp_995[1], markers[1], label="$0.995$", markersize = 4.5)
-axs[2].plot(mma_comp_900[0], mma_comp_900[1], markers[2], label="$0.9$", markersize = 5.5)
+axs[2].plot(mma_comp_999[0], mma_comp_999[1], markers[0], label="$0.999$", markersize = 4.5, fillstyle='none')
+axs[2].plot(mma_comp_995[0], mma_comp_995[1], markers[1], label="$0.995$", markersize = 4.5, fillstyle='none')
+axs[2].plot(mma_comp_900[0], mma_comp_900[1], markers[2], label="$0.9$", markersize = 4.5, fillstyle='none')
 axs[2].set_xlabel('$r_0/M$')
 axs[2].set_xlim(0.95, 3.6)
 axs[2].set_title('High-precision Mathematica Values')

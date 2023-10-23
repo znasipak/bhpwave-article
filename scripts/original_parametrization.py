@@ -76,8 +76,11 @@ for i in range(Nb):
         phase_samples[i, j] = [atemp, otemp, PData, alpha, beta]
         time_samples[i, j] = [atemp, otemp, TData, alpha, beta]
 
-cmap_temp = mpl.colormaps['plasma'].resampled(80)
+# cmap_temp = mpl.colormaps['viridis'].resampled(80)
 alist = [0, 14, 20, 25, 29, 32]
+
+N = len(alist)
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.viridis(np.linspace(0,1,N)))
 
 fig, axs = plt.subplots(1, 3,)
 fig.set_size_inches(12, 4)
@@ -85,14 +88,14 @@ fig.tight_layout()
 for i in alist: 
     avals, omegas, EdotVals = flux_samples[i,:,:3].T
     EdotVals_reweighted = 32./5.*EdotVals*omegas**(10/3)
-    axs[0].plot(omegas[0] - omegas, EdotVals_reweighted, label="$\hat{a}" + "= {:.4}$".format(avals[0]), color=cmap_temp(2*i), lw=2)
+    axs[0].plot(omegas[0] - omegas, EdotVals_reweighted, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[0].set_yscale('log')
 axs[0].set_xlabel('$\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}$')
 axs[0].set_ylabel('$\mathcal{F}_E$')
 
 for i in alist: 
     avals, omegas, PVals = phase_samples[i,:,:3].T
-    axs[1].plot(omegas[0] - omegas, 1 + PVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), color=cmap_temp(2*i), lw=2)
+    axs[1].plot(omegas[0] - omegas, 1 + PVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[1].set_yscale('log')
 axs[1].set_xlabel('$\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}$')
 axs[1].set_ylabel('$1 - \check{\Phi}$')
@@ -100,7 +103,7 @@ axs[1].set_ylabel('$1 - \check{\Phi}$')
 
 for i in alist: 
     avals, omegas, TVals = time_samples[i,:,:3].T
-    axs[2].plot(omegas[0] - omegas, 1 + TVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), color=cmap_temp(2*i), lw=2)
+    axs[2].plot(omegas[0] - omegas, 1 + TVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[2].set_yscale('log')
 axs[2].set_xlabel('$\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}$')
 axs[2].set_ylabel('$1 - \check{t}$')
