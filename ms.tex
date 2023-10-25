@@ -341,9 +341,9 @@ To simplify the calculation of our inspirals, we introduce the dimensionless and
 \end{align} 
 A hat represents a quantity that is made dimensionless, while a check represents a quantity that is dimensionless and scaled by the mass ratio. We then reparametrize the equations of motion in terms of the (dimensionless) orbital frequency, yielding
 \begin{subequations} \label{eqn:eom1}
-\begin{align} \label{eqn:dtdOmega}
+\begin{align} \label{eqn:dOmegadT}
     \frac{d\hat{\Omega}}{d\check{t}} &= -\left[\partial_{\mathcal{E}}\hat{\Omega}(\hat{\Omega}; \hat{a}) {\mathcal{F}}_E(\hat{\Omega}; \hat{a})\right],
-    \\ \label{eqn:dPhidOmega}
+    \\ \label{eqn:dPhidT}
     \frac{d\check{\Phi}}{d\check{t}} &= \hat{\Omega},
 \end{align} 
 \end{subequations}
@@ -462,7 +462,7 @@ Furthermore, we find that the interpolated frequency-domain quantities, $\check{
 \begin{figure*}[!htp]
     \centering
     \includegraphics[width=0.99\linewidth]{figures/deltaPhiTest.pdf}
-    \caption{The maximized phase difference $||\delta \Phi^I||_{\hat{a}, \hat{\Omega}}$ as described in Sec.~\ref{sec:traj}.}
+    \caption{The maximized phase difference $||\delta \Phi^I||_{\hat{a}, \hat{\Omega}}$ as described in Sec.~\ref{sec:traj} for different observation periods $T_\mathrm{obs}$. We can see that for any observation period, all the way up to 25 years, our phase spline maintains subradian phase accuracy when compared to direct numerical integration of the orbital phase.}
     \label{fig:obsTime}
 \end{figure*}
 
@@ -479,8 +479,8 @@ Similar to the trajectories, we presample the complex waveform amplitudes $B_{\e
 
 \begin{figure}[!htp]
     \centering
-    \includegraphics[width=0.98\linewidth]{figures/amp_combined.pdf}
-    \caption{Dependence of the amplitude $A_{22}$ on the radius of the orbit $r_0/M$ for different Kerr spin parameters $\hat{a}$.}
+    \includegraphics[width=0.95\linewidth]{figures/amp_combined.pdf}
+    \caption{The top panel plots the waveform amplitude $A_{\ell=2, m=2}$ as a function of the radius of the orbit $r_0/M$ for different Kerr spin parameters $\hat{a}\geq 0.9$. The bottom panel plots the $A_{\ell, m=\ell}$ modes as a function of $r_0/M$ for $\hat{a} = 0.9999$ and all $2 \leq \ell \leq 20$. The magnitude of the $\ell = m$ modes is ordered inversely with $\ell$ in the bottom panel. In other words, the $\ell = 2$ mode is the dominant mode, the $\ell = 3$ is the next most dominant mode, then $\ell =4$, $\ell = 5$, and so on, with $\ell = 20$ being the mode with the smallest magnitude. The bottom (yellow) line in the top panel is identical to the top (yellow) line in the bottom panel.}
     \label{fig:amplitudeVariation}
 \end{figure}
 
@@ -537,7 +537,7 @@ In Table \ref{tab:modeCount}, we report the number of selected modes $N_\mathrm{
     \centering
     \includegraphics[width=0.98\linewidth]{figures/few_bhpwave_overlay.pdf}
     \includegraphics[width=0.98\linewidth]{figures/few_phase_comparison.pdf}
-    \caption{Dependence of the amplitude $A_{22}$ on the radius of the orbit $r_0/M$ for different Kerr spin parameters $\hat{a}$.}
+    \caption{Comparisons between waveforms produced by the FEW and \texttt{bhpwave} models for an EMRI with intrinsic parameters $(M, \mu, a, p_0, e_0, x) = (10^6 M_\odot, 10 M_\odot, 0, 12.05, 0, 1)$. The top panels show the evolution of the strain $h_+$ with time $t$. The solid (blue) line corresponds to the waveform computed by FEW, while the dashed (orange) line is produced by \texttt{bhpwave}. The three different top panels focus on three small time windows within the full four year signal. The bottom panel plots the difference in the gravitational wave phases between the waveform models. The solid (cyan) line shows the phase difference when the waveforms are evaluated at the same set of parameters. The dashed (black) line is the phase difference after rescaling the FEW parameters to account for different definitions of $GM_\odot$.}
     \label{fig:compareFEW}
 \end{figure*}
 
@@ -639,7 +639,7 @@ is the noise-weighted inner product between two real signals, $S_n(f)$ is the on
 \begin{figure}[!htp]
     \centering
     \includegraphics[width=0.98\linewidth]{figures/dft_comparison.pdf}
-    \caption{Dependence of the amplitude $A_{22}$ on the radius of the orbit $r_0/M$ for different Kerr spin parameters $\hat{a}$.}
+    \caption{Comparison between the discrete Fourier transform of the time-domain gravitational wave strain $h_+$ produced by \texttt{bhpwave} (solid blue line) and the frequency-domain waveform for $h_+$ produced by \texttt{bhpwave} using the stationary phase approximation (dashed orange line). For reference, the sensitivity curve $S_n$ is also plotted as the dot-dashed (black) curve. Note that we downsample the number of the frequency samples included in this plot by a factor of 10000 in order to more clearly see how well the two waveforms agree, even in the highly oscillatory region between $10^{-3} - 10^{-2}$ Hz.}
     \label{fig:dft}
 \end{figure}
 
@@ -739,15 +739,15 @@ where $\Delta h_m(\theta_\mathrm{peak}) = h_t(\theta_\mathrm{peak}) - h_m(\theta
 
 \begin{figure}[!htp]
     \centering
-    \includegraphics[width=0.98\linewidth]{figures/phase_error.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \includegraphics[width=0.95\linewidth]{figures/phase_error.pdf}
+    \caption{Comparisons of the statistical uncertainties $\Delta\theta^i_\mathrm{stat}$ (solid lines) and systematic biases $\Delta\theta^i_\mathrm{bias}$ (dashed lines) in the intrinsic parameters $(M,\mu,\hat{a},p_0)$ as a function of spin $\hat{a}$ for a range of binaries with different masses. Different mass combinations $(M,\mu)$ corresponds to different colors and markers, as given by the legend in the third panel. The systematic biases are introduced by downsampling the trajectory data to introduce larger interpolation errors into our waveform model.}
     \label{fig:fisherCompare}
 \end{figure}
 
 \begin{figure*}[!htp]
     \centering
     \includegraphics[width=0.98\linewidth]{figures/flux_error.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \caption{The impact of flux errors on parameter estimation as a function of spin $\hat{a}$, as discussed in Sec.~\ref{sec:errors}. The circular markers (purple line) plot the mismatch between $h_E(\theta)$ and $h_B(\theta-\theta_\mathrm{bias})$, where $h_B$ is our accurate model, $h_E$ is our biased model, $\theta$ are the parameters of the GW source predicted by $h_B$ and $\theta_\mathrm{bias}$ are the biases in those parameters from the true values $\theta-\theta_\mathrm{bias}$. The diamond markers (blue line) plot the maximum ratio between these biases and the intrinsic uncertainty in the extrinsic parameters, while the triangle markers (green line) plot the same ratio for the intrinsic parameters. The square markers (yellow line) report the overall dephasing between the two models. The dashed line marks a magnitude of one.}
     \label{fig:errorBiases}
 \end{figure*}
 
@@ -821,28 +821,28 @@ This can be seen by parametrizing the time and phase in terms of $\Omega$. Then 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/flux_spline_error.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \caption{The fractional interpolation error $\delta_{(7,6)}$ of the flux spline $\mathcal{F}_{N(7,6)}^I$ as a function of the grid parameters $\alpha$ and $\chi$.}
     \label{fig:fluxSplineError}
 \end{figure}
 
 \begin{figure}[bhtp]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/spline_convergence.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
     \label{fig:fluxSplineConvergence}
 \end{figure}
 
 \begin{figure*}[bhtp]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/flux_comparison.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \caption{Fractional error between our interpolated flux data $\mathcal{F}_E^I$ and the flux data reported within the Circular Orbit Self-force Data repository in the BHPToolkit. The left panel displays errors across the entire domain covered by our spline. The middle plot focuses on a region where we find strong disagreement between our model and the repository. The right plot compares our data to flux calculations from a high-precision (>100 digits) Mathematica code in this problem region, demonstrating that our results are consistent with high-precision calculations.}
     \label{fig:fluxComparison}
 \end{figure*}
 
 \begin{figure}[bhtp]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/boundary_condition_comparison.pdf}
-    \caption{Different rescalings and reparametrizations of the flux to improve interpolation accuracy of the numerical data.}
+    \caption{The same comparison as the left plot of Figure \ref{fig:fluxComparison}, only this time we construct our flux interpolant by imposing not-a-knot boundary conditions (top panel) or natural boundary conditions (bottom panel), leading to worse agreement with the pretabulated flux data.}
     \label{fig:fluxComparison2}
 \end{figure}
 
