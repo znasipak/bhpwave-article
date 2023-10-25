@@ -459,11 +459,18 @@ To evaluate the fidelity of our interpolated trajectories, we perform a series o
 
 Furthermore, we find that the interpolated frequency-domain quantities, $\check{t}^I_N$ and $\check{\Phi}^I_N$, possess absolute errors $< 5\times 10^{-7}$, and the derivatives of the interpolated splines satisfy the frequency-domain equations of motion \eqref{eqn:eom2} to a precision $\sim 10^{-6}$. Likewise, $\alpha^I$ has estimated fractional errors $< 5\times 10^{-8}$ and $\check{\Phi}^I_{N(2)}$ has estimated absolute errors $< 5\times 10^{-8}$.
 
+\begin{figure*}[!htp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{figures/deltaPhiTest.pdf}
+    \caption{The maximized phase difference $||\delta \Phi^I||_{\hat{a}, \hat{\Omega}}$ as described in Sec.~\ref{sec:traj}.}
+    \label{fig:obsTime}
+\end{figure*}
+
 Next we quantify the impact of these interpolation errors on the gravitational wave phases.  First, we calculate the phase accumulated over an inspiral with initial orbital frequency $\hat{\Omega}_0$ using our interpolated data,
 \begin{align}
     \Delta \Phi^I &= \frac{1}{\epsilon}\left[\check{\Phi}^I\left(\check{t}_0 + \frac{\epsilon T}{M}; \hat{a} \right) - \check{\Phi}^I\left(\check{t}_0; \hat{a}\right) \right],
 \end{align}
-where $\check{t}_0 = \check{t}(\hat{\Omega}_0; \hat{a})$ and $T$ is the duration of the observed inspiral. Note that $\check{\Phi}^I$ is reconstructed from $\check{\Phi}^I_{N(2)}$ via \eqref{eqn:phaseNorm2}. We then compare $\Delta \Phi^I$ to the accumulated phase $\Phi^\mathrm{ODE}$ obtained by directly integrating \eqref{eqn:eom1} with the initial conditions $\hat{\Omega}(\check{t}=0) = \hat{\Omega}_0$ and $\check{\Phi}(\check{t}=0) = 0$. The interpolation error is then estimated by the difference $\delta \Phi^I = |\Delta\Phi^I - \Phi^\mathrm{ODE}|$. Next, we find the maximum value of $\delta \Phi^I$ for a range of $\hat{a}$ values and initial orbital frequencies $\hat{\Omega}_0$. We denote this maximized difference as $||\delta \Phi^I||_{\hat{a},\hat{\Omega}}$. In Figure \ref{fig:obsTime} we plot $||\delta \Phi^I||_{\hat{a},\hat{\Omega}}$ as a function of mass-ratio $10^{-7} \leq \epsilon \leq 10^{-2}$ and massive black hole mass $10^{4} \leq M \leq 10^{8}$ for binaries observed for $T = [0.5, 2, 5, 10, 25]$ years. We measure maximum phase errors of $0.0097$, $0.0186$, $0.0307$, $0.0430$, and $0.0642$ for the observation periods $0.5$, $2$, $5$, $10$, and $25$ years, respectively. These phase errors are reduced by about a factor of two if we only focus on inspirals with initial frequencies $\hat{\Omega} \geq 0.013$ (corresponding to $r_0 \lesssim 18 M)$ and binaries with smaller bodies of mass $\mu \geq 2 M_\odot$. Therefore, we see that interpolation errors most likely meet the subradian phase accuracy requirements for realistic space-based mHz gravitational wave observations, which we further verify in Sec.~\ref{sec:errors}.
+where $\check{t}_0 = \check{t}(\hat{\Omega}_0; \hat{a})$ and $T$ is the duration of the observed inspiral. Note that $\check{\Phi}^I$ is reconstructed from $\check{\Phi}^I_{N(2)}$ via \eqref{eqn:phaseNorm2}. We then compare $\Delta \Phi^I$ to the accumulated phase $\Phi^\mathrm{ODE}$ obtained by directly integrating \eqref{eqn:eom1} with the initial conditions $\hat{\Omega}(\check{t}=0) = \hat{\Omega}_0$ and $\check{\Phi}(\check{t}=0) = 0$. The interpolation error is then estimated by the difference $\delta \Phi^I = |\Delta\Phi^I - \Phi^\mathrm{ODE}|$. Next, we find the maximum value of $\delta \Phi^I$ for a range of $\hat{a}$ values and initial orbital frequencies $\hat{\Omega}_0$. We denote this maximized difference as $||\delta \Phi^I||_{\hat{a},\hat{\Omega}}$. In Figure \ref{fig:obsTime} we plot $||\delta \Phi^I||_{\hat{a},\hat{\Omega}}$ as a function of mass-ratio $10^{-7} \leq \epsilon \leq 10^{-2}$ and massive black hole mass $10^{4} \leq M \leq 10^{8}$ for binaries observed for $T = [0.5, 2, 5, 10, 25]$ years. We exclude binaries with secondary masses $\mu < M_\odot$. We measure maximum phase errors of $0.0097$, $0.0186$, $0.0307$, $0.0430$, and $0.0642$ for the observation periods $0.5$, $2$, $5$, $10$, and $25$ years, respectively. These phase errors are reduced by about a factor of two if we only focus on inspirals with initial frequencies $\hat{\Omega} \geq 0.013$ (corresponding to $r_0 \lesssim 18 M)$ and binaries with smaller bodies of mass $\mu \geq 2 M_\odot$. Therefore, we see that interpolation errors most likely meet the subradian phase accuracy requirements for realistic space-based mHz gravitational wave observations, which we further verify in Sec.~\ref{sec:errors}.
 
 \subsection{Mode amplitudes}
 \label{sec:amp}
@@ -531,7 +538,7 @@ In Table \ref{tab:modeCount}, we report the number of selected modes $N_\mathrm{
     \includegraphics[width=0.98\linewidth]{figures/few_bhpwave_overlay.pdf}
     \includegraphics[width=0.98\linewidth]{figures/few_phase_comparison.pdf}
     \caption{Dependence of the amplitude $A_{22}$ on the radius of the orbit $r_0/M$ for different Kerr spin parameters $\hat{a}$.}
-    \label{fig:amplitudeVariation}
+    \label{fig:compareFEW}
 \end{figure*}
 
 
