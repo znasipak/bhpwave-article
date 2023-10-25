@@ -43,9 +43,31 @@ def a_omega_to_chi_alpha(a, omega):
     alpha = alpha_of_a_omega(a, omega)
     return (chi, alpha)
 
-traj = np.loadtxt(pathname+"/../data/trajectory.txt", skiprows=3)
-trajHeader = np.loadtxt(pathname+"/../data/trajectory.txt", skiprows=2, max_rows=1, dtype='str')
-trajShape = np.loadtxt(pathname+"/../data/trajectory.txt", skiprows=1, max_rows=1, dtype='int')
+def pn_flux_noprefactor(omega):
+    return omega**(10./3.)
+
+def pn_time_noprefactor(a, omega):
+    oISCO = kerr_isco_frequency(a)
+    offset = oISCO**(-8/3) + 1.e-6
+    return np.abs(offset - omega**(-8./3.))
+
+def pn_phase_noprefactor(a, omega):
+    oISCO = kerr_isco_frequency(a)
+    offset = oISCO**(-5/3) - 1.e-6
+    return np.abs(offset - omega**(-5./3.))
+
+def pn_flux_noprefactor_domega(omega):
+    return (10./3.)*omega**(7./3.)
+
+def pn_time_noprefactor_domega(omega):
+    return -(-8/3)*omega**(-11./3.)
+
+def pn_phase_noprefactor_domega(omega):
+    return -(-5/3)*omega**(-8./3.)
+
+traj = np.loadtxt(pathname+"/../data/trajectory_downsampled_base.txt", skiprows=3)
+trajHeader = np.loadtxt(pathname+"/../data/trajectory_downsampled_base.txt", skiprows=2, max_rows=1, dtype='str')
+trajShape = np.loadtxt(pathname+"/../data/trajectory_downsampled_base.txt", skiprows=1, max_rows=1, dtype='int')
 
 phaseData = np.ascontiguousarray(traj[:, 4].reshape(trajShape))
 timeData = np.ascontiguousarray(traj[:, 3].reshape(trajShape))
@@ -93,14 +115,14 @@ axs[0].set_ylabel('$5/32 \\times \mathcal{F}_E^N$')
 
 for i in alist: 
     avals, omegas, PVals = phase_samples[i,:,:3].T
-    axs[1].plot((omegas[0] - omegas)/(omegas[0] - omegas[-1]), 32*PVals*omegas**(5/3), label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
+    axs[1].plot((omegas[0] - omegas)/(omegas[0] - omegas[-1]), 32*PVals/pn_phase_noprefactor(avals[0], omegas), label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[1].set_xlabel('$(\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega})/(\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}_\mathrm{min})$')
 axs[1].set_ylabel('$32 \\times \check{\Phi}^N$')
 # axs[1].legend()
 
 for i in alist: 
     avals, omegas, TVals = time_samples[i,:,:3].T
-    axs[2].plot((omegas[0] - omegas)/(omegas[0] - omegas[-1]), 256/5*TVals*omegas**(8/3), label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
+    axs[2].plot((omegas[0] - omegas)/(omegas[0] - omegas[-1]), 256/5*TVals/pn_time_noprefactor(avals[0], omegas), label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[2].set_xlabel('$(\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega})/(\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}_\mathrm{min})$')
 axs[2].set_ylabel('$256/5 \\times\check{t}^N$')
 axs[2].legend()
