@@ -824,7 +824,7 @@ We describe several validation tests for assessing the accuracy of our inspiral 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/spline_convergence.pdf}
-    \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
+    \caption{Convergence of the maximum fractional interpolation error $||\delta_{(n+1,n)}||_\infty$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2^{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
     \label{fig:fluxSplineConvergence}
 \end{figure}
 
@@ -846,9 +846,9 @@ We describe several validation tests for assessing the accuracy of our inspiral 
 
 To confirm the numerical accuracy of our interpolated data, we perform a series of comparisons and self-consistency checks. First we assess the accuracy of our flux interpolant by downsampling the data. Let $f^I_{(n,m)}(x,y)$ denote a bicubic spline that interpolates the function $f(x,y)$ using $(2^n+1) \times (2^m+1)$ grid points in $(x,y)$, e.g., $\mathcal{F}_{N(8,7)}^I(\alpha, \chi) = \mathcal{F}_N^I(\alpha, \chi) $. We then estimate the fractional interpolation error for the flux spline $\mathcal{F}_{N(N',M')}^I$ via
 \begin{align}
-    \delta_{(N',M')}(\alpha, \chi) = \left|1 - \frac{\mathcal{F}_{N(N',M')}^I(\alpha, \chi)}{\mathcal{F}_{N(N'+1,M'+1)}^I(\alpha, \chi)} \right|.
+    \Delta^\mathcal{F}_{(N',M')}(\alpha, \chi) = \left|1 - \frac{\mathcal{F}_{N(N',M')}^I(\alpha, \chi)}{\mathcal{F}_{N(N'+1,M'+1)}^I(\alpha, \chi)} \right|.
 \end{align}
-By downsampling the data, we calculate $\delta_{(7,6)}$, $\delta_{(6,5)}$, and $\delta_{(5,4)}$. We plot $\delta_{(7,6)}$ in Figure \ref{fig:fluxSplineError}, demonstrating that $\delta_{(7,6)}<10^{-6}$ across the entire domain. To estimate the interpolation error of our fully-sampled spline, $\delta_{(8,7)}$, we examine the convergence rate of $|| \delta_{(n+1,n)} ||_\infty$ in Figure \ref{fig:fluxSplineConvergence}. We find that $|| \delta_{(n+1,n)} ||_\infty \propto 2^{-4n}$, which is consistent with the standard fourth-order scaling for cubic spline errors ($\delta \sim \Delta x^4$ for grid spacing $\Delta x$). Provided this scaling holds true as we increase the sampling rate, we estimate that $\delta_{(8,7)} \lesssim 5\times 10^{-8}$.
+By downsampling the data, we calculate $\Delta^\mathcal{F}_{(7,6)}$, $\Delta^\mathcal{F}_{(6,5)}$, and $\Delta^\mathcal{F}_{(5,4)}$. We plot $\Delta^\mathcal{F}_{(7,6)}$ in Figure \ref{fig:fluxSplineError}, demonstrating that $\Delta^\mathcal{F}_{(7,6)}<10^{-6}$ across the entire domain. To estimate the interpolation error of our fully-sampled spline, $\Delta^\mathcal{F}_{(8,7)}$, we examine the convergence rate of $|| \Delta^\mathcal{F}_{(n+1,n)} ||_\infty$ in Figure \ref{fig:fluxSplineConvergence}. We find that $|| \Delta^\mathcal{F}_{(n+1,n)} ||_\infty \propto 2^{-4n}$, which is consistent with the standard fourth-order scaling for cubic spline errors (error $ \sim \Delta x^4$ for grid spacing $\Delta x$). Provided this scaling holds true as we increase the sampling rate, we estimate that $\Delta^\mathcal{F}_{(8,7)} \lesssim 5\times 10^{-8}$.
 
 We also compare the flux interpolant to Kerr circular flux values produced by independent codes \cite{TaraETC14, GralHughWarb16}. Tables of these values are provided within the ``Circular Orbit Self-force Data'' repository hosted by the Black Hole Perturbation Toolkit \cite{BHPTK18}. Figure \ref{fig:fluxComparison} plots the fractional errors between the Toolkit data set and our interpolated fluxes for the spin values $\hat{a} = [-0.99, -0.8, -0.5, 0.1, 0.6, 0.9, 0.995, 0.999]$ as a function of the orbital separation $r_0$. For $r_0 \gtrsim 3.5 M$ the fractional errors in the fluxes are consistent with the interpolation error estimated in Figure \ref{fig:fluxSplineError}, indicating that our flux results are reliable to a precision $\sim 10^{-9}$ in this domain. Crucially, we find that our use of the $E(3)$ boundary condition in our spline interpolation is essential for achieving these small fractional errors. For example, in Figure \ref{fig:fluxComparison2} we plot the fractional errors resulting from the use of the more common `natural' or `not-a-knot' spline boundary conditions when interpolating our flux results. Both boundary conditions degrade the accuracy of our interpolated flux data, with the natural spline providing the largest fractional errors. For both the natural and not-a-knot splines, the fractional errors rise as we approach larger negative values of the spin ($a \rightarrow -1$) and larger orbital separations ($\Omega \rightarrow \Omega_\mathrm{min}$), where our flux data is sparsely-sampled. Therefore, a careful choice of boundary conditions can significantly improve the accuracy of our splines, thereby reducing the number of points at which we need to perform expensive calculations of the gravitational wave fluxes.
 
@@ -859,14 +859,14 @@ Altogether, these tests indicate that the error in our interpolated flux functio
 \begin{figure}[!t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/timeAndPhaseConvergence.pdf}
-    \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
+    \caption{Convergence of the maximum absolute interpolation error for the frequency-weighted time and phase splines, $||\Delta^{\Omega t}_{(n,n)}||_\infty$ (orange squares) and $||\Delta^\Phi_{(n,n)}||_\infty$ (green diamonds), along with the fractional interpolation error for the unweighted time-spline $||\Delta^t_{(n,n)}||_\infty$ (blue diamonds). The dashed lines correspond to a power-law convergence of $2^{4n}$.}
     \label{fig:trajConvergence}
 \end{figure}
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/frequencyConvergence.pdf}
-    \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
+    \caption{Convergence of the maximum fractional interpolation error for the frequency spline, $||\Delta^{\Omega}_{(n,n)}||_\infty$.}
     \label{fig:frequencyConvergence}
 \end{figure}
 
