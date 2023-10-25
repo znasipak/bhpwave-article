@@ -124,7 +124,7 @@ axs[1].set_ylabel('$32 \\times \check{\Phi}_N$')
 for i in alist: 
     avals, omegas, TVals = time_samples[i,:,:3].T
     alphas, betas = flux_samples[i,:,3:].T
-    axs[2].plot((alphas), 256/5*TVals/pn_time_noprefactor(avals[0], omegas), label="$\\beta = {:.4}$".format(betas[0]), lw=2)
+    axs[2].plot((alphas), 256/5*TVals/pn_time_noprefactor(avals[0], omegas), label="$\\chi = {:.4}$".format(betas[0]), lw=2)
 axs[2].set_xlabel('$\\alpha$')
 axs[2].set_ylabel('$256/5 \\times \check{t}_N$')
 axs[2].legend()
