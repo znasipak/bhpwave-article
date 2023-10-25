@@ -43,9 +43,9 @@ def a_omega_to_chi_alpha(a, omega):
     return (chi, alpha)
 
 EdotDataComp = np.load(pathname + "/../data/bhpwave_edot_redo.npy")
-traj = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=3)
-trajHeader = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=2, max_rows=1, dtype='str')
-trajShape = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=1, max_rows=1, dtype='int')
+traj = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=3)
+trajHeader = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=2, max_rows=1, dtype='str')
+trajShape = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=1, max_rows=1, dtype='int')
 
 phaseData = np.ascontiguousarray(traj[:, 4].reshape(trajShape))
 timeData = np.ascontiguousarray(traj[:, 3].reshape(trajShape))
@@ -97,10 +97,10 @@ error_test_4=np.array([[abs(1-Edot_34(chiI, alphaJ)/Edot_78(chiI, alphaJ)) for c
 error_test_4[error_test_4==0.]=1.e-16
 np.max(error_test_2)/np.max(error_test), np.max(error_test_3)/np.max(error_test_2)
 
-plt.plot([6, 5, 4, 3], [np.max(error_test_2)*16**(5-n) for n in [6, 5, 4, 3]], '--', label = "$\propto 2^{-4n}$")
+plt.plot([6, 5, 4, 3], [np.max(error_test_2)*16**(5-n) for n in [6, 5, 4, 3]], 'k--', label = "$\propto 2^{-4n}$", linewidth=1)
 plt.plot([6, 5, 4, 3], [np.max(error_test), np.max(error_test_2), np.max(error_test_3), np.max(error_test_4)], '.', markersize=10)
 plt.yscale('log')
-plt.ylabel('$||\delta_{(n+1,n)}||_\infty$')
+plt.ylabel('$||\Delta^\mathcal{F}_{(n+1,n)}||_\infty$')
 plt.xlabel('$n$')
 plt.legend()
 

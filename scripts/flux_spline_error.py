@@ -75,7 +75,7 @@ error_test[error_test==0.]=1.e-16
 plt.pcolormesh(chiIs, alphaJs, np.log10(error_test), cmap='viridis', shading='gouraud')
 plt.ylabel('$\\alpha$')
 plt.xlabel('$\\chi$')
-plt.title('$\delta_{(7,6)}(\\alpha, \\chi)$')
+plt.title('$\Delta^\mathcal{F}_{(7,6)}(\\alpha, \\chi)$')
 plt.colorbar()
 
 fig_name = "flux_spline_error"
