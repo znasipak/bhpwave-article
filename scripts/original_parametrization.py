@@ -43,9 +43,9 @@ def a_omega_to_chi_alpha(a, omega):
     alpha = alpha_of_a_omega(a, omega)
     return (chi, alpha)
 
-traj = np.loadtxt(pathname+"/../data/trajectory.txt", skiprows=3)
-trajHeader = np.loadtxt(pathname+"/../data/trajectory.txt", skiprows=2, max_rows=1, dtype='str')
-trajShape = np.loadtxt(pathname+"/../data/trajectory.txt", skiprows=1, max_rows=1, dtype='int')
+traj = np.loadtxt(pathname+"/../data/trajectory_downsampled_base.txt", skiprows=3)
+trajHeader = np.loadtxt(pathname+"/../data/trajectory_downsampled_base.txt", skiprows=2, max_rows=1, dtype='str')
+trajShape = np.loadtxt(pathname+"/../data/trajectory_downsampled_base.txt", skiprows=1, max_rows=1, dtype='int')
 
 phaseData = np.ascontiguousarray(traj[:, 4].reshape(trajShape))
 timeData = np.ascontiguousarray(traj[:, 3].reshape(trajShape))
@@ -88,24 +88,27 @@ fig.tight_layout()
 for i in alist: 
     avals, omegas, EdotVals = flux_samples[i,:,:3].T
     EdotVals_reweighted = 32./5.*EdotVals*omegas**(10/3)
-    axs[0].plot(omegas[0] - omegas, EdotVals_reweighted, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
+    axs[0].plot(omegas, EdotVals_reweighted, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[0].set_yscale('log')
-axs[0].set_xlabel('$\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}$')
+axs[0].set_xscale('log')
+axs[0].set_xlabel('$\hat{\Omega}$')
 axs[0].set_ylabel('$\mathcal{F}_E$')
 
 for i in alist: 
     avals, omegas, PVals = phase_samples[i,:,:3].T
-    axs[1].plot(omegas[0] - omegas, 1 + PVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
+    axs[1].plot(omegas, 1 + PVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[1].set_yscale('log')
-axs[1].set_xlabel('$\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}$')
+axs[1].set_xscale('log')
+axs[1].set_xlabel('$\hat{\Omega}$')
 axs[1].set_ylabel('$1 - \check{\Phi}$')
 # axs[1].legend()
 
 for i in alist: 
     avals, omegas, TVals = time_samples[i,:,:3].T
-    axs[2].plot(omegas[0] - omegas, 1 + TVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
+    axs[2].plot(omegas, 1 + TVals, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[2].set_yscale('log')
-axs[2].set_xlabel('$\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega}$')
+axs[2].set_xscale('log')
+axs[2].set_xlabel('$\hat{\Omega}$')
 axs[2].set_ylabel('$1 - \check{t}$')
 axs[2].legend()
 
