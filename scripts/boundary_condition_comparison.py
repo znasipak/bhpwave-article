@@ -56,9 +56,9 @@ for spin in flux_spin_list:
         os.system(wget_string)
 
 EdotDataComp = np.load(pathname + "/../data/bhpwave_edot_redo.npy")
-traj = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=3)
-trajHeader = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=2, max_rows=1, dtype='str')
-trajShape = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=1, max_rows=1, dtype='int')
+traj = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=3)
+trajHeader = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=2, max_rows=1, dtype='str')
+trajShape = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=1, max_rows=1, dtype='int')
 
 phaseData = np.ascontiguousarray(traj[:, 4].reshape(trajShape))
 timeData = np.ascontiguousarray(traj[:, 3].reshape(trajShape))
@@ -90,6 +90,9 @@ for file, spin in zip(flux_file_list, flux_spin_list):
     tempData = np.loadtxt(file)
     tempData = tempData[tempData[:,0] < 62.]
     testData.append([spin, tempData])
+
+N = len(testData)
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.rainbow(np.linspace(0,1,N)))
 
 bc_array = ["not-a-knot", "natural"]
 markers = ['.', 'x', '+', 'D', 'o', 'v', 's', '8']

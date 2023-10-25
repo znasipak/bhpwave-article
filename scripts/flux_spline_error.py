@@ -43,9 +43,9 @@ def a_omega_to_chi_alpha(a, omega):
     return (chi, alpha)
 
 EdotDataComp = np.load(pathname + "/../data/bhpwave_edot_redo.npy")
-traj = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=3)
-trajHeader = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=2, max_rows=1, dtype='str')
-trajShape = np.loadtxt(pathname + "/../data/trajectory.txt", skiprows=1, max_rows=1, dtype='int')
+traj = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=3)
+trajHeader = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=2, max_rows=1, dtype='str')
+trajShape = np.loadtxt(pathname + "/../data/trajectory_downsampled_base.txt", skiprows=1, max_rows=1, dtype='int')
 
 phaseData = np.ascontiguousarray(traj[:, 4].reshape(trajShape))
 timeData = np.ascontiguousarray(traj[:, 3].reshape(trajShape))
@@ -72,7 +72,7 @@ chiIs = np.linspace(0., 1., 302)
 error_test=np.array([[abs(1-Edot_67(chiI, alphaJ)/Edot_78(chiI, alphaJ)) for chiI in chiIs] for alphaJ in alphaJs])
 error_test[error_test==0.]=1.e-16
 
-plt.pcolormesh(chiIs, alphaJs, np.log10(error_test), cmap='plasma', shading='gouraud')
+plt.pcolormesh(chiIs, alphaJs, np.log10(error_test), cmap='viridis', shading='gouraud')
 plt.ylabel('$\\alpha$')
 plt.xlabel('$\\chi$')
 plt.title('$\delta_{(7,6)}(\\alpha, \\chi)$')
