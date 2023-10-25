@@ -40,7 +40,7 @@
              %  but any date may be explicitly specified
 
 \begin{abstract}
-We present \texttt{bhpwave}: a new Python-based, open-source tool for generating the gravitational waveforms of stellar-mass compact objects undergoing quasi-circular inspirals into rotating massive black holes. These binaries, known as extreme-mass-ratio inspirals (EMRIs), are exciting mHz gravitational wave sources for future space-based detectors such as LISA. Relativistic models of EMRI gravitational wave signals are necessary to unlock the full scientific potential of mHz detectors, yet few open-source EMRI waveform models exist. To help fill this void we built \texttt{bhpwave}, which uses the adiabatic approximation from black hole perturbation theory to rapidly construct gravitational waveforms based on the leading-order inspiral dynamics of the binary. Crucially \texttt{bhpwave} is the first open-source adiabatic model to produce waveforms for binaries with \emph{rotating} massive black holes, opening a new dimension of parameter space for astrophysical investigation. In this work, we present the theoretical and numerical foundations underpinning \texttt{bhpwave}. We also demonstrate how \texttt{bhpwave} can be used to assess the impact of EMRI modeling errors on LISA gravitational wave data analysis. In particular, we find that for retrograde orbits and slowly-spinning black holes we can mismodel the gravitational wave phasing by as much as $\sim 10$ radians without significantly biasing EMRI parameter estimation.
+We present \texttt{bhpwave}: a new Python-based, open-source tool for generating the gravitational waveforms of stellar-mass compact objects undergoing quasi-circular inspirals into rotating massive black holes. These binaries, known as extreme-mass-ratio inspirals (EMRIs), are exciting mHz gravitational wave sources for future space-based detectors such as LISA. Relativistic models of EMRI gravitational wave signals are necessary to unlock the full scientific potential of mHz detectors, yet few open-source EMRI waveform models exist. To help fill this void we built \texttt{bhpwave}, which uses the adiabatic approximation from black hole perturbation theory to rapidly construct gravitational waveforms based on the leading-order inspiral dynamics of the binary. In this work, we present the theoretical and numerical foundations underpinning \texttt{bhpwave}. We also demonstrate how \texttt{bhpwave} can be used to assess the impact of EMRI modeling errors on LISA gravitational wave data analysis. In particular, we find that for retrograde orbits and slowly-spinning black holes we can mismodel the gravitational wave phasing by as much as $\sim 10$ radians without significantly biasing EMRI parameter estimation.
 \end{abstract}
 
 %\keywords{Suggested keywords}%Use showkeys class option if keyword
@@ -55,7 +55,7 @@ Extreme-mass-ratio inspirals (EMRIs) are binaries composed of a compact object w
 
 Due to their small mass ratios $\epsilon = \mu/M \ll 1$, EMRIs are naturally modeled by black hole perturbation theory and the self-force formalism \cite{PounWard20}. Within this framework, the small body is treated as a perturbation to a background Kerr spacetime. The inspiral of the small body is then driven by a \emph{gravitational self-force} (GSF), which arises from the small body interacting with its own perturbation of the spacetime metric. The metric perturbations and the GSF are constructed perturbatively, order by order in $\epsilon$, to derive the dynamics and resulting gravitational waves radiated by the binary. 
 
-We can understand the relative impact of these self-forces on EMRI gravitational waveforms by expanding the phasing of the EMRI gravitational waveform $\Phi_\mathrm{GW}$ in powers of $\epsilon$ via a two-timescale analysis \cite{HindFlan08},
+We can understand the relative impact of these self-forces on EMRI gravitational waveforms by expanding the phasing of the gravitational wave signal $\Phi_\mathrm{GW}$ in powers of $\epsilon$ via a two-timescale analysis \cite{HindFlan08},
 \begin{align} \label{eqn:twotimescale}
 \Phi_\mathrm{GW} = \frac{1}{\epsilon} \left[ \Phi_\mathrm{0PA} + \epsilon^{1/2} \Phi_\mathrm{res} + \epsilon \Phi_\mathrm{1PA} + O(\epsilon^2)\right].
 \end{align}
@@ -65,11 +65,11 @@ Nonetheless purely adiabatic models---which only include $\Phi_\mathrm{0PA}$ in 
 
 However, in practice it is challenging to optimize adiabatic EMRI waveform calculations in order to make them efficient and accessible, so that they can be incorporated in large scale samplings of parameter space. Currently, only one open-source tool exists for producing adiabatic EMRI waveforms: the Fast EMRI Waveforms (FEW) Python package \cite{ChuaGallVall19, ChuaETC20, KatzETC20, KatzETC21}. While this tool is the gold standard for EMRI waveform models, particularly due to its ability to leverage GPUs, it is currently restricted to eccentric binaries with non-rotating black holes. Since we expect almost all astrophysical EMRIs to possess a rotating massive black hole, it is important to extend models such as FEW into this crucial area of parameter space.
 
-Therefore we introduce \texttt{bhpwave} [RTD link?] an open-source Python-based waveform generator that models the adiabatic dynamics and gravitational wave signals produced by a small body undergoing a quasi-circular\footnote{By ``quasi-circular," we mean that, at any moment of time, the inspiral motion is tangent to a circular geodesic as described in Sec.~\ref{sec:adiabatic}. This is a consequence of the fact that in the adiabatic limit, circular orbits remain circular, i.e., $e(t) = O(\epsilon)$ \cite{KennOri96, Kenn98}.} (non-eccentric) inspiral into a {rotating} massive black hole. This code can model any binary with an initial orbital separation of $r_0 \leq 60 M$ and a massive black hole spin in the range $|a| \leq 0.9999 M$. (See Sec.~\ref{sec:adiabatic} for exact definitions of $a$ and $r_0$.) Furthermore, the model supports any mass-ratio, though adiabatic waveform models are most relevant for $\epsilon \lesssim 10^{-4}$. By leveraging parallel computations across CPUs, \texttt{bhpwave} can evaluate years-long waveforms in milliseconds. Even on a standard laptop, waveform evaluations still complete within a few hundred milliseconds to a couple seconds.
+Therefore we introduce \texttt{bhpwave}\footnote{\href{https://bhpwave.readthedocs.io}{https://bhpwave.readthedocs.io}} an open-source Python-based waveform generator that models the adiabatic dynamics and gravitational wave signals produced by a small body undergoing a quasi-circular\footnote{By ``quasi-circular," we mean that, at any moment of time, the inspiral motion is tangent to a circular geodesic as described in Sec.~\ref{sec:adiabatic}. This is a consequence of the fact that in the adiabatic limit, circular orbits remain circular, i.e., $e(t) = O(\epsilon)$ \cite{KennOri96, Kenn98}.} (non-eccentric) inspiral into a {rotating} massive black hole. This code can model any binary with an initial orbital separation of $r_0 \leq 60 M$ and a massive black hole spin in the range $|a| \leq 0.9999 M$. (See Sec.~\ref{sec:adiabatic} for exact definitions of $a$ and $r_0$.) Furthermore, the model supports any mass-ratio, though adiabatic waveform models are most relevant for $\epsilon \lesssim 10^{-4}$. By leveraging parallel computations across CPUs, \texttt{bhpwave} can evaluate years-long waveforms in milliseconds. Even on a standard laptop, waveform evaluations still complete within a few hundred milliseconds to a couple seconds.
 
 A notable limitation of \texttt{bhpwave} is that it currently neglects the effects of eccentricity and precession.\footnote{In a frame where the massive black hole's angular momentum is held fixed, precession is instead described in terms of the inclination of the small body relative to the equatorial plane of the more massive black hole.} Nonetheless, while most observed EMRIs are expected to be highly eccentric \cite{GairETC04},  there are possible formation channels driven by accretion flow that circularize EMRI dynamics and align the orbital angular momentum with the massive black hole's spin \cite{PanLyuYang21}. Thus, \texttt{bhpwave} is applicable to these so-called ``wet-formation" EMRIs. 
 
-Additionally, \texttt{bhpwave} does not provide the first adiabatic calculation of quasi-circular inspirals. These systems have long been studied in the literature \cite{Detw78, KennOri96, FinnThor00, Hugh00b, GralHughWarb16}. However, as aforementioned, it is challenging to implement an adiabatic model that is efficient, reliable, and accessible. Even when neglecting eccentricity, the inclusion of massive black hole spin presents a number of challenges that are less pronounced for binaries with non-spinning bodies, such as the larger range of radial separations accessible to spinning binaries, the faster frequency evolution for more deeply bound orbits, and the higher harmonic content needed for modeling rapidly-rotating systems. By building upon the theoretical foundations described in the literature, our aim for \texttt{bhpwave} is to provide an efficient and accessible model that fills in a new area of parameter space and provides an important stepping stone for developing more advanced models that incorporate all possible orbital effects.
+Additionally, \texttt{bhpwave} does not provide the first adiabatic calculation of quasi-circular inspirals. These systems have long been studied in the literature \cite{Detw78, KennOri96, FinnThor00, Hugh00b, GralHughWarb16}, and other works have even modeled eccentric, equatorial and eccentric, inclined EMRIs for a restricted number massive black hole spins \cite{FujiShib20, SkouLuke22, HughETC21}. Recent works have also included the effects due to the small body's spin \cite{SkouLuke22, DrumETC23}. However, as aforementioned, it is challenging to implement an adiabatic model that is efficient, accurate, and accessible across a majority of the parameter space. Even when neglecting eccentricity, the inclusion of massive black hole spin presents a number of challenges that are less pronounced for binaries with non-spinning bodies, such as the larger range of radial separations accessible to spinning binaries, the faster frequency evolution for more deeply bound orbits, and the higher harmonic content needed for modeling rapidly-rotating systems. By building upon the theoretical foundations described in the literature, our aim for \texttt{bhpwave} is to provide an efficient and accessible model that fills in a new area of parameter space and provides an important stepping stone for developing more advanced waveform codes that incorporate all possible orbital effects.
 
 To encourage the continued development of open-source adiabatic EMRI models, this paper outlines the theoretical and numerical foundations underpinning \texttt{bhpwave}. In Sec.~\ref{sec:adiabatic} we summarize the quasi-circular limit of the adiabatic approximation within the context of black hole perturbation theory to establish methods and notation. 
 %In Sec.~\ref{sec:bhpwave} we outline how \texttt{bhpwave} implements the quasi-circular adiabatic model, primarily through its three modules: \texttt{bhpwave.trajectory}, \texttt{bhpwave.harmonics}, and \texttt{bhpwave.waveform}. 
@@ -92,7 +92,7 @@ Consider a small body with mass $\mu$ orbiting in a Kerr spacetime with metric $
 \end{multline}
 where $a$ is the Kerr spin parameter, $M$ is the Kerr mass parameter, $\Delta = r^2 - 2Mr + a^2$, and $\Sigma = r^2+a^2\cos^2\theta$.
 
-The mass $\mu$ follows a geodesic $z_p^\mu \doteq (t_p, r_p, \theta_p, \phi_p)$ that maintains a constant Boyer-Lindquist radius $r_p = r_0$ and is restricted to the equatorial plane $\theta_p = \pi/2$ (with respect to the angular momentum of the Kerr black hole). Due to the Killing symmetries of Kerr spacetime, this motion possesses three constants of motion: the orbital energy $u_t = - \mathcal{E}$, the $z$-component of the orbital angular momentum $u_\phi = \mathcal{L}_z$, and the Carter constant $\mathcal{Q} = Q_{\mu\nu} u^\mu u^\nu$ \cite{SteiWarb20}, which are related to $a$ and $r_0$ by
+The mass $\mu$ follows a geodesic $z_p^\mu \doteq (t_p, r_p, \theta_p, \phi_p)$ that maintains a constant Boyer-Lindquist radius $r_p = r_0$ and is restricted to the equatorial plane $\theta_p = \pi/2$ (with respect to the angular momentum of the Kerr black hole). Due to the Killing symmetries of Kerr spacetime, this motion possesses three constants of motion: the orbital energy $\mathcal{E} = -u_t$, the $z$-component of the orbital angular momentum $\mathcal{L}_z = u_\phi$, and the Carter constant $\mathcal{Q} = Q_{\mu\nu} u^\mu u^\nu$ (see Eq.~(8) in \cite{SteiWarb20} for an explicit definition of $Q_{\mu\nu}$), which are related to $a$ and $r_0$ by
 \begin{subequations} \label{eqn:En}
 \begin{align}
     \mathcal{E} &= \frac{1 - 2 v^2 \pm \hat{a} v^3}{\sqrt{1-3v^2\pm 2\hat{a}v^3}},
@@ -122,7 +122,7 @@ respectively. Straightforward integration then yields
     &
     \phi_p(\tau) &= \omega_\phi\tau.
 \end{align*}
-Combining these results, we can re-express the evolution of the orbital phase in terms of coordinate time, $\phi_p(t) = \Omega_p t$, where the geodesic orbital frequency
+Combining these results, we can re-express the evolution of the orbital phase in terms of coordinate time, $\phi_p(t) = \Omega_p t$, where the geodesic orbital frequency is given as
 \begin{equation} \label{eqn:OmegaOfR}
     \Omega_p = \frac{\omega_\phi}{\omega_t}
     = \pm \frac{v^3}{M(1 \pm \hat{a} v^3)}.
@@ -154,7 +154,7 @@ where $\rho = -(r-ia\cos\theta)^{-1}$, $S_{-2jm}(\theta;\gamma)$ is the spin-wei
 
 The spin-weighted spheroidal harmonics can be conveniently represented as a rapidly-converging series of spin-weighted spherical harmonics $Y_{s\ell m}(\theta)e^{im\phi}$ \cite{Hugh00b},
 \begin{align}
-    S_{sjm}(\theta, \gamma) = \sum_{\ell=\ell_\mathrm{min}}^\infty b_{sjm}^\ell(\gamma) Y_{s\ell m}(\theta),
+    S_{sjm}(\theta; \gamma) = \sum_{\ell=\ell_\mathrm{min}}^\infty b_{sjm}^\ell(\gamma) Y_{s\ell m}(\theta),
 \end{align}
 where $\ell_\mathrm{min}=\mathrm{max}[|m|,|s|]$. This decomposition is particularly useful because we can then reproject $\psi_4$ onto an angular basis that is independent of frequency,
 \begin{align} \label{eqn:psi4LModes}
@@ -245,7 +245,7 @@ Due to gravitational {radiation-reaction}, the small body does not remain on a c
     &
     \frac{d\Phi}{dt} &= \Omega + O(\epsilon).
 \end{align}
-Because $\dot{E} \sim \epsilon$, the orbital energy evolves gradually and the evolution can be understood in terms of the \emph{osculating geodesics} method \cite{GairETC11}. At any time $t_0$, the motion is approximately tangent to a geodesic with energy $E(t_0) \approx \mathcal{E}$ and frequency $\Omega(t_0) \approx \Omega_p$. The small body then evolves from geodesic to geodesic based on its gravitational wave emission until the body approaches the ISCO, at which point the approximation breaks down and we end the evolution.
+Because $\dot{E} \sim \epsilon$, the orbital energy evolves gradually and the evolution can be understood in terms of a time-averaged \emph{osculating geodesics} method \cite{GairETC11}. At any time $t_0$, the motion is approximately tangent to a geodesic with energy $E(t_0) \approx \mathcal{E}$ and frequency $\Omega(t_0) \approx \Omega_p$. The small body then evolves from geodesic to geodesic based on its gravitational wave emission until the body approaches the ISCO, at which point the approximation breaks down and we end the evolution.
 
 In effect, at leading order we can express the orbital frequency $\Omega$ in terms of the orbital energy ${E}$ using Eqs.~\eqref{eqn:En} and \eqref{eqn:OmegaOfR}, but with $\mathcal{E}$ and $\Omega_p$ replaced by $E$ and $\Omega$, respectively. Furthermore, the forcing term $\mathcal{F}_E$ is constructed using flux-balance arguments \cite{Mino03, Galt82, QuinWald99}: for a point-particle on a circular geodesic the loss of orbital energy is balanced by the gravitational wave energy flux $\dot{E}^\mathrm{GW}$, leading to the relation $\epsilon \mathcal{F}_E = \dot{E}^\mathrm{GW}$. 
 
@@ -266,16 +266,14 @@ where, assuming $r \gg M$, the waveform amplitudes are given by
 \begin{align} \label{eqn:amplitude}
     B_{\ell m}(u) = -2\frac{X_{-2\ell m}^\mathcal{I}( \Omega(u);a)}{m^2\Omega^2(u)} = A_{\ell m} e^{i \psi_{\ell m}}.
 \end{align}
-For later convenience we introduce the magnitude of the waveform amplitudes $A_{\ell m} = |B_{\ell m}|$ and the phase of the complex amplitudes $\psi_{\ell m}$, both of which depend on $\Omega(u)$ and $a$. Furthermore, rather than using the conventions of \cite{KatzETC21,HughETC21}, we follow \cite{PounWard20} and parametrize the adiabatic waveform in terms of the outgoing time-coordinate $u=t-r_*$. As a result, if we hold the orbital constants and frequencies fixed, \eqref{eqn:adiabaticWaveform} reduces to a geodesic ``snapshot'' waveform obtained via \eqref{eqn:psi4ToH} and \eqref{eqn:psi4LModes}. In practice, when implementing \eqref{eqn:adiabaticWaveform} in \texttt{bhpwave}, we replace $u$ with Boyer-Lindquist time $t$ to match the FEW model (which is described by (10) in \cite{KatzETC21}). This is equivalent to parametrizing all of our waveforms with an initial time $t_0 = r_*$. Therefore, we replace $u$ with $t$ for the remainder of this work.
+For later convenience we introduce the magnitude of the waveform amplitudes $A_{\ell m} = |B_{\ell m}|$ and the phase of the complex amplitudes $\psi_{\ell m}$, both of which depend on $\Omega(u)$ and $a$. Furthermore, rather than using the conventions of \cite{KatzETC21,HughETC21}, we follow \cite{PounWard20} and parametrize the adiabatic waveform in terms of the outgoing time-coordinate $u=t-r_*$. As a result, our expression is consistent with the adiabatic expression obtained from a full two-timescale analysis, and if we hold the orbital constants and frequencies fixed, \eqref{eqn:adiabaticWaveform} reduces to a geodesic ``snapshot'' waveform obtained via \eqref{eqn:psi4ToH} and \eqref{eqn:psi4LModes}. In practice, when implementing \eqref{eqn:adiabaticWaveform} in \texttt{bhpwave}, we replace $u$ with Boyer-Lindquist time $t$ to match the FEW model (which is described by (10) in \cite{KatzETC21}). This is equivalent to parametrizing all of our waveforms with an initial time $t_0 = r_*$. Therefore, we replace $u$ with $t$ for the remainder of this work.
 
 \subsection{Frequency domain waveforms}
 
 The amplitude and phase decomposition of \eqref{eqn:adiabaticWaveform} makes it particularly straightforward to represent our waveforms in the frequency domain via the stationary phase approximation \cite{HughETC21},
 \begin{subequations} \label{eqn:fourierH}
 \begin{align}
-    \tilde{h}(f) &= \int_{-\infty}^\infty h(t) e^{2\pi i f t} dt,
-    \\ 
-    &=  \frac{\mu}{r}\sum_{\ell m}\tilde{h}_{\ell m}(f),
+    \tilde{h}(f) &= \int_{-\infty}^\infty h(t) e^{2\pi i f t} dt =  \frac{\mu}{r}\sum_{\ell m}\tilde{h}_{\ell m}(f),
     \\ 
     \tilde{h}_{\ell m}(f) & \approx \tilde{B}_{\ell m}(f) Y_{-2\ell m} e^{i[2\pi f t_p(f)+ m(\phi-\Phi[t_p(f)])]},
 \end{align}
@@ -475,7 +473,7 @@ where $\check{t}_0 = \check{t}(\hat{\Omega}_0; \hat{a})$ and $T$ is the duration
 \subsection{Mode amplitudes}
 \label{sec:amp}
 
-Similar to the trajectories, we presample the complex waveform amplitudes $B_{\ell m}$ on a fixed $65 \times 65$ grid in $(\alpha, \chi)$. To optimize the accuracy of our amplitude interpolation, we decompose $B_{\ell m}$ into its phase $\psi_{\ell m}$ and the log of its real amplitude $\mathcal{A}_{lm} = \ln A_{\ell m}$. We then interpolate these quantities independently. We generate mode data for $\ell \leq 20$ and $0 < m \leq \ell$. Even with the reduced sampling, the interpolation errors introduce estimated fractional errors $< 3\times 10^{-5}$ in $A_{\ell m}$ and absolute errors $<2 \times 10^{-5}$ for $\psi_{\ell m}$, as discussed in Appendix \ref{app:tests}.
+Similar to the trajectories, we presample the complex waveform amplitudes $B_{\ell m}$ on a fixed $65 \times 65$ grid in $(\alpha, \chi)$. To optimize the accuracy of our amplitude interpolation, we decompose $B_{\ell m}$ into its phase $\psi_{\ell m}$ and the log of its real amplitude $\ln A_{\ell m}$. We then interpolate these quantities independently. We generate mode data for $\ell \leq 20$ and $0 < m \leq \ell$. Even with the reduced sampling, the interpolation errors introduce estimated fractional errors $< 3\times 10^{-5}$ in $A_{\ell m}$ and absolute errors $<2 \times 10^{-5}$ for $\psi_{\ell m}$, as discussed in Appendix \ref{app:tests}.
 
 \begin{figure}[!htp]
     \centering
@@ -503,12 +501,12 @@ Given a fixed time step $dt$, signal duration $T$, and binary source parameters 
 leading to the reduced sums
 \begin{subequations} \label{eqn:timeDomainReduced}
     \begin{align}
-    h_+(t) = +\sum_{\ell=2}^\infty \sum_{ m = 1}^{\ell} A_{\ell m} Y^+_{\ell m} \cos(\psi_{\ell m} + m[\phi - \Phi]),
+    h_+(t) = +\sum_{\ell=2}^\infty \sum_{ m = 1}^{\ell} \mathcal{A}_{\ell m} Y^+_{\ell m} \cos(\psi_{\ell m} + m[\phi - \Phi]),
     \\
-    h_\times(t) = -\sum_{\ell=2}^\infty \sum_{ m = 1}^{\ell}  A_{\ell m} Y^\times_{\ell m} \sin(\psi_{\ell m} + m[\phi - \Phi]),
+    h_\times(t) = -\sum_{\ell=2}^\infty \sum_{ m = 1}^{\ell}  \mathcal{A}_{\ell m} Y^\times_{\ell m} \sin(\psi_{\ell m} + m[\phi - \Phi]),
 \end{align}
 \end{subequations}
-where
+where $\mathcal{A} = \mu A_{\ell m}/r$ and
 \begin{subequations}
     \begin{align}
     Y^{+/\times}_{\ell m}(\theta) &= Y_{-2\ell m}(\theta) \pm Y_{-2\ell m}(\pi - \theta),
@@ -520,9 +518,9 @@ where
 The truncation of the $(\ell, m)$-mode sum is determined by the power in each harmonic mode,
 \begin{subequations} \label{eqn:powerLM}
     \begin{align}
-        P_{\ell m} &= \int_0^T \left[ \left|A_{\ell m}(t) Y_{\ell m}^+\right|^2 + \left|A_{\ell m}(t) Y_{\ell m}^\times\right|^2  \right]dt ,
+        P_{\ell m} &= \int_0^T \left[ \left|\mathcal{A}_{\ell m}(t) Y_{\ell m}^+\right|^2 + \left|\mathcal{A}_{\ell m}(t) Y_{\ell m}^\times\right|^2  \right]dt ,
         \\
-        &\approx \left[\left|Y_{\ell m}^+\right|^2 + \left|Y_{\ell m}^\times\right|^2 \right] \sum_{n=1}^{N} |A_{\ell m}(\hat{\Omega}_n)|^2 \Delta t_n,
+        &\approx \left[\left|Y_{\ell m}^+\right|^2 + \left|Y_{\ell m}^\times\right|^2 \right] \sum_{n=1}^{N} |\mathcal{A}_{\ell m}(\hat{\Omega}_n)|^2 \Delta t_n,
     \end{align}
 \end{subequations}
 where $\hat{\Omega}_n = \hat{\Omega}(t=0) + n \Delta\hat{\Omega}$, with orbital frequency spacing $\Delta \hat{\Omega} = [\hat{\Omega}(t=T) - \hat{\Omega}(t=0)]/N$, time spacing $\Delta t_n = t(\hat{\Omega}_n) - t(\hat{\Omega}_{n-1})$, and signal duration $T$. In this work, we find that $N = 500$ sufficiently approximates the mode power. Additionally, we find that an equal spacing in frequency space is more numerically efficient than an equal sampling in time. We include all $(\ell, m)$-modes that satisfy the selection criteria
@@ -591,9 +589,9 @@ Following this mode selection, we evaluate all of the selected modes in \eqref{e
 
 Frequency-domain waveforms are generated in a similar manner for a fixed frequency step $df$ and maximum frequency $f_\mathrm{max}$. Alternatively, one can specify a time step $dt$ and signal duration $T$, for which we set $df = 1/T$ and $2f_\mathrm{max} = 1/dt$. By eliminating sums over negative $m$-modes, we have
 \begin{align}
-    \tilde{h}_+(f) &= \frac{1}{2}\sum_{\ell = 2}^\infty \sum_{m = 1}^{\ell} \sqrt{\frac{2\pi}{m\dot{\Omega}}}A_{\ell m} Y_{\ell m}^+ e^{+i\Psi_{\ell m}},
+    \tilde{h}_+(f) &= \frac{1}{2}\sum_{\ell = 2}^\infty \sum_{m = 1}^{\ell} \sqrt{\frac{2\pi}{m\dot{\Omega}}}\mathcal{A}_{\ell m} Y_{\ell m}^+ e^{+i\Psi_{\ell m}},
     \\
-    \tilde{h}_\times(f) &= \frac{i}{2}\sum_{\ell = 2}^\infty \sum_{m = 1}^{\ell} \sqrt{\frac{2\pi}{m\dot{\Omega}}}A_{\ell m} Y_{\ell m}^\times e^{+i\Psi_{\ell m}},
+    \tilde{h}_\times(f) &= \frac{i}{2}\sum_{\ell = 2}^\infty \sum_{m = 1}^{\ell} \sqrt{\frac{2\pi}{m\dot{\Omega}}}\mathcal{A}_{\ell m} Y_{\ell m}^\times e^{+i\Psi_{\ell m}},
 \end{align}
 where the phases are given by $\Psi_{\ell m}(f) = \psi_{\ell m}(\hat{\Omega}_f/m) + 2\pi f t(\hat{\Omega}_f/m) + m[\phi - \Phi(\hat{\Omega}_f/m)] - \pi/4$ and all mode-functions are evaluated at $\hat{\Omega}_f = 2\pi f$. Mode selection is identical to the time-domain waveforms. Similarly we parallelize evaluations over the frequency steps $f_j = j\times df$ for $j = 0, 1, 2, \dots, f_\mathrm{max}/df$.
 
@@ -789,43 +787,41 @@ This research was supported by an appointment to the NASA Postdoctoral Program a
 \section{Approximations of the frequency domain waveforms}
 \label{app:fourierPhase}
 
-Note that in our case, the stationary phase approximation is an asymptotic expansion with error $O(\epsilon^{1/2})$.
-
-In the small mass-ratio limit, $M\dot{\Phi} = M\Omega \sim 1$ while $M \dot{\psi}_{\ell m} \sim \epsilon$. Therefore, neglecting the time-evolution of ${\psi}_{\ell m}$, we invert $f\approx m\Omega(t)/(2\pi)$ to approximate $t_p(f)$ for each $(\ell, m)$ mode. Similarly  At first glance, ignoring this $O(\epsilon)$ term may introduce an error of $O(1)$ in the values of $t_p$ and $\Phi(t_p)$, thus diminishing the phase accuracy of our frequency-domain waveform. However, these errors perfectly cancel, leading to an $O(\epsilon)$ error in the phasing, as explained in Appendix \ref{app:fourierPhase}.
-
-Furthermore, when calculating $\tilde{B}_{\ell m}(f)$, we neglect any contribution from $\ddot{\psi}_{\ell m}$ in \eqref{eqn:fourierAmplitude}. We expect this approximation to introduce an $O(\epsilon)$ error relative to the leading-order behavior of $\tilde{B}_{\ell m}(f) \sim 1/\sqrt{\epsilon}$, and therefore is safe to neglect in the small mass-ratio limit.
-
-This can be seen by parametrizing the time and phase in terms of $\Omega$. Then $\Omega_f = \Omega(f) = \Omega_0 + \delta\Omega$ where $\Omega_0 = 2\pi f/m$ and $\delta\Omega \sim \epsilon$. The induced error in the phasing $\Psi(f) = 2\pi f t(\Omega_f) + \psi_{\ell m}(\Omega_f) - m\Phi(\Omega_f)$ for a fixed value of $f$ is then given by
+In the small mass-ratio limit, $M\dot{\Phi} = M\Omega \sim O(1)$ while $M \dot{\psi}_{\ell m} \sim O(\epsilon)$. Therefore, neglecting the time-evolution of ${\psi}_{\ell m}$, we invert $f\approx m\Omega(t)/(2\pi)$ to approximate $t_p(f)$ for each $(\ell, m)$ mode. At first glance, one might expect that ignoring this $O(\epsilon)$ term would introduce an error of $O(1)$ in the values of $t_p$ and $\Phi(t_p)$, thus diminishing the phase accuracy of our frequency-domain waveform. However, these errors perfectly cancel, leading to an $O(\epsilon)$ error. This can be seen by parametrizing the time and phase in terms of $\Omega$. Then $\Omega_f = \Omega(f) = \Omega_0 + \delta\Omega$ where $\Omega_0 = 2\pi f/m$ and $\delta\Omega \sim O(\epsilon)$. The induced error in the phasing $\Psi(f) = 2\pi f t(\Omega_f) + \psi_{\ell m}(\Omega_f) - m\Phi(\Omega_f)$ for a fixed value of $f$ is then given by
 \begin{align}
     \Psi(f) &=
     m\Omega_0 t(\Omega_0) + \psi_{\ell m}(\Omega_0) - m\Phi(\Omega_0) 
     \\ \notag
-    & \qquad + \big[m\Omega_0 \partial_\Omega t(\Omega_0) + \partial_\Omega\psi_{\ell m}(\Omega_0) 
+    & \quad \qquad + \big[m\Omega_0 \partial_\Omega t(\Omega_0) + \partial_\Omega\psi_{\ell m}(\Omega_0) 
     \\ \notag
-    & \qquad \qquad + m\partial_\Omega\Phi(\Omega_0)\big]\delta \Omega + O(\delta\Omega^2),
+    & \quad \qquad \qquad - m\partial_\Omega\Phi(\Omega_0)\big]\delta \Omega + O(\delta\Omega^2),
     \\
     &=
     m\Omega_0 t(\Omega_0) + \psi_{\ell m}(\Omega_0) - m\Phi(\Omega_0) 
     \\ \notag
-    & \qquad + \big[m\Omega_0 \partial_\Omega t(\Omega_0) + \partial_\Omega\psi_{\ell m}(\Omega_0) 
-    \\ \notag
-    & \qquad \qquad + m\partial_\Omega\Phi(\Omega_0)\big]\delta \Omega + O(\delta\Omega^2),
+    & \quad \qquad \qquad + \partial_\Omega\psi_{\ell m}(\Omega_0) \delta \Omega + O(\delta\Omega^2),
 \end{align}
+where we have made use of the fact that 
+$\Omega \partial_\Omega t = \partial_\Omega \Phi$. Finally, we take into account that $\partial_\Omega \psi_{\ell m} = \dot{\psi}_{\ell m}\partial_\Omega t$. Since $M^2 \dot{\Omega} \sim O(\epsilon)$, then $\partial_\Omega \psi_{\ell m} \, \delta \Omega \sim O(\epsilon)$, which sets the overall error in the phase at $O(\epsilon)$ due to neglecting $\dot{\psi}_{\ell m}$.
+
+Furthermore, when calculating $\tilde{B}_{\ell m}(f)$, we neglect any contribution from $\ddot{\psi}_{\ell m}$ in \eqref{eqn:fourierAmplitude}. We expect this approximation to introduce an $O(\epsilon)$ error relative to the leading-order behavior of $\tilde{B}_{\ell m}(f) \sim 1/\sqrt{\epsilon}$, and therefore is safe to neglect in the small mass-ratio limit.
 
 \section{Validating fluxes, trajectories, and numerical splines}
 \label{app:tests}
 
+We describe several validation tests for assessing the accuracy of our inspiral trajectory data.
+
 \subsection{Numerical precision of fluxes}
 \label{app:fluxtests}
 
-\begin{figure}[h!]
+\begin{figure}[!tp]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/flux_spline_error.pdf}
     \caption{The fractional interpolation error $\delta_{(7,6)}$ of the flux spline $\mathcal{F}_{N(7,6)}^I$ as a function of the grid parameters $\alpha$ and $\chi$.}
     \label{fig:fluxSplineError}
 \end{figure}
 
-\begin{figure}[bhtp]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/spline_convergence.pdf}
     \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
@@ -854,38 +850,50 @@ To confirm the numerical accuracy of our interpolated data, we perform a series 
 \end{align}
 By downsampling the data, we calculate $\delta_{(7,6)}$, $\delta_{(6,5)}$, and $\delta_{(5,4)}$. We plot $\delta_{(7,6)}$ in Figure \ref{fig:fluxSplineError}, demonstrating that $\delta_{(7,6)}<10^{-6}$ across the entire domain. To estimate the interpolation error of our fully-sampled spline, $\delta_{(8,7)}$, we examine the convergence rate of $|| \delta_{(n+1,n)} ||_\infty$ in Figure \ref{fig:fluxSplineConvergence}. We find that $|| \delta_{(n+1,n)} ||_\infty \propto 2^{-4n}$, which is consistent with the standard fourth-order scaling for cubic spline errors ($\delta \sim \Delta x^4$ for grid spacing $\Delta x$). Provided this scaling holds true as we increase the sampling rate, we estimate that $\delta_{(8,7)} \lesssim 5\times 10^{-8}$.
 
-We also compare the flux interpolant to Kerr circular flux values produced by independent codes \cite{TaraETC14, GralHughWarb16}. Tables of these values are provided within the ``Circular Orbit Self-force Data'' repository hosted by the Black Hole Perturbation Toolkit \cite{BHPTK18}. Figure \ref{fig:fluxComparison} plots the fractional errors between the Toolkit data set and our interpolated fluxes for the spin values $\hat{a} = [-0.99, -0.8, -0.5, 0.1, 0.6, 0.9, 0.995, 0.999]$ as a function of the orbital separation $r_0$. For $r_0 \gtrsim 3.5 M$ the fractional errors in the fluxes are consistent with the interpolation error estimated in Figure \ref{fig:fluxSplineError}, indicating that our flux results are reliable to a precision $\sim 10^{-9}$ in this domain. Crucially, we find that our use of the $E(3)$ boundary condition in our spline interpolation is essential for achieving these small fractional errors. For example, in Figure \ref{fig:fluxComparison2} we plot the fractional errors resulting from the use of the more common `natural' or `not-a-knot' spline boundary conditions when interpolating our flux results. Both boundary conditions degrade the accuracy of our interpolated flux data, with the natural spline providing the largest fractional errors. For both the natural and not-a-knot splines, the fractional errors rise as we approach larger negative values of the spin ($a \rightarrow -1$) and larger orbital separations ($\Omega \rightarrow \Omega_\mathrm{min}$), where our flux data is sparsely-sampled. Therefore, a careful choice of boundary conditions can significantly improve the accuracy of our splines, thereby diminishing the number of points at which we need to perform expensive calculations of the gravitational wave fluxes.
+We also compare the flux interpolant to Kerr circular flux values produced by independent codes \cite{TaraETC14, GralHughWarb16}. Tables of these values are provided within the ``Circular Orbit Self-force Data'' repository hosted by the Black Hole Perturbation Toolkit \cite{BHPTK18}. Figure \ref{fig:fluxComparison} plots the fractional errors between the Toolkit data set and our interpolated fluxes for the spin values $\hat{a} = [-0.99, -0.8, -0.5, 0.1, 0.6, 0.9, 0.995, 0.999]$ as a function of the orbital separation $r_0$. For $r_0 \gtrsim 3.5 M$ the fractional errors in the fluxes are consistent with the interpolation error estimated in Figure \ref{fig:fluxSplineError}, indicating that our flux results are reliable to a precision $\sim 10^{-9}$ in this domain. Crucially, we find that our use of the $E(3)$ boundary condition in our spline interpolation is essential for achieving these small fractional errors. For example, in Figure \ref{fig:fluxComparison2} we plot the fractional errors resulting from the use of the more common `natural' or `not-a-knot' spline boundary conditions when interpolating our flux results. Both boundary conditions degrade the accuracy of our interpolated flux data, with the natural spline providing the largest fractional errors. For both the natural and not-a-knot splines, the fractional errors rise as we approach larger negative values of the spin ($a \rightarrow -1$) and larger orbital separations ($\Omega \rightarrow \Omega_\mathrm{min}$), where our flux data is sparsely-sampled. Therefore, a careful choice of boundary conditions can significantly improve the accuracy of our splines, thereby reducing the number of points at which we need to perform expensive calculations of the gravitational wave fluxes.
 
-Finally, we return the near-ISCO region of Figure \ref{fig:fluxComparison}. The fractional errors between our data and the fluxes published in the Toolkit peak at $\sim 10^{-3}$ near $r_0 \sim 3 M$, as seen in the middle plot of Figure \ref{fig:fluxComparison}. To identify the source of this disagreement, we perform another set of flux calculations using the \texttt{Teukolsky} Mathematica package \cite{BHPT_TEUK}, which is also provided in the Black Hole Perturbation Toolkit.\footnote{Note that this package was designed and implemented independently of the circular flux data published in the ``Circular Orbit Self-force Data'' Toolkit data repository.} In the Mathematica code, we use over 300 digits of precision to guarantee the accuracy of the computed flux values. The fractional error between our flux interpolant and the high-precision Teukolsky fluxes are shown in the right plot of Figure \ref{fig:fluxComparison}, demonstrating strong agreement between our data and the Toolkit-generated fluxes. Therefore, we suspect that the flux values published in the ``Circular Orbit Self-force Data'' repository are not accurate to all reported digits for $ 2M \lesssim r_0 \lesssim 4 M$.
+Finally, we return the near-ISCO region of Figure \ref{fig:fluxComparison}. The fractional errors between our data and the fluxes published in the Toolkit peak at $\sim 10^{-3}$ near $r_0 \sim 3 M$, as seen in the middle plot of Figure \ref{fig:fluxComparison}. To identify the source of this disagreement, we perform another set of flux calculations using the \texttt{Teukolsky} Mathematica package \cite{BHPT_TEUK}, which is also provided in the Black Hole Perturbation Toolkit.\footnote{Note that this package was designed and implemented independently of the circular flux data published in the ``Circular Orbit Self-force Data'' Toolkit data repository.} In the Mathematica code, we use anywhere from 50 to 400 digits of precision to guarantee the accuracy of the computed flux values. The fractional error between our flux interpolant and the high-precision Teukolsky fluxes are shown in the right plot of Figure \ref{fig:fluxComparison}, demonstrating strong agreement between our data and the Toolkit-generated fluxes. Therefore, we suspect that the flux values published in the ``Circular Orbit Self-force Data'' repository are not accurate to all reported digits for $ 2M \lesssim r_0 \lesssim 4 M$.
 
-Altogether, these tests indicate the the error in our interpolated flux function is $< 10^{8}$ and often matches the intrinsic error in the underlying flux data, which was calculated to a requested precision of $\sim 10$ digits. Since flux errors scale as $\sim \epsilon^{-1}$ over an inspiral, we expect that this level of flux interpolation error will have a subradian impact on the phase accuracy of our gravitational waveforms for astrophysically-realistic systems.
+Altogether, these tests indicate that the error in our interpolated flux function is $< 10^{8}$ and often matches the intrinsic error in the underlying flux data, which was calculated to a requested precision of $\sim 10$ digits. Since flux errors scale as $\sim \epsilon^{-1}$ over an inspiral, we expect that this level of flux interpolation error will have a subradian impact on the phase accuracy of our gravitational waveforms for astrophysically-realistic systems.
 
 \subsection{Numerical accuracy of trajectories}
 \label{app:trajtests}
 
-Next we validate the accuracy of our trajectories. For the time and phase evolution, we are concerned with the absolute error in the splines, since the quantities $\Omega t$ and $\Phi$ appear directly in the phasing of our frequency- and time-domain waveforms, respectively. 
+Next we validate the accuracy of our trajectories. For the evolution of $\Omega t$ and $\Phi$, we are concerned with the absolute error in the splines, since these quantities  only appear directly in the phasing of our frequency- and time-domain waveforms, respectively. However, we are concerned with the precision of $t$ when evaluating the initial phase of our waveform based on an initial frequency, i.e., $\Phi_\mathrm{initial} = \Phi(t(\Omega_0))$.
 
-First we verify the numerical convergence of our splines. Similar to our analysis of the fluxes, we define the convergence measures,
+To verify the numerical convergence of our splines, we define the convergence measures,
 \begin{align}
-    \Delta^t_{(N',M')} &= \left| {\check{t}^I_{(N',M')}} - {\check{t}^I_{(N'+1,M'+1)}} \right|,
+    \Delta^t_{(N',M')} &= \left| 1 - \frac{1-\check{t}^I_{(N',M')}}{1-\check{t}^I_{(N'+1,M'+1)}} \right|,
+    \\
+    \Delta^{\Omega t}_{(N',M')} &= \hat{\Omega}\left| {\check{t}^I_{(N',M')}} - {\check{t}^I_{(N'+1,M'+1)}} \right|,
     \\
     \Delta^\Phi_{(N',M')} &= \left| {\check{\Phi}^I_{(N',M')}} - {\check{\Phi}^I_{(N'+1,M'+1)}} \right|,
 \end{align}
-and plot $|| \Delta^{t/\Phi}_{(n+1,n)}||_\infty$ for $n = (3, 4, 5, 6)$ in Figure \ref{fig:trajConvergence}. As before, the error improves as we increase the sampling density by a factor of $2$ in each dimension, though in this case the maximum absolute error converges slightly faster than $2^{4n}$. Thus extrapolating this rate of convergence, we estimate $|| \Delta^{t/\Phi}_{(8,7)}||_\infty \lesssim 5\times 10^{-7}$. 
+and plot $|| \Delta^{t,\Omega t,\Phi}_{(n,n)}||_\infty$ for $n = (5, 6, 7, 8)$ in Figure \ref{fig:trajConvergence}. As before, the error improves as we increase the sampling density by a factor of $2$ in each dimension, though in this case the maximum absolute error converges slightly faster than $2^{4n}$. Thus extrapolating this rate of convergence, we estimate $|| \Delta^{t,\Omega t,\Phi}_{(9,9)}||_\infty \lesssim 3\times 10^{-8}$. 
 
 Next, we check that the interpolated trajectories satisfy the equations of motion \eqref{eqn:eom2} via the two tests,
 \begin{align}
-    \delta_{t}(\hat{\Omega}_0, \hat{a}) &= \left| 1 - \left[1 + \frac{1}{\mathcal{F}^I_N}\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)\right]\left[1 - \frac{d\check{t}^I}{d\alpha}\right]^{-1}\right|,
+    \delta_{t}(\hat{\Omega}, \hat{a}) &= \left| 1 - \left[1 + \frac{1}{\mathcal{F}^I_N}\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)\right]\left[1 - \frac{d\check{t}^I}{d\alpha}\right]^{-1}\right|,
     \\
-    \delta_{\Phi}(\hat{\Omega}_0, \hat{a}) &= \left| 1 -  \left[1 + \frac{\hat{\Omega}_0}{\mathcal{F}^I_N}\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)\right]\left[1 -\frac{d\check{\Phi}^I}{d{\alpha}} \right]^{-1}\right|,
+    \delta_{\Phi}(\hat{\Omega}, \hat{a}) &= \left| 1 -  \left[1 + \frac{\hat{\Omega}}{\mathcal{F}^I_N}\left(\frac{\partial\mathcal{E}}{\partial\alpha} \right)\right]\left[1 -\frac{d\check{\Phi}^I}{d{\alpha}} \right]^{-1}\right|,
 \end{align}
-where, on the righthand side, all functions and derivatives are evaluated at $\alpha(\hat{a},\hat{\Omega}_0)$ and $\chi(\hat{a})$. We shift the numerators and denominators by a factor $1$, because the $\alpha$-derivatives vanish at $\alpha = 0$. This translation effectively leads to $\delta_t$ and $\delta_\Phi$ measuring absolute error for values of $\alpha \lesssim 0.05$, while measuring relative error for values $\alpha \gtrsim 0.05$. Based on this analysis, we find $||\delta_t||_\infty \simeq 10^{-5.8}$ and $||\delta_\Phi||_\infty \simeq 10^{-5.9}$.
+where, on the righthand side, all functions and derivatives are evaluated at $\alpha(\hat{a},\hat{\Omega})$ and $\chi(\hat{a})$. We shift the numerators and denominators by a factor $1$, because the $\alpha$-derivatives vanish at $\alpha = 0$. This translation effectively leads to $\delta_t$ and $\delta_\Phi$ measuring absolute error for values of $\alpha \lesssim 0.05$, while measuring relative error for values $\alpha \gtrsim 0.05$. Based on this analysis, we find $||\delta_t||_\infty \simeq 10^{-6.7}$ and $||\delta_\Phi||_\infty \simeq 10^{-6.8}$ when maximizing over all values of $\hat{a}$ and $\hat{\Omega}$.
 
-To assess the accuracy of $\hat{\Omega}^I(\check{t};\hat{a})$, we calculate the error
+To assess the precision of $\hat{\Omega}^I(\check{t};\hat{a})$, we calculate the fractional error
 \begin{align}
-    \delta_{\Omega}(t_0, \hat{a}) = \left| 1- \frac{t_0}{\check{t}^I[\alpha(\hat{\Omega}^I[\beta(t_0)])]} \right|,
+    \Delta^\Omega_{(N',M')} &= \left| 1 - \frac{\hat{\Omega}^I_{(N',M')}}{\hat{\Omega}^I_{(N'+1,M'+1)}} \right|,
 \end{align}
-where once again all functions are evaluated at $\chi(\hat{a})$.
+and plot the maximum values $||\Delta^\Omega_{(n,n)}||_\infty$ for $n = (5, 6, 7, 8)$ in Figure \ref{fig:frequencyConvergence}. With the convergence slightly better than $2^{4n}$, we estimate that $||\Delta^\Omega_{(9,9)}||_\infty < 2\times 10^{-9}$. Furthermore, we can apply the self-consistency check,
+\begin{align}
+    \delta_{\Omega}(\hat{\Omega}_0, \hat{a}) = \left| 1- \frac{\hat{\Omega}_0}{\hat{\Omega}^I[\check{t}^I(\hat{\Omega}_0)]} \right|,
+\end{align}
+and we find that the maximum error across all values is $||\delta_{\Omega}||_\infty = 3\times 10^{-9}$.
+
+\subsection{Numerical precision and accuracy of waveform amplitudes}
+\label{app:ampAccuracy}
+
+We look at the numerical precision of the spline for the magnitude of our complex waveform amplitude, $A^I_{\ell m}$, and the accuracy of the amplitude phase spline $\psi^I_{\ell m}$. Since the grids that we interpolate are already sparsely populated we do not follow the same analysis as the previous subsections. Rather than comparing splines from successive iterations of downsampled data, we instead compute a new set of complex amplitude values on a $10 \times 30$ grid in $(\chi, \alpha)$. We perform this calculation for $(\ell,m) = [(2,2), (5,2), (5,5), (20,2), (20,20)]$ to get a representative sample of small and large $\ell$-values and small and large $m$ values. As a result, the maximum fractional errors in $A^I_{\ell m}$ are $2.1\times10^{-6}$, $6.2\times10^{-6}$, $5.2\times10^{-6}$, $5.5\times10^{-3}$, and $2.1\times10^{-5}$ for the $(2,2)$, $(5,2)$, $(5,5)$, $(20,2)$, and $(20,20)$ modes, respectively. For the maximum absolute errors in $\psi^I_{\ell m}$ we get $2.3\times10^{-6}$, $2.4\times10^{-6}$, $4.8\times10^{-6}$, $2.3\times10^{-3}$, and $1.9\times10^{-5}$ for the $(2,2)$, $(5,2)$, $(5,5)$, $(20,2)$, and $(20,20)$ modes, respectively. Therefore, $\psi_{\ell m}$ achieves subradian phase accuracy while $A^I_{\ell m}$ maintains precision to at least 3 digits even for the least dominant mode $(20, 2)$, which will only be included in waveforms with very low mode selection thresholds $\epsilon_\mathrm{mode} < 10^{-5}$.
+
 
 \begin{figure*}[!htp]
     \centering
@@ -894,6 +902,20 @@ where once again all functions are evaluated at $\chi(\hat{a})$.
     \label{fig:mcmcOverlay}
 \end{figure*}
 
+\section{Transformations for retrograde orbits}
+\label{app:retrograde}
+
+Consider an orbit with positive spin $\hat{a} > 0$, but negative angular momentum and orbital frequency $\hat{\Omega} < 0$ and $\mathcal{L}_z < 0$ (which is parametrized by the choice $x<0$). Under the transformation $(\hat{a}, \hat{\Omega}) \rightarrow (-\hat{a}, -\hat{\Omega})$ on the waveform, we must first understand the impact on the mode amplitudes $A_{\ell m}(\hat{a},\hat{\Omega})e^{i\psi_{\ell m}(\hat{a},\hat{\Omega})} = A_{\ell m}(-\hat{a},-\hat{\Omega}) e^{-i\psi_{\ell m}(-\hat{a},-\hat{\Omega})}$ and $\Phi(\hat{a},\hat{\Omega}) = -\Phi(\hat{a},\hat{\Omega})$. Consequently, the waveform takes the form
+\begin{subequations}
+    \begin{align}
+    h_+(-\hat{a},-\hat{\Omega}) &= \sum_{\ell m} \mathcal{A}_{\ell m}(\hat{a},\hat{\Omega}) Y^+_{\ell m} \cos(\psi_{\ell m} - m[\phi + \Phi]),
+    \\
+    h_\times(-\hat{a},-\hat{\Omega}) &= \sum_{\ell m} \mathcal{A}_{\ell m}(\hat{a},\hat{\Omega}) Y^\times_{\ell m} \sin(\psi_{\ell m} - m[\phi + \Phi]),
+\end{align}
+\end{subequations}
+or $h_{+/\times}(-\hat{a},-\hat{\Omega}; \theta, \phi) = h_{+/\times}(\hat{a},\hat{\Omega}, \pi -\theta, -\phi)$.
+
+
 \section{Numerical methods for Fisher calculations}
 \label{app:fisher}
 
@@ -901,17 +923,17 @@ To construct the Fisher information matrix in \eqref{eqn:fisher} we first comput
 \begin{align}
     \partial_i f(\theta) \approx \frac{f(\theta + h) - f(\theta - h)}{2h},
 \end{align}
-to differentiate $A_{\ell m}$ and $\Phi_{\ell m} = \psi_{\ell m} + m(\phi - \Phi)$ at each time step. We adapt the step-size $h$ until we converge to a stable numerical approximation of the derivative. However, very small step-sizes can accentuate numerical noise inherent in our waveforms. To mitigate this noise, we apply a Savitzky–Golay filter to suppress this noise in our numerical derivatives.
+to differentiate $\mathcal{A}_{\ell m}$ and $\Phi_{\ell m} = \psi_{\ell m} + m(\phi - \Phi)$ at each time step. We adapt the step-size $h$ until we converge to a stable numerical approximation of the derivative. However, very small step-sizes can accentuate numerical noise inherent in our waveforms. To mitigate this noise, we apply a Savitzky–Golay filter to suppress this noise in our numerical derivatives.
 
 Then the waveform derivative is assembled in the source frame via
 \begin{subequations} \label{eqn:timeDomainDerivatives}
     \begin{align}
-    \partial_i h_+ &= +\sum_{\ell m} \left[ \partial_i A_{\ell m} \cos\Phi_{\ell m} - A_{\ell m} \partial_i \Phi_{\ell m} \sin\Phi_{\ell m}\right] Y^+_{\ell m},
+    \partial_i h_+ &= +\sum_{\ell m} \left[ \partial_i \mathcal{A}_{\ell m} \cos\Phi_{\ell m} - \mathcal{A}_{\ell m} \partial_i \Phi_{\ell m} \sin\Phi_{\ell m}\right] Y^+_{\ell m},
     \\
-    \partial_i h_\times &= -\sum_{\ell m} \left[ \partial_i A_{\ell m} \sin\Phi_{\ell m} + A_{\ell m} \partial_i \Phi_{\ell m} \cos\Phi_{\ell m}\right] Y^\times_{\ell m},
+    \partial_i h_\times &= -\sum_{\ell m} \left[ \partial_i \mathcal{A}_{\ell m} \sin\Phi_{\ell m} + \mathcal{A}_{\ell m} \partial_i \Phi_{\ell m} \cos\Phi_{\ell m}\right] Y^\times_{\ell m},
     \end{align}
 \end{subequations}
-and then we transform to the SSB frame. For derivatives with respect to $\Phi_{\phi 0}$, rather than using numerical derivatives, we use the analytic solutions $\partial_{\Phi_{\phi 0}} A_{\ell m} = 0$ and $\partial_{\Phi_{\phi 0}} \Phi_{\ell m} = -m$. 
+and then we transform to the SSB frame. For derivatives with respect to $\Phi_{\phi 0}$, rather than using numerical derivatives, we use the analytic solutions $\partial_{\Phi_{\phi 0}} C_{\ell m} = 0$ and $\partial_{\Phi_{\phi 0}} \Phi_{\ell m} = -m$. 
 
 For derivatives with respect to the extrinsic parameters, we use a higher-order numerical finite central difference stencil,
 \begin{align}
@@ -959,7 +981,7 @@ where $\tilde{\Gamma} = \Gamma$ is the pseudoinverse of $\tilde{\Gamma}^{-1}$. P
 \end{align}
 where $\theta^i_{(AB)}$ represents the set of parameters that have been perturbed away from $\theta^i_\mathrm{peak}$ by $\Delta \theta^A$ and $\Delta \theta^B$. For all of the Fisher matrix calculations performed in this work, we find \eqref{eqn:covCheck} is satisfied to a precision $< 10^{-1}$ across all combinations of model parameters and to a precision $<10^{-2}$ for all intrinsic parameters.
 
-As a final check, we perform a parallel-tempered Markov Chain Monte Carlo (MCMC) sampling of the posterior distribution for intrinsic the source parameters $(M, \mu, a, p_0, \Phi_{\phi0}) = ()$ using the open-source \texttt{Eryn} sampling tool \cite{ForeETC13, KarnETC23,Katz23}.\footnote{Note that we choose a very comparable mass ratio to speed-up waveform evaluation and the calculation of the likelihood. This allows us to perform the sampling within a day on a laptop. More realistic EMRI systems are much more computationally expensive to sample and beyond the scope of this work. MCMC sampling of astrophysically-realistic EMRIs with \texttt{bhpwave} will be presented in a following paper.} To simplify the calculation, we only sample over the intrinsic parameters $(\log M, \log \mu, a, p_0, \Phi_{\phi0})$ and hold all other parameters fixed. We then perform our Fisher analysis on the same system. In Figure \ref{fig:mcmcOverlay} the dark blue lines represent the two dimensional contours of the posterior distribution calculated from our MCMC sampling. Each contour line corresponds to a one-$\sigma$ deviation from a neighboring contour. We then use the covariances predicted from our Fisher analysis to sample a multivariate distribution and overlay this on top of our MCMC results. The Fisher results are plotted using lighter orange lines. As we can see, the two sets of samples lie nearly on top of one another, indicating that our Fisher matrix analysis provides a leading-order estimate for the shape of the posterior. 
+As a final check, we perform a parallel-tempered Markov Chain Monte Carlo (MCMC) sampling of the posterior distribution for intrinsic the source parameters $(M, \mu, \hat{a}, p_0, \Phi_{\phi0}) = (10^6 M_\odot, 10^5 M_\odot, 0.9, 12.55, 0.2)$ using the open-source \texttt{Eryn} sampling tool \cite{ForeETC13, KarnETC23,Katz23}.\footnote{Note that we choose a very comparable mass ratio to speed-up waveform evaluation and the calculation of the likelihood. This allows us to perform the sampling within a day on a laptop. More realistic EMRI systems are much more computationally expensive to sample and beyond the scope of this work. MCMC sampling of astrophysically-realistic EMRIs with \texttt{bhpwave} will be presented in a following paper.} To simplify the calculation, we only sample over the intrinsic parameters $(\log M, \log \mu, a, p_0, \Phi_{\phi0})$ and hold all other parameters fixed. We then perform our Fisher analysis on the same system. In Figure \ref{fig:mcmcOverlay} we plot the two dimensional contours of the posterior distribution calculated from our MCMC sampling (dark blue lines). Each contour line corresponds to a one-$\sigma$ deviation from a neighboring contour. We then use the covariances predicted from our Fisher analysis to sample a multivariate distribution and overlay this on top of our MCMC results (lighter orange lines). As we can see, the two sets of samples lie nearly on top of one another, indicating that our Fisher matrix analysis provides a leading-order estimate for the shape of the posterior. 
 
 
 \bibliography{parent}
