@@ -856,6 +856,20 @@ Finally, we return the near-ISCO region of Figure \ref{fig:fluxComparison}. The 
 
 Altogether, these tests indicate that the error in our interpolated flux function is $< 10^{8}$ and often matches the intrinsic error in the underlying flux data, which was calculated to a requested precision of $\sim 10$ digits. Since flux errors scale as $\sim \epsilon^{-1}$ over an inspiral, we expect that this level of flux interpolation error will have a subradian impact on the phase accuracy of our gravitational waveforms for astrophysically-realistic systems.
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/timeAndPhaseConvergence.pdf}
+    \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
+    \label{fig:trajConvergence}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/frequencyConvergence.pdf}
+    \caption{Convergence of the maximum fractional interpolation error $\delta_{(n+1,n)}$ as we increase $n$. Increasing $n$ by one amounts to  doubling the sampling density in each dimension of our grid. Thus a power law decay of $2{-4n}$ (dashed blue line) indicates fourth-order convergence of our bicubic spline.}
+    \label{fig:frequencyConvergence}
+\end{figure}
+
 \subsection{Numerical accuracy of trajectories}
 \label{app:trajtests}
 
