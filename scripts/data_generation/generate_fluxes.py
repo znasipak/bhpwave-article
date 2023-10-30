@@ -2,7 +2,7 @@ from pybhpt.flux import FluxMode
 from pybhpt.geo import KerrGeodesic
 from pybhpt.teuk import TeukolskyMode
 import numpy as np
-from data_generation_tools import *
+from script_analysis_tools import *
 
 # Compute amplitudes
 

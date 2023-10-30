@@ -3,7 +3,7 @@ from bhpwave.trajectory.geodesic import kerr_isco_frequency, kerr_circ_geo_radiu
 from scipy.integrate import solve_ivp
 from scipy.optimize import root_scalar
 import numpy as np
-from data_generation_tools import *
+from script_analysis_tools import *
 
 import os
 pathname = os.path.dirname(os.path.abspath(__file__))
