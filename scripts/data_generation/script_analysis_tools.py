@@ -105,3 +105,4 @@ def load_trajectory_data_file(filepath):
     chiDataFlux = chiDataFluxTemp[::fluxDownsampleChi]
 
     return chiData, alphaData, timeData, phaseData, betaData, omegaData, phaseBetaData, chiDataFlux, alphaDataFlux, fluxData
+    
