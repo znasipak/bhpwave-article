@@ -31,7 +31,7 @@ for M in M_array:
             i += 1
 imax = i
 
-data_path = "../../data/'saved_phase_analysis.pkl'"
+data_path = "../../data/saved_phase_analysis.pkl"
 
 if os.path.exists(data_path):
     with open(data_path, 'rb') as f:
