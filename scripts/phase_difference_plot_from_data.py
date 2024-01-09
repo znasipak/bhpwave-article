@@ -4,7 +4,7 @@ import matplotlib as mpl
 import numpy as np
 mpl.rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
 mpl.rc('text', usetex=True)
-mpl.rc('font', **{'size' : 14})
+mpl.rc('font', **{'size' : 18})
 
 import os
 pathname = os.path.dirname(os.path.abspath(__file__))
@@ -59,6 +59,6 @@ axs[0].set_ylabel("$\log (M/M_\odot)$")
 fig.subplots_adjust(right=0.8)
 colorbar_axes = fig.add_axes([0.81, 0.11, 0.01, 0.77])
 cbar = fig.colorbar(pcm, cax=colorbar_axes)
-cbar.ax.get_yaxis().labelpad = 20
-cbar.ax.set_ylabel("$||\\delta\\Phi^I||_{\\hat{a},\\hat{\\Omega}}$", rotation=270)
+cbar.ax.get_yaxis().labelpad = 25
+cbar.ax.set_ylabel("$\log||\\delta\\Phi^I||_{\\hat{a},\\hat{\\Omega}}$", rotation=270)
 plt.savefig(pathname + "/../figures/deltaPhiTest.pdf", bbox_inches='tight')
