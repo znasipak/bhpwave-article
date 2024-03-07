@@ -150,4 +150,7 @@ fig2 = corner.corner(fisher_samples,
     scale_hist = False,
     **corner_kwargs
 )
-plt.savefig(pathname + "/../figures/mcmc.pdf")
+
+fig_name = "mcmc"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

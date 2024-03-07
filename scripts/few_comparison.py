@@ -83,7 +83,9 @@ axs[2].set_xlabel(r"$t$ (sec)")
 
 plt.subplots_adjust(wspace=0.1)
 
-plt.savefig(pathname + "/../figures/few_bhpwave_overlay.pdf", bbox_inches="tight")
+fig_name = "few_bhpwave_overlay"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)
 
 fig = plt.figure()
 
@@ -93,4 +95,7 @@ plt.plot(np.arange(hFComp.shape[0])[::50000]*dt/YRSID_SI, (np.unwrap(np.angle(hF
 plt.xlabel(r"$t$ (yrs)")
 plt.ylabel(r"$\Delta\Phi_\mathrm{GW}$")
 plt.legend()
-plt.savefig(pathname + "/../figures/few_phase_comparison.pdf", bbox_inches="tight")
+
+fig_name = "few_phase_comparison"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

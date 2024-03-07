@@ -61,4 +61,7 @@ colorbar_axes = fig.add_axes([0.81, 0.11, 0.01, 0.77])
 cbar = fig.colorbar(pcm, cax=colorbar_axes)
 cbar.ax.get_yaxis().labelpad = 25
 cbar.ax.set_ylabel("$\log||\\delta\\Phi^I||_{\\hat{a},\\hat{\\Omega}}$", rotation=270)
-plt.savefig(pathname + "/../figures/deltaPhiTest.pdf", bbox_inches='tight')
+
+fig_name = "deltaPhiTest"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

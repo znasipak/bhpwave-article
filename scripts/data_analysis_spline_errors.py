@@ -82,4 +82,6 @@ for param_k in [0, 1, 2, 3]:
     # axs[param_k].yaxis.set_major_locator(mticker.LogLocator(numticks=999))
     axs[param_k].yaxis.set_minor_locator(mticker.LogLocator(numticks=999, subs="auto"))
 
-plt.savefig(pathname + "/../figures/phase_error.pdf", bbox_inches='tight')
+fig_name = "phase_error"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

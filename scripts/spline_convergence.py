@@ -75,4 +75,6 @@ plt.ylabel('$||\Delta^\mathcal{F}_{(n+1,n)}||_\infty$')
 plt.xlabel('$n$')
 plt.legend()
 
-plt.savefig(pathname+"/../figures/spline_convergence.pdf", bbox_inches="tight", dpi=300)
+fig_name = "spline_convergence"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

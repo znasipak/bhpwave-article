@@ -61,7 +61,7 @@ fig.set_size_inches(15, 3.5)
 fig.subplots_adjust(wspace=0.2)
 for i in alist: 
     avals, omegas, EdotVals = flux_samples[i,:,:3].T
-    EdotVals_reweighted = 32./5.*EdotVals*omegas**(10/3)
+    EdotVals_reweighted = EdotVals
     axs[0].plot(omegas, EdotVals_reweighted, label="$\hat{a}" + "= {:.4}$".format(avals[0]), lw=2)
 axs[0].set_yscale('log')
 axs[0].set_xscale('log')
@@ -86,4 +86,6 @@ axs[2].set_xlabel('$\hat{\Omega}$')
 axs[2].set_ylabel('$1 - \check{t}$')
 axs[2].legend()
 
-plt.savefig(pathname+"/../figures/orginal_parametrization.pdf", bbox_inches="tight", dpi=300)
+fig_name = "orginal_parametrization"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

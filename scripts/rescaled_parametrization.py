@@ -12,33 +12,6 @@ from script_analysis_tools import *
 
 import os
 pathname = os.path.dirname(os.path.abspath(__file__))
-print(pathname)
-
-def load_trajectory_data_file(filepath):
-    traj = np.loadtxt(filepath, skiprows=3)
-    #trajHeader = np.loadtxt(filepath, skiprows=2, max_rows=1, dtype='str')
-    trajShape = np.loadtxt(filepath, skiprows=1, max_rows=1, dtype='int')
-
-    fluxDataTemp = np.ascontiguousarray(traj[:, 2].reshape(trajShape[:2]))
-    alphaDataFluxTemp = np.ascontiguousarray(traj[:, 1].reshape(trajShape[:2])[0])
-    chiDataFluxTemp = np.ascontiguousarray(traj[:, 0].reshape(trajShape[:2])[:, 0])
-
-    phaseData = np.ascontiguousarray(traj[:, 4].reshape(trajShape[:2]))
-    timeData = np.ascontiguousarray(traj[:, 3].reshape(trajShape[:2]))
-    alphaData = np.ascontiguousarray(traj[:, 1].reshape(trajShape[:2])[0])
-    chiData = np.ascontiguousarray(traj[:, 0].reshape(trajShape[:2])[:, 0])
-    betaData = np.ascontiguousarray(traj[:, 5].reshape(trajShape[:2])[0])
-    omegaData = np.ascontiguousarray(traj[:, 6].reshape(trajShape[:2]))
-    phaseBetaData = np.ascontiguousarray(traj[:, 7].reshape(trajShape[:2]))
-
-    fluxDownsampleChi = int((trajShape[0] - 1)/(trajShape[2] - 1))
-    fluxDownsampleAlpha = int((trajShape[1] - 1)/(trajShape[3] - 1))
-
-    fluxData = fluxDataTemp[::fluxDownsampleChi, ::fluxDownsampleAlpha]
-    alphaDataFlux = alphaDataFluxTemp[::fluxDownsampleAlpha]
-    chiDataFlux = chiDataFluxTemp[::fluxDownsampleChi]
-
-    return chiData, alphaData, timeData, phaseData, betaData, omegaData, phaseBetaData, chiDataFlux, alphaDataFlux, fluxData
 
 traj_data_full = load_trajectory_data_file(pathname+"/../data/trajectory.txt")
 
@@ -107,4 +80,6 @@ axs[2].set_xlabel('$(\hat{\Omega}_\mathrm{ISCO} - \hat{\Omega})/(\hat{\Omega}_\m
 axs[2].set_ylabel('$256/5 \\times\check{t}_N$')
 #axs[2].legend()
 
-plt.savefig(pathname+"/../figures/rescaled_parametrization.pdf", bbox_inches="tight", dpi=300)
+fig_name = "rescaled_parametrization"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

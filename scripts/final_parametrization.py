@@ -82,5 +82,6 @@ axs[2].set_xlabel('$\\alpha$')
 axs[2].set_ylabel('$256/5 \\times \check{t}_N$')
 axs[2].legend()
 
-print("Saving figure to " + pathname + "/../figures/final_parametrization.pdf")
-plt.savefig(pathname+"/../figures/final_parametrization.pdf", bbox_inches="tight", dpi=300)
+fig_name = "final_parametrization"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

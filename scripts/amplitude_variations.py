@@ -45,4 +45,6 @@ axs[1].set_yscale('log')
 axs[1].set_ylabel('$A_{\ell, m= 2}$')
 fig.tight_layout()
 
-plt.savefig(pathname + "/../figures/amp_combined.pdf", bbox_inches="tight")
+fig_name = "amp_combined"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)

@@ -66,4 +66,8 @@ axs[0].set_ylabel("magnitude")
 axs[0].legend(fontsize=14)
 plt.ylim(1e-6, 1e2)
 plt.subplots_adjust(wspace=0.1)
-plt.savefig(pathname + "/../figures/flux_error.pdf", bbox_inches='tight')
+
+
+fig_name = "flux_error"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)
