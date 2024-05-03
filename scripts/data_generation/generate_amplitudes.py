@@ -3,6 +3,7 @@ from pybhpt.geo import KerrGeodesic
 from pybhpt.teuk import TeukolskyMode
 import numpy as np
 from script_analysis_tools import *
+from data_generation_tools import *
 
 # Compute amplitudes
 
@@ -37,7 +38,7 @@ for i in range(chi.shape[0]):
             if a0 < 0: # the code within FluxSummation is only set up to do a >= 0
                 a0 *= -1
                 x0 = -1
-            wave=WaveAmplitude(a0, r0, 0, x0)
+            wave = WaveAmplitude(a0, r0, 0, x0)
             for emm in range(1, ell + 1):
                 mode_temp = wave.spherical_amplitudes(lmax, emm, 0)
                 if x0 < 0:

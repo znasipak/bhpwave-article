@@ -94,4 +94,7 @@ plt.ylabel('$|\\tilde{h}_+(f)|$')
 plt.legend(loc='upper left')
 plt.xlim(1e-4, 3.3e-2)
 plt.ylim(1e-21, 1e-16)
-plt.savefig(pathname + "/../figures/dft_comparison.pdf", bbox_inches='tight')
+
+fig_name = "dft_comparison"
+print("Saving figure to " + pathname + "/../figures/" + fig_name + ".pdf")
+plt.savefig(pathname + "/../figures/" + fig_name + ".pdf", bbox_inches="tight", dpi = 300)
